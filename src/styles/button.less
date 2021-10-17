@@ -1,0 +1,120 @@
+@import './var.less';
+.bottom-btn-wrap {
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40rpx 40rpx 80rpx 40rpx;
+  box-shadow: 0px 1rpx 0px 0px #dddddd;
+  z-index: @zindex-fixed-button;
+  .tip {
+    font-size: 24rpx;
+    color: #9b9b9b;
+    line-height: 40rpx;
+    text-align: center;
+  }
+}
+.large-btn {
+  width: 670rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  box-sizing: border-box;
+  .light {
+    color: #ff3f3f;
+  }
+  .btn-name {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #222;
+    line-height: 55rpx;
+  }
+  .btn-subName {
+    font-size: 24rpx;
+    color: #444;
+    line-height: 33rpx;
+  }
+  .btn {
+    font-size: 32rpx;
+    font-weight: 600;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+  }
+  .btn.large {
+    font-size: 40rpx;
+  }
+}
+.large-btn.yellow {
+  background: @gradient-yellow;
+  color: #222;
+}
+.large-btn.red {
+  background: @gradient-red;
+  color: #fff;
+  .btn {
+    color: #fff;
+  }
+}
+.large-btn.gray {
+  background: #666;
+  color: #fff;
+  .btn {
+    color: #fff;
+  }
+}
+.large-btn.red.plain {
+  background: #fff;
+  border: 1rpx solid #ff3f3f;
+  .btn {
+    color: #ff3f3f;
+  }
+}
+.large-btn.gray.plain {
+  background: #fff;
+  border: 1rpx solid #bbb;
+  color: #000;
+  .btn {
+    color: #000;
+  }
+}
+.middle-btn {
+  font-size: 32rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-radius: 40rpx;
+}
+.middle-btn.red {
+  background: @gradient-red;
+  color: #fff;
+}
+.middle-btn.red.plain {
+  background: #fff;
+  color: #ff3f3f;
+  border: 1rpx solid #ff3f3f;
+}
+.width-260 {
+  width: 260rpx;
+}
+.width-270 {
+  width: 270rpx;
+}
+.width-188 {
+  width: 188rpx;
+}
+.width-390 {
+  width: 390rpx;
+}
+.width-485 {
+  width: 485rpx;
+}
+.width-670 {
+  width: 670rpx;
+}

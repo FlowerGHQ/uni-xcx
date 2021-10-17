@@ -1,0 +1,41 @@
+{
+  "pages": [
+   
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/schoolList/index",
+      "style": {
+        "navigationBarTitleText": "切换校区",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ED4A4A",
+    "backgroundColor": "#ED4A4A",
+    "usingComponents": {
+      "van-popup": "/static/vant/popup/index",
+      "van-toast": "/static/vant/toast/index",
+      "van-overlay": "/static/vant/overlay/index",
+      "van-count-down": "/static/vant/count-down/index",
+      "van-loading": "/static/vant/loading/index",
+      "van-field": "/static/vant/field/index",
+      "van-picker": "/static/vant/picker/index",
+      "van-dialog": "/static/vant/dialog/index",
+      "van-tab": "/static/vant/tab/index",
+      "van-tabs": "/static/vant/tabs/index",
+      "van-sticky": "/static/vant/sticky/index",
+      "van-icon": "/static/vant/icon/index"
+    }
+  }
+}

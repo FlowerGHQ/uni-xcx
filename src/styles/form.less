@@ -1,0 +1,31 @@
+.sign-form-module {
+  background: #fff;
+  box-shadow: 0px 2rpx 10rpx 0px rgba(238, 238, 238, 1);
+  border-radius: 16rpx;
+  .label {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #222;
+    line-height: 40rpx;
+    padding-left: 25rpx;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 10rpx;
+      height: 10rpx;
+      left: 0;
+      top: 15rpx;
+      background: #ed4a4a;
+    }
+  }
+  .tip {
+    height: 40rpx;
+    font-size: 24rpx;
+    color: #999;
+    line-height: 40rpx;
+    .light {
+      color: #ed4a4a;
+    }
+  }
+}

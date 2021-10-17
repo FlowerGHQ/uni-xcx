@@ -1,0 +1,22 @@
+{
+  "origins": [
+    {
+      "name": "partners-b-business",
+      "originUrl": "https://test-partners-b.schoolpal.cn/api/partners-b-business/v2/api-docs",
+      "usingMultipleOrigins": true
+    },
+    {
+      "name": "oauth",
+      "originUrl": "https://test-partners-b.schoolpal.cn/api/oauth/v2/api-docs",
+      "usingMultipleOrigins": true
+    }
+  ],
+  "outDir": "./src/pont",
+  "prettierConfig": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none"
+  },
+  "templatePath": "./src/pontTemplate"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "uni-ts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env APP_ENV=dev NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+    "test": "cross-env APP_ENV=test NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+    "prod": "cross-env APP_ENV=prod NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+    "build:dev": "cross-env APP_ENV=dev NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
+    "build:test": "cross-env APP_ENV=test NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
+    "build:prod": "cross-env APP_ENV=prod NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build"
+  },
+  "dependencies": {
+    "@dcloudio/uni-h5": "^2.0.0-31820210406002",
+    "@dcloudio/uni-helper-json": "*",
+    "@dcloudio/uni-i18n": "^2.0.0-31820210406002",
+    "@dcloudio/uni-mp-weixin": "^2.0.0-31820210406002",
+    "@dcloudio/uni-stat": "^2.0.0-31820210406002",
+    "@vant/weapp": "1.6.8",
+    "@vue/shared": "^3.0.0",
+    "core-js": "^3.6.5",
+    "dayjs": "^1.10.4",
+    "flyio": "^0.6.2",
+    "kuconfig": "^0.5.1",
+    "regenerator-runtime": "^0.12.1",
+    "sentry-miniapp": "^0.11.1",
+    "vue": "^2.6.11",
+    "vue-class-component": "^6.3.2",
+    "vue-property-decorator": "^8.0.0",
+    "vuex": "^3.2.0",
+    "vuex-class": "^0.3.2",
+    "weuse": "^0.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-typescript": "^7.2.0",
+    "@babel/runtime": "~7.12.0",
+    "@dcloudio/types": "*",
+    "@dcloudio/uni-automator": "^2.0.0-31820210406002",
+    "@dcloudio/uni-cli-shared": "^2.0.0-31820210406002",
+    "@dcloudio/uni-migration": "^2.0.0-31820210406002",
+    "@dcloudio/uni-template-compiler": "^2.0.0-31820210406002",
+    "@dcloudio/vue-cli-plugin-hbuilderx": "^2.0.0-31820210406002",
+    "@dcloudio/vue-cli-plugin-uni": "^2.0.0-31820210406002",
+    "@dcloudio/vue-cli-plugin-uni-optimize": "^2.0.0-31820210406002",
+    "@dcloudio/webpack-uni-mp-loader": "^2.0.0-31820210406002",
+    "@dcloudio/webpack-uni-pages-loader": "^2.0.0-31820210406002",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-typescript": "*",
+    "@vue/cli-service": "~4.5.0",
+    "babel-plugin-import": "^1.11.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "less": "^3.13.1",
+    "less-loader": "^7.3.0",
+    "mini-types": "*",
+    "miniprogram-api-typings": "*",
+    "pont-engine": "1.0.13",
+    "postcss-comment": "^2.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^3.0.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "Android >= 4",
+    "ios >= 8"
+  ],
+  "uni-app": {
+    "scripts": {}
+  }
+}
