@@ -23,6 +23,22 @@
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/business/talkCard/index",
+      "style": {
+        "navigationBarTitleText": "拓客卡分享",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/talkCard/detail",
+      "style": {
+        "navigationBarTitleText": "拓客卡详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {

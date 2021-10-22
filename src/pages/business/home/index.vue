@@ -7,7 +7,7 @@
     </div>
     <div class="common-func">
       <div @click="openScan" class="common-func-title">常用功能</div>
-      <div class="flex talk-card base-card">
+      <div class="flex talk-card base-card" @click="shareCard">
         <div class="talk-icon">1</div>
         <div class="flex1">
           <div class="talk-title">拓客卡</div>
@@ -44,6 +44,11 @@ export default Vue.extend({
   methods: {
     openNext() {
       console.log(222)
+    },
+    shareCard() {
+      uni.navigateTo({
+        url: '/pages/business/talkCard/index'
+      })
     },
     changeSchoolOrg() {
       console.log(1)
