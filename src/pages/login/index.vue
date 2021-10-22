@@ -15,7 +15,7 @@
 </template>
 <script lang="ts">
 import AuthButton from '@/components/auth-button.vue'
-import { API } from '@/models/api'
+// import { API } from '@/models/api'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -27,8 +27,8 @@ export default Vue.extend({
   methods: {
     async startOpen() {
       try {
-        const res = await API.partnersBBusiness.account.authorized.request({})
-        console.log(res)
+        // const res = await API.partnersBBusiness.account.authorized.request({})
+        // console.log(res)
       } catch {
         console.log(111)
       }

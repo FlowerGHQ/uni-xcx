@@ -2,11 +2,19 @@
   <div class="user-login">
     <div class="change-org" @click="changeSchoolOrg">
       <div>icon</div>
-      <div>切换校区</div>
+      <div>切换1校区</div>
       <div>Icon</div>
     </div>
     <div class="common-func">
       <div @click="openScan" class="common-func-title">常用功能</div>
+      <div class="flex talk-card base-card">
+        <div class="talk-icon">1</div>
+        <div class="flex1">
+          <div class="talk-title">拓客卡</div>
+          <div class="talk-desc">分享权益，快速助力获客</div>
+        </div>
+        <div class="share-button">立即分享</div>
+      </div>
       <div class="common-func-list">
         <CommonList />
       </div>
@@ -30,7 +38,7 @@ export default Vue.extend({
   },
   onLoad(option) {
     uni.setNavigationBarTitle({
-      title: '创建课程'
+      title: '首页'
     })
   },
   methods: {
@@ -93,5 +101,46 @@ export default Vue.extend({
 }
 .common-func-list {
   padding: 0 48rpx;
+}
+.talk-card {
+  height: 128rpx;
+  background: linear-gradient(209deg, #ffb3a0 0%, #fc776c 100%);
+  border-radius: 8px;
+  margin: 0 48rpx 48rpx;
+  box-shadow: 0px 36rpx 80rpx -30rpx #fc776c;
+  // justify-content: space-between;
+  align-items: center;
+  .talk-icon {
+    width: 64rpx;
+    height: 64rpx;
+    background: #ffffff;
+    margin-right: 16rpx;
+  }
+  .talk-title {
+    width: 96rpx;
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 48rpx;
+    margin-bottom: 4rpx;
+  }
+  .talk-desc {
+    width: 264rpx;
+    font-size: 24rpx;
+    font-weight: 300;
+    color: #ffffff;
+    line-height: 32rpx;
+  }
+  .share-button {
+    width: 176rpx;
+    height: 48rpx;
+    background: #ffffff;
+    border-radius: 24rpx;
+    text-align: center;
+    font-size: 28rpx;
+    font-weight: 400;
+    color: #f86744;
+    line-height: 48rpx;
+  }
 }
 </style>

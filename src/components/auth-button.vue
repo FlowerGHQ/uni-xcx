@@ -20,7 +20,7 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 const account = namespace('account')
 import { querystring } from '@/utils/common'
-import { API } from '@/models/api'
+// import { API } from '@/models/api'
 
 @Component
 export default class extends Vue {
@@ -40,11 +40,11 @@ export default class extends Vue {
     let data = await wx.login()
     // console.log(data)
     // /api/oauth/v1/miniProgramLogin
-    const res = API.oauth.login.miniProgramLogin.request({
-      code: data.code,
-      notAutoLogin: true
-    })
-    console.log(res)
+    // const res = API.oauth.login.miniProgramLogin.request({
+    //   code: data.code,
+    //   notAutoLogin: true
+    // })
+    // console.log(res)
     const { detail } = e
     console.log(detail)
     if (detail.errMsg !== 'getPhoneNumber:ok') {

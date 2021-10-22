@@ -18,6 +18,8 @@ const vantComponents = [
   'popup',
   'overlay',
   'picker',
+  'calendar',
+  'nav-bar',
   'picker-column',
   'datetime-picker',
   'row',
@@ -30,7 +32,9 @@ const vantComponents = [
   'wxs',
   'dialog',
   'goods-action',
-  'goods-action-button'
+  'goods-action-button',
+  'search',
+  'action-sheet'
 ]
 const vantIgnored = fs
   .readdirSync(path.resolve(__dirname, './node_modules/@vant/weapp/dist'))
