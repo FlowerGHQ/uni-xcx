@@ -16,17 +16,21 @@
     "@dcloudio/uni-i18n": "^2.0.0-31820210406002",
     "@dcloudio/uni-mp-weixin": "^2.0.0-31820210406002",
     "@dcloudio/uni-stat": "^2.0.0-31820210406002",
-    "@vant/weapp": "1.6.8",
+    "@vant/weapp": "^1.9.1",
     "@vue/shared": "^3.0.0",
+    "commitizen": "^4.2.4",
     "core-js": "^3.6.5",
+    "cz-customizable": "^6.3.0",
     "dayjs": "^1.10.4",
     "flyio": "^0.6.2",
     "kuconfig": "^0.5.1",
+    "mockjs": "^1.1.0",
     "regenerator-runtime": "^0.12.1",
     "sentry-miniapp": "^0.11.1",
     "vue": "^2.6.11",
     "vue-class-component": "^6.3.2",
     "vue-property-decorator": "^8.0.0",
+    "vue-router": "^3.5.2",
     "vuex": "^3.2.0",
     "vuex-class": "^0.3.2",
     "weuse": "^0.6.0"
@@ -68,5 +72,13 @@
   ],
   "uni-app": {
     "scripts": {}
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-config.js"
+    }
   }
 }

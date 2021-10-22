@@ -1,59 +1,60 @@
 <template>
   <div>
-    <div class="base-title">您的账号加入了{{ mockList.length }}个校区</div>
+    <div class="base-title">您的账号加入了{{ partnerList.length }}个校区</div>
     <div class="content">
-      <div v-for="item in mockList" :key="item.campusId" class="base-list">
+      <div
+        v-for="item in partnerList"
+        :key="item.campusId"
+        class="base-list"
+        @click="changeSchool(item.campusId)"
+      >
         <div :class="{ 'list-item': true, 'freeze-item': item.state === 0 }">
           <span>{{ item.name }}</span>
           <span v-if="item.state === 0">（已冻结）</span>
           <div v-if="item.isDefault" class="school-checked">当前校区</div>
         </div>
-
-        <div v-if="item.isDefault">√</div>
+        <img
+          v-if="item.isDefault"
+          src="../../../assets/images/checked.png"
+          class="icon-checked"
+        />
       </div>
     </div>
+    <!-- <van-dialog id="van-dialog" /> -->
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import Vue from 'vue'
 import { API } from '@/models/api'
 
-@Component
-export default class extends Vue {
-  mockList = [
-    {
-      campusId: 12580,
-      isDefault: true,
-      merchantId: 13213131,
-      name: '校区列表',
-      state: 0
-    },
-    {
-      campusId: 125801,
-      isDefault: false,
-      merchantId: 13213131,
-      name: '校区列表1',
-      state: 0
-    },
-    {
-      campusId: 125802,
-      isDefault: false,
-      merchantId: 13213131,
-      name: '校区列表2',
-      state: 1
-    },
-    {
-      campusId: 125803,
-      isDefault: false,
-      merchantId: 13213131,
-      name: '校区列表3',
-      state: 0
+export default Vue.extend({
+  name: 'AddList',
+  data() {
+    return {
+      partnerList: [] as any,
+      totalCount: 0
     }
-  ]
-  openNext() {
-    // const res = API.partnersBBusiness.campus.list.request({})
+  },
+  onLoad(option) {
+    this.init()
+  },
+  methods: {
+    async init() {
+      const res = await API.partnersBBusiness.campus.list.request({})
+      this.partnerList = res.data
+      console.log(res)
+    },
+    async changeSchool(campusId: number) {
+      const res = await API.partnersBBusiness.campus.list.request({})
+      try {
+        const res = await API.partnersBBusiness.campus.updateDefault.request({
+          campusId
+        })
+        this.init()
+      } catch (error) {}
+    }
   }
-}
+})
 </script>
 <style lang="less" scoped>
 .content {
@@ -66,6 +67,7 @@ export default class extends Vue {
   border-bottom: 0.5px solid #eeeeee;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .list-item {
   font-size: 32rpx;
@@ -85,5 +87,10 @@ export default class extends Vue {
   font-weight: 300;
   color: #f86744;
   text-align: center;
+  margin-left: 16rpx;
+}
+.icon-checked {
+  width: 32rpx;
+  height: 32rpx;
 }
 </style>

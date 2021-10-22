@@ -35,7 +35,13 @@
       "van-tab": "/static/vant/tab/index",
       "van-tabs": "/static/vant/tabs/index",
       "van-sticky": "/static/vant/sticky/index",
-      "van-icon": "/static/vant/icon/index"
+      "van-icon": "/static/vant/icon/index",
+      "van-cell": "/static/vant/cell/index",
+      "van-cell-group": "/static/vant/cell-group/index",
+      "van-calendar": "/static/vant/calendar/index",
+      "van-nav-bar": "/static/vant/nav-bar/index",
+      "van-search": "/static/vant/search/index",
+      "van-action-sheet": "/static/vant/action-sheet/index"
     }
   }
 }

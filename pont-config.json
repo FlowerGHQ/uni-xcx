@@ -1,13 +1,13 @@
 {
   "origins": [
     {
-      "name": "partners-b-business",
-      "originUrl": "https://test-partners-b.schoolpal.cn/api/partners-b-business/v2/api-docs",
+      "name": "partners-s-business",
+      "originUrl": "https://test-partners-s.schoolpal.cn/api/partners-s-business/v2/api-docs",
       "usingMultipleOrigins": true
     },
     {
       "name": "oauth",
-      "originUrl": "https://test-partners-b.schoolpal.cn/api/oauth/v2/api-docs",
+      "originUrl": "https://test-partners-s.schoolpal.cn/api/oauth/v2/api-docs",
       "usingMultipleOrigins": true
     }
   ],

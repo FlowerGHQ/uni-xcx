@@ -24,7 +24,7 @@ export default class MyGenerator extends CodeGenerator {
     const { method, path } = inter
 
     const name = this.dataSource.name
-    const pathPrefix = name === 'oauth' ? '/oauth' : '/partners-b-business'
+    const pathPrefix = name === 'oauth' ? '/oauth' : '/partners-s-business'
     return `
       /**
        * @desc ${inter.description}

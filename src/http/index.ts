@@ -93,15 +93,10 @@ methods.forEach(method => {
                   uni.reLaunch({ url: currentPage.$page.fullPath })
                 }
               } else {
-                reject(
-                  new ApiError(
-                    responseBody.errorCode,
-                    responseBody.errorMessage
-                  )
-                )
+                reject(responseBody)
               }
             }
-            resolve(responseBody.data)
+            resolve(responseBody)
           }
         },
         fail(e) {
