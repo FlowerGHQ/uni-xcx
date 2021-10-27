@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="member-card"
-    :style="{ backgroundImage: `url(../../../../assets/images/bgImage.png)` }"
-  >
+  <div class="member-card">
+    <img src="../../../../assets/images/bgImage.png" alt="" class="bg-image" />
     <div class="name-member">
       <div class="icon-picture"></div>
       <div class="right">
@@ -54,6 +52,18 @@ export default Vue.extend({
   background-size: 100% 100%;
   box-shadow: 0px 8rpx 10rpx 0px rgba(0, 0, 0, 0.37);
   border-radius: 16rpx;
+  position: relative;
+  top: 0;
+  left: 0;
+
+  .bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 686rpx;
+    height: 280rpx;
+    z-index: -1;
+  }
 }
 .name-member {
   display: flex;

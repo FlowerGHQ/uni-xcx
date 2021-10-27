@@ -25,7 +25,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-// import { API } from '@/models/api'
+import { API } from '@/models/api'
 
 export default Vue.extend({
   name: 'AddList',
@@ -40,9 +40,9 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      // const res = await API.partnersBBusiness.campus.list.request({})
-      // this.partnerList = res.data
-      // console.log(res)
+      const res = await API.partnersSBusiness.campus.list.request({})
+      this.partnerList = res.data
+      console.log(res)
     },
     // async changeSchool(campusId: number) {
     //   const res = await API.partnersBBusiness.campus.list.request({})

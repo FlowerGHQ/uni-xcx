@@ -20,7 +20,7 @@ import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 const account = namespace('account')
 import { querystring } from '@/utils/common'
-// import { API } from '@/models/api'
+import { API } from '@/models/api'
 
 @Component
 export default class extends Vue {
@@ -37,32 +37,30 @@ export default class extends Vue {
   decryptionLogin: ActionMethod
 
   async onAuth(e) {
-    let data = await wx.login()
-    // console.log(data)
-    // /api/oauth/v1/miniProgramLogin
-    // const res = API.oauth.login.miniProgramLogin.request({
-    //   code: data.code,
-    //   notAutoLogin: true
-    // })
-    // console.log(res)
-    const { detail } = e
-    console.log(detail)
-    if (detail.errMsg !== 'getPhoneNumber:ok') {
-      // 跳转手机号码登录页
-      return
-    }
-    wx.showLoading({
-      title: '登录中',
-      mask: true
-    })
     try {
-      await this.decryptionLogin({
+      let data = await wx.login()
+      await API.oauth.login.miniProgramLogin.request({
+        code: data.code,
+        notAutoLogin: true
+      })
+      const { detail } = e
+      if (detail.errMsg !== 'getPhoneNumber:ok') {
+        // 跳转手机号码登录页
+        return
+      }
+      wx.showLoading({
+        title: '登录中',
+        mask: true
+      })
+      await API.oauth.login.miniProgramDecryptionLogin.request({
         iv: detail.iv,
         encryptedData: detail.encryptedData
       })
+      await API.partnersSBusiness.account.authorized.request({})
       this.next()
     } catch (e) {
-      this.$toast(e.message)
+      console.log(e)
+      this.$toast(e.errorMessage)
     } finally {
       wx.hideLoading()
     }

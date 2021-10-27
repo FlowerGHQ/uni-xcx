@@ -47,8 +47,8 @@ export default Vue.extend({
   align-items: center;
   flex-direction: column;
   .common-image {
-    width: 50rpx;
-    height: 50rpx;
+    width: 96rpx;
+    height: 96rpx;
     background-color: transparent;
     background-position: center;
     background-size: contain;
@@ -61,7 +61,19 @@ export default Vue.extend({
     word-break: break-word;
   }
 }
-.white {
-  background-image: url('../../../../assets/images/white.png');
+.book {
+  background-image: url('../../../../assets/images/book.png');
+}
+.set {
+  background-image: url('../../../../assets/images/set.png');
+}
+.reward {
+  background-image: url('../../../../assets/images/reward.png');
+}
+.wallet {
+  background-image: url('../../../../assets/images/wallet.png');
+}
+.contract {
+  background-image: url('../../../../assets/images/contract.png');
 }
 </style>

@@ -1,14 +1,17 @@
 <template>
   <div class="user-login">
     <div class="change-org" @click="changeSchoolOrg">
-      <div>icon</div>
-      <div>切换1校区</div>
-      <div>Icon</div>
+      <div class="flex">
+        <img src="../../../assets/images/place.png" class="icon-place" />
+        <div class="school-title">{{ defaultSchool }}</div>
+      </div>
+      <img src="../../../assets/images/right-arrow.png" class="icon-right" />
     </div>
     <div class="common-func">
       <div @click="openScan" class="common-func-title">常用功能</div>
       <div class="flex talk-card base-card" @click="shareCard">
-        <div class="talk-icon">1</div>
+        <!-- <div class="talk-icon">1</div>“ -->
+        <img src="../../../assets/images/card.png" class="talk-icon" />
         <div class="flex1">
           <div class="talk-title">拓客卡</div>
           <div class="talk-desc">分享权益，快速助力获客</div>
@@ -26,20 +29,25 @@
 <script lang="ts">
 import CommonList from './components/common-button-list.vue'
 import Vue from 'vue'
+import { API } from '@/models/api'
 
 export default Vue.extend({
   name: 'HomeList',
   components: { CommonList },
   data() {
-    return {}
+    return {
+      defaultSchool: '切换校区'
+    }
   },
   onShow() {
     wx.hideHomeButton()
   },
-  onLoad(option) {
+  async onLoad(option) {
     uni.setNavigationBarTitle({
       title: '首页'
     })
+    const res = await API.partnersSBusiness.campus.list.request({})
+    this.defaultSchool = res.data.find(item => item.isDefault).name
   },
   methods: {
     openNext() {
@@ -118,7 +126,6 @@ export default Vue.extend({
   .talk-icon {
     width: 64rpx;
     height: 64rpx;
-    background: #ffffff;
     margin-right: 16rpx;
   }
   .talk-title {
@@ -147,5 +154,22 @@ export default Vue.extend({
     color: #f86744;
     line-height: 48rpx;
   }
+}
+
+.school-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #222222;
+  line-height: 44rpx;
+  margin-left: 8rpx;
+}
+
+.icon-place {
+  width: 44rpx;
+  height: 44rpx;
+}
+.icon-right {
+  width: 24rpx;
+  height: 24rpx;
 }
 </style>
