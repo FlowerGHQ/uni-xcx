@@ -46,17 +46,17 @@ declare namespace defs {
       storedAmount?: number
     }
 
-    export class CouponBo {
+    export class CouponDto {
       /** 是否可用 */
       canUsed?: boolean
 
-      /** 满足金额，单位分 */
+      /** 满足金额，单位元 */
       conditionAmount?: number
 
       /** 优惠券说明 */
       description?: string
 
-      /** 减金额，单位分 */
+      /** 减金额，单位元 */
       discountAmount?: number
 
       /** 过期时间 */
@@ -74,8 +74,8 @@ declare namespace defs {
       /** 规则描述 */
       ruleDescription?: string
 
-      /**  规则类型：1-满减，2赠送 */
-      ruleType?: number
+      /** 规则类型：1-满减，2赠送 */
+      ruleType?: 'UN_KNOWN' | 'DISCOUNT_IF_ACHIEVE' | 'GIVE_AWAY'
 
       /**  状态：0-下架，1上架 */
       state?: boolean
@@ -84,30 +84,7 @@ declare namespace defs {
       usageRange?: string
     }
 
-    export class MemberCardBo {
-      /** applyEndTime */
-      applyEndTime?: string
-
-      /** applyStartTime */
-      applyStartTime?: string
-
-      /** description */
-      description?: string
-
-      /** id */
-      id?: number
-
-      /** name */
-      name?: string
-
-      /** state */
-      state?: boolean
-
-      /** value */
-      value?: number
-    }
-
-    export class MemberCardDetailBo {
+    export class MemberCardDetailDto {
       /** 领取结束时间 */
       applyEndTime?: string
 
@@ -115,7 +92,7 @@ declare namespace defs {
       applyStartTime?: string
 
       /** 关联优惠券信息 */
-      couponList?: Array<defs.partnersSBusiness.CouponBo>
+      couponList?: Array<defs.partnersSBusiness.CouponDto>
 
       /** 权益说明 */
       description?: string
@@ -129,8 +106,36 @@ declare namespace defs {
       /** 状态：0-下架，1-上架 */
       state?: boolean
 
-      /** 价值 */
+      /** 价值，单位元 */
       value?: number
+    }
+
+    export class MemberCardDto {
+      /** 领取结束时间 */
+      applyEndTime?: string
+
+      /** 领取开始时间 */
+      applyStartTime?: string
+
+      /** 权益说明 */
+      description?: string
+
+      /** 拓客卡id */
+      id?: number
+
+      /** 拓客卡名称 */
+      name?: string
+
+      /** 状态：false-下架，true-上架 */
+      state?: boolean
+
+      /** 价值，单位元 */
+      value?: number
+    }
+
+    export class MemberCardShareDto {
+      /** 分享二维码图片url */
+      url?: string
     }
 
     export class Page<T0 = any> {
@@ -344,49 +349,74 @@ declare namespace API {
      */
     export namespace memberCard {
       /**
-       * 详情
+       * 拓客卡详情
        * /memberCard/detail
        */
       export namespace detail {
         export class Params {
-          /** id */
+          /** @Min: 1.0 - @Max: null (until #1244 gets fixed) */
           id: number
         }
 
         export type Response = defs.partnersSBusiness.SimpleResponse<
-          defs.partnersSBusiness.MemberCardDetailBo
+          defs.partnersSBusiness.MemberCardDetailDto
         >
         export const init: Response
         export function request(
           params: Params
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
-            defs.partnersSBusiness.MemberCardDetailBo
+            defs.partnersSBusiness.MemberCardDetailDto
           >
         >
       }
 
       /**
-       * 列表
+       * 拓客卡列表
        * /memberCard/list
        */
       export namespace list {
         export class Params {
           /** pageIndex */
-          pageIndex: number
+          pageIndex?: number
           /** pageSize */
-          pageSize: number
+          pageSize?: number
+          /** state */
+          state?: boolean
         }
 
         export type Response = defs.partnersSBusiness.SimpleResponse<
-          defs.partnersSBusiness.Page<defs.partnersSBusiness.MemberCardBo>
+          defs.partnersSBusiness.Page<defs.partnersSBusiness.MemberCardDto>
         >
         export const init: Response
         export function request(
           params: Params
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
-            defs.partnersSBusiness.Page<defs.partnersSBusiness.MemberCardBo>
+            defs.partnersSBusiness.Page<defs.partnersSBusiness.MemberCardDto>
+          >
+        >
+      }
+
+      /**
+       * 获取分享拓客卡信息
+       * /memberCard/shareInfo
+       */
+      export namespace shareInfo {
+        export class Params {
+          /** @Min: 1.0 - @Max: null (until #1244 gets fixed) */
+          id: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.MemberCardShareDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.MemberCardShareDto
           >
         >
       }

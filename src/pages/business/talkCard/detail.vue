@@ -3,12 +3,12 @@
     <div class="change-org" @click="changeSchoolOrg">
       <div class="flex">
         <img src="../../../assets/images/place.png" class="icon-place" />
-        <div class="school-title">切换校区</div>
+        <div class="school-title">{{ defaultSchool }}</div>
       </div>
       <img src="../../../assets/images/right-arrow.png" class="icon-right" />
     </div>
     <div class="talk-card">
-      <Card />
+      <Card :showIcon="false" :item="memberCard" />
     </div>
     <van-tabs @click="onClickTab">
       <van-tab title="尊享礼券" name="bonus">
@@ -33,27 +33,141 @@
     </van-tabs>
     <div class="bottom-test">
       <img src="../../../assets/images/limited.png" class="icon-limited" />
+      <div class="limit-get">限时领取</div>
+      <van-count-down
+        use-slot
+        :time="time"
+        @change="onChange"
+        @finish="onFinish"
+      >
+        <span class="count-down">{{ timeData.curHour }}</span>
+        <span class="span-spacing">:</span>
+        <span class="count-down">{{ timeData.minutes }}</span>
+        <span class="span-spacing">:</span>
+        <span class="count-down">{{ timeData.seconds }}</span>
+      </van-count-down>
     </div>
     <div class="bottom-button">
-      <button class="view">生成二维码</button>
+      <button class="view" @click="openQRcode">生成二维码</button>
       <button class="save-list">分享至微信</button>
     </div>
+    <van-popup
+      :show="showQRcode"
+      position="bottom"
+      closeable
+      @close="closeQRcode"
+    >
+      <img :src="src" alt="" class="QR-img" />
+      <!-- <div class="bottom-button"> -->
+      <button class="save-list" @click="openSave">保存至相册</button>
+      <!-- </div> -->
+    </van-popup>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Card from './components/card.vue'
+import { API } from '@/models/api'
+import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
   components: { Card },
   data() {
-    return {}
+    return {
+      defaultSchool: '',
+      id: '',
+      memberCard: {},
+      time: 0,
+      timeData: {},
+      isFinish: false,
+      showQRcode: false,
+      src: ''
+    }
   },
-
+  async onLoad(option) {
+    this.id = option?.id
+    const res = await API.partnersSBusiness.campus.list.request({})
+    const res1 = await API.partnersSBusiness.memberCard.detail.request({
+      id: this.id
+    })
+    const date1 = dayjs()
+    const date2 = dayjs(res1.data.applyEndTime)
+    this.memberCard = res1.data
+    this.defaultSchool = res.data.find(item => item.isDefault).name
+    if (date1 > date2) {
+      this.isFinish = true
+      return
+    }
+    console.log(this.time)
+    this.time = date2.diff(date1)
+  },
   methods: {
     onClickTab(e: any) {
       console.log(e.target.name)
+    },
+    onChange(e) {
+      console.log(e)
+      const curHour = 24 * e.detail.days
+      this.timeData = { ...e.detail, curHour }
+    },
+    onFinish() {
+      this.isFinish = true
+      console.log(1, 'end')
+    },
+    async openQRcode() {
+      const res = await API.partnersSBusiness.memberCard.shareInfo.request({
+        id: this.id
+      })
+      this.showQRcode = true
+      this.src = res.data.url
+      console.log('qrcode', res)
+    },
+    closeQRcode() {
+      this.showQRcode = false
+      console.log(11)
+    },
+    openSave() {
+      wx.downloadFile({
+        url: this.src,
+        success: function (res) {
+          console.log(res)
+          //图片保存到本地
+          wx.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: function (data) {
+              wx.showToast({
+                title: '保存成功',
+                icon: 'success',
+                duration: 2000
+              })
+            },
+            fail: function (err) {
+              console.log(err)
+              if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
+                console.log('当初用户拒绝，再次发起授权')
+                wx.openSetting({
+                  success(settingdata) {
+                    console.log(settingdata)
+                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                      console.log(
+                        '获取权限成功，给出再次点击图片保存到相册的提示。'
+                      )
+                    } else {
+                      console.log(
+                        '获取权限失败，给出不给权限就无法正常使用的提示'
+                      )
+                    }
+                  }
+                })
+              }
+            },
+            complete(res) {
+              console.log(res)
+            }
+          })
+        }
+      })
     }
   }
 })
@@ -115,13 +229,45 @@ export default Vue.extend({
 .bottom-test {
   width: 100%;
   height: 80rpx;
+  padding-left: 48rpx;
   background: #ffebe6;
   position: fixed;
   bottom: calc(112rpx + var(--safe-area-inset-bottom));
   left: 0;
+  display: flex;
+  align-items: center;
 }
-.icon-limited{
+.icon-limited {
   height: 66rpx;
   width: 66rpx;
+  align-self: baseline;
+}
+.limit-get {
+  width: 96rpx;
+  height: 32rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #f86744;
+  line-height: 32rpx;
+  margin: 0 16rpx 0 72rpx;
+}
+.count-down {
+  display: inline-block;
+  text-align: center;
+  height: 44rpx;
+  padding: 2rpx 8rpx;
+  background: #161718;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #f86744;
+  line-height: 44rpx;
+}
+.span-spacing {
+  padding: 0 10rpx;
+}
+.QR-img {
+  height: 480rpx;
+  width: 480rpx;
 }
 </style>

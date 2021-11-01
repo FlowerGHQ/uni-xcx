@@ -39,6 +39,14 @@
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/business/contract/index",
+      "style": {
+        "navigationBarTitleText": "合约查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {

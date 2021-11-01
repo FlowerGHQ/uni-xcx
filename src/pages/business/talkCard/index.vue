@@ -1,19 +1,33 @@
 <template>
   <div class="talk-card-list">
-    <Card class="talk-card" />
-    <Card class="talk-card" />
-    <Card class="talk-card" />
-    <Card class="talk-card" />
+    <Card
+      class="talk-card"
+      :item="item"
+      v-for="item in curList"
+      :key="item.id"
+    />
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import Card from './components/card.vue'
+import { API } from '@/models/api'
 
 export default Vue.extend({
   name: 'TalkList',
-  components: { Card }
+  components: { Card },
+  data() {
+    return { curList: [] }
+  },
+  async onLoad() {
+    const data = await API.partnersSBusiness.memberCard.list.request({
+      pageIndex: 1,
+      pageSize: 100
+    })
+    console.log(data)
+    this.curList = data.data.list
+  }
 })
 </script>
 

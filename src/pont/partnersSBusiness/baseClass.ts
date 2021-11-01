@@ -40,17 +40,17 @@ class ContractDetailDto {
   storedAmount = undefined
 }
 
-class CouponBo {
+class CouponDto {
   /** 是否可用 */
   canUsed = false
 
-  /** 满足金额，单位分 */
+  /** 满足金额，单位元 */
   conditionAmount = undefined
 
   /** 优惠券说明 */
   description = ''
 
-  /** 减金额，单位分 */
+  /** 减金额，单位元 */
   discountAmount = undefined
 
   /** 过期时间 */
@@ -68,8 +68,8 @@ class CouponBo {
   /** 规则描述 */
   ruleDescription = ''
 
-  /**  规则类型：1-满减，2赠送 */
-  ruleType = undefined
+  /** 规则类型：1-满减，2赠送 */
+  ruleType = 'UN_KNOWN'
 
   /**  状态：0-下架，1上架 */
   state = false
@@ -78,30 +78,7 @@ class CouponBo {
   usageRange = ''
 }
 
-class MemberCardBo {
-  /** applyEndTime */
-  applyEndTime = ''
-
-  /** applyStartTime */
-  applyStartTime = ''
-
-  /** description */
-  description = ''
-
-  /** id */
-  id = undefined
-
-  /** name */
-  name = ''
-
-  /** state */
-  state = false
-
-  /** value */
-  value = undefined
-}
-
-class MemberCardDetailBo {
+class MemberCardDetailDto {
   /** 领取结束时间 */
   applyEndTime = ''
 
@@ -123,8 +100,36 @@ class MemberCardDetailBo {
   /** 状态：0-下架，1-上架 */
   state = false
 
-  /** 价值 */
+  /** 价值，单位元 */
   value = undefined
+}
+
+class MemberCardDto {
+  /** 领取结束时间 */
+  applyEndTime = ''
+
+  /** 领取开始时间 */
+  applyStartTime = ''
+
+  /** 权益说明 */
+  description = ''
+
+  /** 拓客卡id */
+  id = undefined
+
+  /** 拓客卡名称 */
+  name = ''
+
+  /** 状态：false-下架，true-上架 */
+  state = false
+
+  /** 价值，单位元 */
+  value = undefined
+}
+
+class MemberCardShareDto {
+  /** 分享二维码图片url */
+  url = ''
 }
 
 class Page {
@@ -217,9 +222,10 @@ export const partnersSBusiness = {
   AccountAuthorizedDto,
   CampusListBo,
   ContractDetailDto,
-  CouponBo,
-  MemberCardBo,
-  MemberCardDetailBo,
+  CouponDto,
+  MemberCardDetailDto,
+  MemberCardDto,
+  MemberCardShareDto,
   Page,
   ShareholderDetailDto,
   SimpleResponse,

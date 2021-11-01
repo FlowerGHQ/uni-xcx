@@ -1,5 +1,5 @@
 /**
- * @desc 列表
+ * @desc 拓客卡列表
  */
 
 '/memberCard/list'
@@ -9,9 +9,11 @@ import http from '@/http'
 
 export class Params {
   /** pageIndex */
-  pageIndex: number
+  pageIndex?: number
   /** pageSize */
-  pageSize: number
+  pageSize?: number
+  /** state */
+  state?: boolean
 }
 
 export const init = new defs.partnersSBusiness.SimpleResponse()

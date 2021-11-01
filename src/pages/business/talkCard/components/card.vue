@@ -4,38 +4,74 @@
     <div class="name-member">
       <div class="icon-picture"></div>
       <div class="right">
-        <p class="tuo-name">{{ memberItem.name || 'name' }}</p>
+        <p class="tuo-name">{{ item.name || 'name' }}</p>
         <p class="time">
-          截至时间：{{
-            memberItem.applyStartTime ? memberItem.applyStartTime : '2021-01-22'
+          有效期：{{
+            item.applyStartTime ? format(item.applyStartTime) : '2021-01-22'
           }}
+          ~ {{ item.applyEndTime ? format(item.applyEndTime) : '2021-01-22' }}
         </p>
       </div>
     </div>
     <div class="bottom-member">
       <div class="num-box">
-        <div class="number-color"><span>¥</span> 20000.00</div>
-        <p class="number-value">预估价值</p>
+        <div class="number-color">
+          <span>¥</span> {{ formatMoney(item.value) }}
+        </div>
+        <p class="number-value">价值</p>
       </div>
-      <div class="button-right">
-        <div class="list-det" @click="openDetail">详情</div>
-        <div class="list-det">下架</div>
+      <div class="button-right" v-if="showIcon">
+        <div class="list-det" @click="openDetail(item.id)">预览</div>
+        <div class="list-det">分享</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import Vue from 'vue'
 export default Vue.extend({
   data() {
     return {}
   },
+  props: {
+    item: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    showIcon: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
-    openDetail() {
+    openDetail(id) {
       uni.navigateTo({
-        url: '/pages/business/talkCard/detail'
+        url: `/pages/business/talkCard/detail?id=${id}`
       })
+    },
+    format(time) {
+      return dayjs(time).format('YYYY-MM-DD')
+    },
+    formatMoney(money) {
+      var f = parseFloat(money)
+      if (isNaN(f)) {
+        return '0.00'
+      }
+      var f = Math.round(money * 100) / 100
+      var s = f.toString()
+      var rs = s.indexOf('.')
+      if (rs < 0) {
+        rs = s.length
+        s += '.'
+      }
+      while (s.length <= rs + 2) {
+        s += '0'
+      }
+      return s
     }
   }
 })

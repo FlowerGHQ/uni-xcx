@@ -1,8 +1,8 @@
 /**
- * @desc 拓客卡详情
+ * @desc 获取分享拓客卡信息
  */
 
-'/memberCard/detail'
+'/memberCard/shareInfo'
 
 import * as defs from '../../baseClass'
 import http from '@/http'
@@ -15,5 +15,5 @@ export class Params {
 export const init = new defs.partnersSBusiness.SimpleResponse()
 
 export async function request(params) {
-  return http.get('/partners-s-business/memberCard/detail', params)
+  return http.get('/partners-s-business/memberCard/shareInfo', params)
 }
