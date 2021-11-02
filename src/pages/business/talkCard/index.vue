@@ -23,7 +23,8 @@ export default Vue.extend({
   async onLoad() {
     const data = await API.partnersSBusiness.memberCard.list.request({
       pageIndex: 1,
-      pageSize: 100
+      pageSize: 100,
+      state: true
     })
     console.log(data)
     this.curList = data.data.list

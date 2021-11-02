@@ -12,7 +12,16 @@
     </div>
     <van-tabs @click="onClickTab">
       <van-tab title="尊享礼券" name="bonus">
-        <div>1111111</div>
+        <div class="discount-list">
+          <div v-for="item in memberCard.couponList" :key="item.id">
+            <DiscountItem
+              :type="item.ruleType"
+              :discountObj="item"
+              @viewClick="viewClick(item.id)"
+              @shelfClick="shelfClick(item)"
+            />
+          </div>
+        </div>
       </van-tab>
       <van-tab title="权益介绍" name="bonus">
         <div class="tab-rights">
@@ -57,22 +66,21 @@
       closeable
       @close="closeQRcode"
     >
-      <img :src="src" alt="" class="QR-img" />
-      <!-- <div class="bottom-button"> -->
       <button class="save-list" @click="openSave">保存至相册</button>
-      <!-- </div> -->
+      <img :src="src" alt="" class="QR-img" />
     </van-popup>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Card from './components/card.vue'
+import DiscountItem from './components/discount-item.vue'
 import { API } from '@/models/api'
 import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { Card },
+  components: { Card, DiscountItem },
   data() {
     return {
       defaultSchool: '',
@@ -99,7 +107,6 @@ export default Vue.extend({
       this.isFinish = true
       return
     }
-    console.log(this.time)
     this.time = date2.diff(date1)
   },
   methods: {
@@ -107,7 +114,6 @@ export default Vue.extend({
       console.log(e.target.name)
     },
     onChange(e) {
-      console.log(e)
       const curHour = 24 * e.detail.days
       this.timeData = { ...e.detail, curHour }
     },
@@ -144,6 +150,11 @@ export default Vue.extend({
             },
             fail: function (err) {
               console.log(err)
+              wx.showToast({
+                title: err.errMsg,
+                icon: 'success',
+                duration: 2000
+              })
               if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
                 console.log('当初用户拒绝，再次发起授权')
                 wx.openSetting({
@@ -269,5 +280,138 @@ export default Vue.extend({
 .QR-img {
   height: 480rpx;
   width: 480rpx;
+}
+</style>
+
+<style lang="less" scoped>
+.class-all {
+  padding: 0 32rpx;
+  .discount {
+    width: 686rpx;
+    height: 220rpx;
+    border-radius: 20rpx;
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    .discount-number {
+      width: 240rpx;
+      height: 200rpx;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-family: DINAlternate-Bold, DINAlternate;
+    }
+    .color-number,
+    .color-number-gift,
+    .disabled-number {
+      color: #e5c89c;
+      font-size: 48rpx;
+      margin-bottom: 8rpx;
+      span {
+        font-size: 24rpx;
+      }
+    }
+    .color-number-gift,
+    .disabled-number {
+      color: #ffffff;
+      font-weight: bold;
+    }
+    .use-number {
+      color: #ffffff;
+      font-size: 24rpx;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+    }
+    .discount-name {
+      flex: 1;
+      padding: 32rpx 16rpx 40rpx 16rpx;
+      .right-top {
+        margin-bottom: 36rpx;
+        p {
+          font-size: 32rpx;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+        }
+        span {
+          font-size: 24rpx;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #666666;
+        }
+        p.name-color {
+          color: #cccccc;
+        }
+        span.discount-dealine {
+          color: #cccccc;
+        }
+      }
+      .right-bottom {
+        display: flex;
+        justify-content: space-between;
+        .icon {
+          display: flex;
+          align-items: center;
+        }
+        .icon-full {
+          display: inline-block;
+          width: 28rpx;
+          height: 28rpx;
+          border-radius: 50%;
+          margin-right: 2rpx;
+        }
+        span {
+          font-size: 24rpx;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+        }
+        .full {
+          color: #ce9948;
+        }
+        .gift {
+          color: #fa8130;
+        }
+        .disabled-all {
+          color: #cccccc;
+        }
+      }
+    }
+  }
+  .discount,
+  .icon-full {
+    background-size: cover !important;
+  }
+  .button {
+    display: flex;
+  }
+  .view-tag,
+  .shelf-tag {
+    display: inline-block;
+    margin-right: 16rpx;
+    width: 120rpx;
+    height: 48rpx;
+    line-height: 48rpx;
+    text-align: center;
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #f86744;
+    border-radius: 24rpx;
+    border: 1px solid #f86744;
+  }
+  .shelf-tag {
+    background: #f86744;
+    color: #ffffff;
+  }
+}
+.gray {
+  filter: grayscale(100%);
+}
+
+
+.discount-list{
+  height: 540rpx;
+
 }
 </style>

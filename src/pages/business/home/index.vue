@@ -67,7 +67,7 @@ export default Vue.extend({
         '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
       return
     }
-    if (res1.data.startTime > dayjs()) {
+    if (dayjs(res1.data.startTime) > dayjs()) {
       this.hasError = true
       this.errorTitle = '合约暂未生效提醒'
       this.errorMessage = `合约生效时间：${dayjs(res1.data.startTime).format(
@@ -75,7 +75,7 @@ export default Vue.extend({
       )}，合约生效前您的拓客卡分享功能不能使用`
       return
     }
-    if (res1.data.endTime < dayjs()) {
+    if (dayjs(res1.data.endTime) < dayjs()) {
       this.hasError = true
       this.errorTitle = '合约到期提醒'
       this.errorMessage =
