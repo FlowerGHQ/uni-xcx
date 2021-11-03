@@ -62,24 +62,26 @@
     <van-popup
       :show="showQRcode"
       position="bottom"
+      round
       closeable
+      custom-style="height: 70%;"
       @close="closeQRcode"
     >
-      <button class="save-list" @click="openSave">保存至相册</button>
-      <img :src="src" alt="" class="QR-img" />
+      <SaveAlbum :src="src" />
     </van-popup>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Card from './components/card.vue'
+import SaveAlbum from './components/save-album.vue'
 import DiscountItem from './components/discount-item.vue'
 import { API } from '@/models/api'
 import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { Card, DiscountItem },
+  components: { Card, DiscountItem, SaveAlbum },
   data() {
     return {
       defaultSchool: '',
@@ -132,53 +134,7 @@ export default Vue.extend({
       this.showQRcode = false
       console.log(11)
     },
-    openSave() {
-      wx.downloadFile({
-        url: this.src,
-        success: function (res) {
-          console.log(res)
-          //图片保存到本地
-          wx.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: function (data) {
-              wx.showToast({
-                title: '保存成功',
-                icon: 'success',
-                duration: 2000
-              })
-            },
-            fail: function (err) {
-              console.log(err)
-              wx.showToast({
-                title: err.errMsg,
-                icon: 'success',
-                duration: 2000
-              })
-              if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
-                console.log('当初用户拒绝，再次发起授权')
-                wx.openSetting({
-                  success(settingdata) {
-                    console.log(settingdata)
-                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
-                      console.log(
-                        '获取权限成功，给出再次点击图片保存到相册的提示。'
-                      )
-                    } else {
-                      console.log(
-                        '获取权限失败，给出不给权限就无法正常使用的提示'
-                      )
-                    }
-                  }
-                })
-              }
-            },
-            complete(res) {
-              console.log(res)
-            }
-          })
-        }
-      })
-    }
+  
   }
 })
 </script>
@@ -275,10 +231,6 @@ export default Vue.extend({
 }
 .span-spacing {
   padding: 0 10rpx;
-}
-.QR-img {
-  height: 480rpx;
-  width: 480rpx;
 }
 </style>
 

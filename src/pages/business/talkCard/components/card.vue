@@ -28,11 +28,13 @@
     <van-popup
       :show="showQRcode"
       position="bottom"
+      round
       closeable
+      custom-style="height: 70%;"
       @close="closeQRcode"
+      lock-scroll
     >
-      <button class="save-list" @click="openSave">保存至相册</button>
-      <img :src="src" alt="" class="QR-img" />
+      <SaveAlbum :src="src" />
     </van-popup>
   </div>
 </template>
@@ -41,10 +43,12 @@
 import dayjs from 'dayjs'
 import Vue from 'vue'
 import { API } from '@/models/api'
+import SaveAlbum from './save-album.vue'
 export default Vue.extend({
   data() {
     return { showQRcode: false, src: '' }
   },
+  components: { SaveAlbum },
   props: {
     item: {
       type: Object,
@@ -94,53 +98,6 @@ export default Vue.extend({
     closeQRcode() {
       this.showQRcode = false
       console.log(11)
-    },
-    openSave() {
-      wx.downloadFile({
-        url: this.src,
-        success: function (res) {
-          console.log(res)
-          //图片保存到本地
-          wx.saveImageToPhotosAlbum({
-            filePath: res.tempFilePath,
-            success: function (data) {
-              wx.showToast({
-                title: '保存成功',
-                icon: 'success',
-                duration: 2000
-              })
-            },
-            fail: function (err) {
-              console.log(err)
-              wx.showToast({
-                title: err.errMsg,
-                icon: 'success',
-                duration: 2000
-              })
-              if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
-                console.log('当初用户拒绝，再次发起授权')
-                wx.openSetting({
-                  success(settingdata) {
-                    console.log(settingdata)
-                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
-                      console.log(
-                        '获取权限成功，给出再次点击图片保存到相册的提示。'
-                      )
-                    } else {
-                      console.log(
-                        '获取权限失败，给出不给权限就无法正常使用的提示'
-                      )
-                    }
-                  }
-                })
-              }
-            },
-            complete(res) {
-              console.log(res)
-            }
-          })
-        }
-      })
     }
   }
 })
@@ -229,20 +186,5 @@ export default Vue.extend({
       margin-left: 20rpx;
     }
   }
-}
-.save-list {
-  width: 294rpx;
-  height: 80rpx;
-  background: #f86744;
-  border-radius: 40rpx;
-  font-size: 16px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  border: 1px solid #f86744;
-  color: #fff;
-}
-.QR-img {
-  height: 480rpx;
-  width: 480rpx;
 }
 </style>
