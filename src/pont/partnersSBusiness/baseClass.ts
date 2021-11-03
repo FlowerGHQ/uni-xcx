@@ -78,6 +78,23 @@ class CouponDto {
   usageRange = ''
 }
 
+class CustomerListDto {
+  /** 创建时间 */
+  createdAt = ''
+
+  /** 消费者id */
+  id = undefined
+
+  /** 消费者姓名 */
+  name = ''
+
+  /** 消费者手机号 */
+  phone = ''
+
+  /** 总金额，单位元 */
+  totalAmount = undefined
+}
+
 class MemberCardDetailDto {
   /** 领取结束时间 */
   applyEndTime = ''
@@ -199,6 +216,35 @@ class ShareholderDetailDto {
   withdrawRewardAmount = undefined
 }
 
+class ShareholderRewardDetailDto {
+  /** 奖励金变更金额，单位元 */
+  amount = undefined
+
+  /** 是否撤销发放 */
+  cancelWithdraw = false
+
+  /** 奖励原因 */
+  courseName = ''
+
+  /** 收入/退款/发放时间 */
+  createdAt = ''
+
+  /** 客户姓名 */
+  customerName = ''
+
+  /** 合作人奖励金明细表主键id */
+  id = undefined
+
+  /** 订单实际金额，单位元 */
+  realAmount = undefined
+
+  /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
+  type = undefined
+
+  /** 发放形式：1-微信，2-支付宝，3-银行转账，4-POS机，5-现金，99-其它方式 */
+  withdrawType = undefined
+}
+
 class SimpleResponse {
   /** data */
   data = new AccountAuthorizedDto()
@@ -213,6 +259,56 @@ class SimpleResponse {
   status = false
 }
 
+class StatisticShareHolderCustomerDto {
+  /** 待成交客户数，单位个 */
+  noTransactionCustomerCount = undefined
+
+  /** 累计拓客数，单位个 */
+  totalCustomerCount = undefined
+
+  /** 累计交易金额（交易+退款），单位元 */
+  totalTransactionAmount = undefined
+}
+
+class StatisticShareHolderHistoryDto {
+  /** 历史客源数，单位个 */
+  totalCustomerCount = undefined
+
+  /** 历史奖励金，单位元 */
+  totalRewardAmount = undefined
+
+  /** 历史交易数，单位笔 */
+  totalTransactionCount = undefined
+}
+
+class StatisticShareholderPeriodDto {
+  /** 新增客源数，单位个 */
+  increaseCustomerCount = undefined
+
+  /** 新增的奖励金额，单位元 */
+  increaseRewardAmount = undefined
+
+  /** 新增交易数，单位笔 */
+  increaseTransactionCount = undefined
+
+  /** 减少的奖励金额，单位元 */
+  refundRewardAmount = undefined
+
+  /** 退款交易数，单位笔 */
+  refundTransactionCount = undefined
+}
+
+class StoredAmountDetailListDto {
+  /** 变更金额，单位元 */
+  amount = undefined
+
+  /** 变动时间 */
+  createdAt = ''
+
+  /** 变更类型：1-充值，2-退还，3-消费，4-消费退款 */
+  type = undefined
+}
+
 class UpdateDefaultCampusVo {
   /** 校区id */
   campusId = undefined
@@ -223,11 +319,17 @@ export const partnersSBusiness = {
   CampusListBo,
   ContractDetailDto,
   CouponDto,
+  CustomerListDto,
   MemberCardDetailDto,
   MemberCardDto,
   MemberCardShareDto,
   Page,
   ShareholderDetailDto,
+  ShareholderRewardDetailDto,
   SimpleResponse,
+  StatisticShareHolderCustomerDto,
+  StatisticShareHolderHistoryDto,
+  StatisticShareholderPeriodDto,
+  StoredAmountDetailListDto,
   UpdateDefaultCampusVo
 }

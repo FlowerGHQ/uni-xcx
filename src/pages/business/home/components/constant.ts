@@ -3,7 +3,7 @@ export const ButtonList = [
     title: '奖励金查询',
     type: 'partner',
     imageStyle: 'reward',
-    openUrl: '/pages/business/contract/index'
+    openUrl: '/pages/business/reward/index'
   },
   {
     title: '客源查询',

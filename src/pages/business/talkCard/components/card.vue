@@ -15,10 +15,10 @@
     </div>
     <div class="bottom-member">
       <div class="num-box">
+        <p class="number-value">价值</p>
         <div class="number-color">
           <span>¥</span> {{ formatMoney(item.value) }}
         </div>
-        <p class="number-value">价值</p>
       </div>
       <div class="button-right" v-if="showIcon">
         <div class="list-det" @click="openDetail(item.id)">预览</div>

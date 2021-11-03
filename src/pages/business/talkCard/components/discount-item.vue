@@ -28,9 +28,7 @@
                 {{ discountObj.name ? discountObj.name : '-' }}
               </p>
               <span :class="discountDealine"
-                >有效期至：{{
-                  discountObj.effectEndTime ? discountObj.effectEndTime : '-'
-                }}</span
+                >有效期至：{{ format(discountObj.effectEndTime) }}</span
               >
             </div>
             <div class="right-bottom">
@@ -45,8 +43,9 @@
               </div>
               <div
                 @click="openDetail(discountObj.name, discountObj.description)"
+                class="open-detail-icon"
               >
-                查看详情》
+                查看详情<van-icon name="arrow" />
               </div>
             </div>
           </div>
@@ -56,12 +55,16 @@
     <van-popup
       :show="showDetail"
       position="bottom"
+      round
       closeable
+      custom-style="height: 40%;"
       @close="closeDetail"
     >
-      <div>
+      <div class="popup-title popup-detail">优惠券详情</div>
+      <div class="popup-title popup-field">
         {{ disCountName }}
-        <p />
+      </div>
+      <div class="popup-text popup-field">
         {{ disCountDesc }}
       </div>
     </van-popup>
@@ -69,13 +72,11 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
 enum TYPE_COLOR {
   TYPE_FULL = 1,
   TYPE_GIFT = 2
-  // TYPE_DISABLED_FULL: 'disabled-full',
-  // TYPE_DISABLED_GIFT: 'disabled-gift'
 }
-
 export default Vue.extend({
   name: 'DiscountItem',
   // 优惠券颜色 数据等 icon颜色数据
@@ -150,7 +151,10 @@ export default Vue.extend({
     shelfClick() {
       this.$emit('shelfClick')
     },
-    openDetail(name, desc) {
+    format(date: string) {
+      return date ? dayjs(date).format('YYYY-MM-DD') : '-'
+    },
+    openDetail(name: string, desc: string) {
       this.disCountName = name
       this.disCountDesc = desc
       this.showDetail = true
@@ -288,5 +292,34 @@ export default Vue.extend({
 }
 .gray {
   filter: grayscale(100%);
+}
+
+.open-detail-icon {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #666666;
+  line-height: 32rpx;
+}
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #222222;
+  line-height: 48rpx;
+  padding: 22rpx 80rpx 22rpx 0;
+}
+.popup-detail {
+  text-align: center;
+  padding: 36rpx;
+}
+.popup-text {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #888888;
+  line-height: 44rpx;
+  padding: 22rpx 32rpx 22rpx 0;
+}
+.popup-field {
+  margin-left: 32rpx;
+  border-bottom: 1rpx solid #eeeeee;
 }
 </style>

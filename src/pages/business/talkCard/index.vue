@@ -6,17 +6,19 @@
       v-for="item in curList"
       :key="item.id"
     />
+    <Empty v-if="!curList.length"></Empty>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import Card from './components/card.vue'
+import Empty from '@/components/empty.vue'
 import { API } from '@/models/api'
 
 export default Vue.extend({
   name: 'TalkList',
-  components: { Card },
+  components: { Card, Empty },
   data() {
     return { curList: [] }
   },

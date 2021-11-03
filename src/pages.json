@@ -35,7 +35,15 @@
     {
       "path": "pages/business/talkCard/detail",
       "style": {
-        "navigationBarTitleText": "拓客卡详情",
+        "navigationBarTitleText": "拓客卡预览",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/reward/index",
+      "style": {
+        "navigationBarTitleText": "奖励金查询",
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }

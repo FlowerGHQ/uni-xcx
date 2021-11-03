@@ -84,6 +84,23 @@ declare namespace defs {
       usageRange?: string
     }
 
+    export class CustomerListDto {
+      /** 创建时间 */
+      createdAt?: string
+
+      /** 消费者id */
+      id?: number
+
+      /** 消费者姓名 */
+      name?: string
+
+      /** 消费者手机号 */
+      phone?: string
+
+      /** 总金额，单位元 */
+      totalAmount?: number
+    }
+
     export class MemberCardDetailDto {
       /** 领取结束时间 */
       applyEndTime?: string
@@ -205,6 +222,35 @@ declare namespace defs {
       withdrawRewardAmount?: number
     }
 
+    export class ShareholderRewardDetailDto {
+      /** 奖励金变更金额，单位元 */
+      amount?: number
+
+      /** 是否撤销发放 */
+      cancelWithdraw?: boolean
+
+      /** 奖励原因 */
+      courseName?: string
+
+      /** 收入/退款/发放时间 */
+      createdAt?: string
+
+      /** 客户姓名 */
+      customerName?: string
+
+      /** 合作人奖励金明细表主键id */
+      id?: number
+
+      /** 订单实际金额，单位元 */
+      realAmount?: number
+
+      /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
+      type?: number
+
+      /** 发放形式：1-微信，2-支付宝，3-银行转账，4-POS机，5-现金，99-其它方式 */
+      withdrawType?: number
+    }
+
     export class SimpleResponse<T0 = any> {
       /** data */
       data?: T0
@@ -217,6 +263,56 @@ declare namespace defs {
 
       /** status */
       status?: boolean
+    }
+
+    export class StatisticShareHolderCustomerDto {
+      /** 待成交客户数，单位个 */
+      noTransactionCustomerCount?: number
+
+      /** 累计拓客数，单位个 */
+      totalCustomerCount?: number
+
+      /** 累计交易金额（交易+退款），单位元 */
+      totalTransactionAmount?: number
+    }
+
+    export class StatisticShareHolderHistoryDto {
+      /** 历史客源数，单位个 */
+      totalCustomerCount?: number
+
+      /** 历史奖励金，单位元 */
+      totalRewardAmount?: number
+
+      /** 历史交易数，单位笔 */
+      totalTransactionCount?: number
+    }
+
+    export class StatisticShareholderPeriodDto {
+      /** 新增客源数，单位个 */
+      increaseCustomerCount?: number
+
+      /** 新增的奖励金额，单位元 */
+      increaseRewardAmount?: number
+
+      /** 新增交易数，单位笔 */
+      increaseTransactionCount?: number
+
+      /** 减少的奖励金额，单位元 */
+      refundRewardAmount?: number
+
+      /** 退款交易数，单位笔 */
+      refundTransactionCount?: number
+    }
+
+    export class StoredAmountDetailListDto {
+      /** 变更金额，单位元 */
+      amount?: number
+
+      /** 变动时间 */
+      createdAt?: string
+
+      /** 变更类型：1-充值，2-退还，3-消费，4-消费退款 */
+      type?: number
     }
 
     export class UpdateDefaultCampusVo {
@@ -345,6 +441,85 @@ declare namespace API {
     }
 
     /**
+     * Customer Controller
+     */
+    export namespace customer {
+      /**
+       * 消费者详情
+       * /customer/detail
+       */
+      export namespace detail {
+        export class Params {
+          /** @Min: 1.0 - @Max: null (until #1244 gets fixed) */
+          customerId: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.CustomerListDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.CustomerListDto
+          >
+        >
+      }
+
+      /**
+       * 消费者列表
+       * /customer/list
+       */
+      export namespace list {
+        export class Params {
+          /** 成交类型：0-全部，1-已成交，2-未成交 */
+          hasTransactionType?: number
+          /** pageIndex */
+          pageIndex?: number
+          /** pageSize */
+          pageSize?: number
+          /** searchKey */
+          searchKey?: string
+          /** shareholderId */
+          shareholderId?: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.Page<defs.partnersSBusiness.CustomerListDto>
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.Page<defs.partnersSBusiness.CustomerListDto>
+          >
+        >
+      }
+
+      /**
+       * 消费者统计
+       * /customer/statistic
+       */
+      export namespace statistic {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.StatisticShareHolderCustomerDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.StatisticShareHolderCustomerDto
+          >
+        >
+      }
+    }
+
+    /**
      * Member Card Controller
      */
     export namespace memberCard {
@@ -442,6 +617,128 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.ShareholderDetailDto
+          >
+        >
+      }
+    }
+
+    /**
+     * Shareholder Reward Controller
+     */
+    export namespace shareholderReward {
+      /**
+       * 合作人奖励金明细分页列表
+       * /shareholderReward/list
+       */
+      export namespace list {
+        export class Params {
+          /** pageIndex */
+          pageIndex?: number
+          /** pageSize */
+          pageSize?: number
+          /** 变更类型：1-交易新增，2-退款减少，3-奖励发放，不传为全部 */
+          type?: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.Page<
+            defs.partnersSBusiness.ShareholderRewardDetailDto
+          >
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.Page<
+              defs.partnersSBusiness.ShareholderRewardDetailDto
+            >
+          >
+        >
+      }
+    }
+
+    /**
+     * Shareholder Stored Controller
+     */
+    export namespace shareholderStored {
+      /**
+       * 储值金明细列表
+       * /shareholderStored/list
+       */
+      export namespace list {
+        export class Params {
+          /** pageIndex */
+          pageIndex?: number
+          /** pageSize */
+          pageSize?: number
+          /** 类型：1-储值金变动，2-消费变动 */
+          type?: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.Page<
+            defs.partnersSBusiness.StoredAmountDetailListDto
+          >
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.Page<
+              defs.partnersSBusiness.StoredAmountDetailListDto
+            >
+          >
+        >
+      }
+    }
+
+    /**
+     * Statistic Controller
+     */
+    export namespace statistic {
+      /**
+       * 按合作人统计历史数据
+       * /statistic/shareHolderHistoryData
+       */
+      export namespace shareHolderHistoryData {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.StatisticShareHolderHistoryDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.StatisticShareHolderHistoryDto
+          >
+        >
+      }
+
+      /**
+       * 按合作人统计周期数据
+       * /statistic/shareHolderPeriodData
+       */
+      export namespace shareHolderPeriodData {
+        export class Params {
+          /** endTime */
+          endTime: string
+          /** startTime */
+          startTime: string
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.StatisticShareholderPeriodDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.StatisticShareholderPeriodDto
           >
         >
       }

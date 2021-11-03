@@ -1,17 +1,16 @@
 <template>
   <div class="user-login">
-    <div class="change-org" @click="changeSchoolOrg">
+    <div class="change-org">
       <div class="flex">
         <img src="../../../assets/images/place.png" class="icon-place" />
         <div class="school-title">{{ defaultSchool }}</div>
       </div>
-      <img src="../../../assets/images/right-arrow.png" class="icon-right" />
     </div>
     <div class="talk-card">
       <Card :showIcon="false" :item="memberCard" />
     </div>
     <van-tabs @click="onClickTab">
-      <van-tab title="尊享礼券" name="bonus">
+      <van-tab title="尊享礼券" name="tickets">
         <div class="discount-list">
           <div v-for="item in memberCard.couponList" :key="item.id">
             <DiscountItem
@@ -23,12 +22,12 @@
           </div>
         </div>
       </van-tab>
-      <van-tab title="权益介绍" name="bonus">
+      <van-tab title="权益介绍" name="introdece">
         <div class="tab-rights">
-          权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍权益介绍
+          {{ memberCard.description }}
         </div>
       </van-tab>
-      <van-tab title="校区介绍" name="bonus">
+      <van-tab title="校区介绍" name="school">
         <div class="tab-school">
           <van-cell-group>
             <van-cell title="校区名称" value="大同舞蹈学校城北校区" />
@@ -58,7 +57,7 @@
     </div>
     <div class="bottom-button">
       <button class="view" @click="openQRcode">生成二维码</button>
-      <button class="save-list">分享至微信</button>
+      <!-- <button class="save-list">分享至微信</button> -->
     </div>
     <van-popup
       :show="showQRcode"
@@ -217,7 +216,7 @@ export default Vue.extend({
   color: #fff;
 }
 .view {
-  margin-right: 32rpx;
+  // margin-right: 32rpx;
   background: #fff;
   color: #f86744;
 }
@@ -409,9 +408,7 @@ export default Vue.extend({
   filter: grayscale(100%);
 }
 
-
-.discount-list{
+.discount-list {
   height: 540rpx;
-
 }
 </style>
