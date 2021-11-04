@@ -1,28 +1,30 @@
 <template>
   <div class="member-card">
     <img src="../../../../assets/images/bgImage.png" alt="" class="bg-image" />
-    <div class="name-member">
-      <div class="icon-picture"></div>
-      <div class="right">
-        <p class="tuo-name">{{ item.name || 'name' }}</p>
-        <p class="time">
-          有效期：{{
-            item.applyStartTime ? format(item.applyStartTime) : '2021-01-22'
-          }}
-          ~ {{ item.applyEndTime ? format(item.applyEndTime) : '2021-01-22' }}
-        </p>
-      </div>
-    </div>
-    <div class="bottom-member">
-      <div class="num-box">
-        <p class="number-value">价值</p>
-        <div class="number-color">
-          <span>¥</span> {{ formatMoney(item.value) }}
+    <div class="member-card-cur">
+      <div class="name-member">
+        <div class="icon-picture"></div>
+        <div class="right">
+          <p class="tuo-name">{{ item.name || 'name' }}</p>
+          <p class="time">
+            有效期：{{
+              item.applyStartTime ? format(item.applyStartTime) : '2021-01-22'
+            }}
+            ~ {{ item.applyEndTime ? format(item.applyEndTime) : '2021-01-22' }}
+          </p>
         </div>
       </div>
-      <div class="button-right" v-if="showIcon">
-        <div class="list-det" @click="openDetail(item.id)">预览</div>
-        <div class="list-det" @click="openShare(item.id)">分享</div>
+      <div class="bottom-member">
+        <div class="num-box">
+          <p class="number-value">价值</p>
+          <div class="number-color">
+            <span>¥</span> {{ formatMoney(item.value) }}
+          </div>
+        </div>
+        <div class="button-right" v-if="showIcon">
+          <div class="list-det" @click="openDetail(item.id)">预览</div>
+          <div class="list-det" @click="openShare(item.id)">分享</div>
+        </div>
       </div>
     </div>
     <van-popup
@@ -105,19 +107,21 @@ export default Vue.extend({
 
 <style lang="less" scoped>
 .member-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   width: 686rpx;
   height: 280rpx;
-  padding: 32rpx 32rpx 16rpx 32rpx;
+  padding: 32rpx;
   background-size: 100% 100%;
   box-shadow: 0px 8rpx 10rpx 0px rgba(0, 0, 0, 0.37);
   border-radius: 16rpx;
   position: relative;
   top: 0;
   left: 0;
-
+  .member-card-cur{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   .bg-image {
     position: absolute;
     top: 0;

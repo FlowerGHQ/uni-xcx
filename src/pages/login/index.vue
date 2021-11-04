@@ -28,6 +28,8 @@ export default Vue.extend({
   },
   async onLoad() {
     this.startOpen()
+
+    wx.login()
   },
   methods: {
     async startOpen() {

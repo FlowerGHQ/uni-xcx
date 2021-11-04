@@ -18,20 +18,19 @@ export default class extends Vue {
 
 <style lang="less" scoped>
 .empty {
-  padding-top: 112px;
   .empty-image {
-    width: 150px;
-    height: 150px;
+    width: 300rpx;
+    height: 300rpx;
     margin: 0 auto;
     background-color: transparent;
     background-position: center;
     background-size: contain;
-    background-image: url('https://cdn.xiaobaoxiu.cn/xbshow/XcxImages/Common/empty-bg.png');
+    background-image: url('../assets/images/empty-box.png');
   }
   .empty-text {
-    max-width: 200px;
-    margin: 12px auto 0 auto;
-    font-size: 14px;
+    max-width: 400rpx;
+    margin: 24rpx auto 0 auto;
+    font-size: 28rpx;
     color: #8c8c8c;
     text-align: center;
     word-break: break-word;

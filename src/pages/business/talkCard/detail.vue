@@ -20,6 +20,7 @@
               @shelfClick="shelfClick(item)"
             />
           </div>
+           <Empty v-if="!memberCard.couponList.length" text="暂无内容" />
         </div>
       </van-tab>
       <van-tab title="权益介绍" name="introdece">
@@ -77,11 +78,12 @@ import Card from './components/card.vue'
 import SaveAlbum from './components/save-album.vue'
 import DiscountItem from './components/discount-item.vue'
 import { API } from '@/models/api'
+import Empty from '@/components/empty.vue'
 import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { Card, DiscountItem, SaveAlbum },
+  components: { Card, DiscountItem, SaveAlbum,Empty },
   data() {
     return {
       defaultSchool: '',
