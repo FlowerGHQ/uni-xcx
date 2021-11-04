@@ -5,7 +5,16 @@
     </div>
     <div class="change-org" @click="changeSchoolOrg">
       <div class="flex">
-        <img src="../../../assets/images/place.png" class="icon-place" />
+        <img
+          src="../../../assets/images/place.png"
+          class="icon-place"
+          v-if="!hasError"
+        />
+        <img
+          src="../../../assets/images/place-disabled.png"
+          class="icon-place"
+          v-else
+        />
         <div class="school-title">{{ defaultSchool }}</div>
       </div>
       <img src="../../../assets/images/right-arrow.png" class="icon-right" />
@@ -18,15 +27,24 @@
         :class="{ 'error-card': hasError, 'normal-card': !hasError }"
       >
         <!-- <div class="talk-icon">1</div>“ -->
-        <img src="../../../assets/images/card.png" class="talk-icon" />
+        <img
+          src="../../../assets/images/card.png"
+          class="talk-icon"
+          v-if="!hasError"
+        />
+        <img
+          src="../../../assets/images/card-disabled.png"
+          class="talk-icon"
+          v-else
+        />
         <div class="flex1">
           <div class="talk-title">拓客卡</div>
           <div class="talk-desc">分享权益，快速助力获客</div>
         </div>
         <div class="share-button">立即分享</div>
       </div>
-      <div class="common-func-list">
-        <CommonList />
+      <div class="common-func-list" @click="hasError ? handleDetail() : null">
+        <CommonList :error="hasError" />
       </div>
     </div>
 
@@ -89,6 +107,15 @@ export default Vue.extend({
     openNext() {
       console.log(222)
     },
+    handleDetail() {
+      if (this.hasError) {
+        this.$dialog.alert({
+          title: this.errorTitle,
+          message: this.errorMessage,
+          confirmButtonText: '知道了'
+        })
+      }
+    },
     shareCard() {
       if (this.hasError) {
         this.$dialog.alert({
@@ -106,20 +133,6 @@ export default Vue.extend({
       console.log(1)
       uni.navigateTo({
         url: '/pages/business/schoolList/index'
-      })
-    },
-    openScan() {
-      // 扫码
-      wx.scanCode({
-        // 调起客户端扫码界面进行扫码
-        complete: res => {}, //接口调用结束的回调函数（调用成功、失败都会执行）
-        fail: res => {}, //接口调用失败的回调函数
-        onlyFromCamera: true, //是否只能从相机扫码，不允许从相册选择图片,这里是只允许相机扫码
-        scanType: ['qrCode'], // 扫码类型 : 二维码
-        success: result => {
-          // 接口调用成功的回调函数
-          console.log(result)
-        }
       })
     }
   }

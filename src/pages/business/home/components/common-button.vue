@@ -1,5 +1,5 @@
 <template>
-  <div class="common" @click.stop="openList">
+  <div class="common" @click="!error ? openList() : null">
     <div class="common-image" :class="image"></div>
     <div class="common-text">
       <slot>{{ text }}</slot>
@@ -23,6 +23,10 @@ export default Vue.extend({
     text: {
       type: String,
       default: ''
+    },
+    error: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -75,5 +79,8 @@ export default Vue.extend({
 }
 .contract {
   background-image: url('../../../../assets/images/contract.png');
+}
+.money {
+  background-image: url('../../../../assets/images/save-money.png');
 }
 </style>

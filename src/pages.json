@@ -9,6 +9,22 @@
       }
     },
     {
+      "path": "pages/login/user/terms",
+      "style": {
+        "navigationBarTitleText": "用户条款",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/user/privacy",
+      "style": {
+        "navigationBarTitleText": "隐私政策",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/business/home/index",
       "style": {
         "navigationBarTitleText": "首页",
@@ -80,7 +96,9 @@
       "van-calendar": "/static/vant/calendar/index",
       "van-nav-bar": "/static/vant/nav-bar/index",
       "van-search": "/static/vant/search/index",
-      "van-action-sheet": "/static/vant/action-sheet/index"
+      "van-action-sheet": "/static/vant/action-sheet/index",
+      "van-checkbox-group": "/static/vant/checkbox-group/index",
+      "van-checkbox": "/static/vant/checkbox/index"
     }
   }
 }

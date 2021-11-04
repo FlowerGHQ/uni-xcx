@@ -20,6 +20,8 @@ const vantComponents = [
   'picker',
   'calendar',
   'nav-bar',
+  'checkbox-group',
+  'checkbox',
   'picker-column',
   'datetime-picker',
   'row',

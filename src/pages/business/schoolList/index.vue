@@ -44,15 +44,15 @@ export default Vue.extend({
       this.partnerList = res.data
       console.log(res)
     },
-    // async changeSchool(campusId: number) {
-    //   const res = await API.partnersBBusiness.campus.list.request({})
-    //   try {
-    //     const res = await API.partnersBBusiness.campus.updateDefault.request({
-    //       campusId
-    //     })
-    //     this.init()
-    //   } catch (error) {}
-    // }
+    async changeSchool(campusId: number) {
+      const res = await API.partnersSBusiness.campus.list.request({})
+      try {
+        const res = await API.partnersSBusiness.campus.updateDefault.request({
+          campusId
+        })
+        this.init()
+      } catch (error) {}
+    }
   }
 })
 </script>

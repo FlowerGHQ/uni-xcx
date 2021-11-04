@@ -20,7 +20,7 @@ export const ButtonList = [
   {
     title: '储值金查询',
     type: 'equity',
-    imageStyle: 'reward',
+    imageStyle: 'money',
     openUrl: '/pages/business/contract/index'
   },
   {

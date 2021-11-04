@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-if="logined" @click.prevent="next" class="auth-btn">
+    <button v-if="!checked" @click.prevent="handleNoChecked" class="auth-btn">
       <slot />
     </button>
     <button
@@ -11,6 +11,20 @@
     >
       <slot />
     </button>
+    <div class="privacy-policy">
+      <van-checkbox
+        name="1"
+        :value="checked"
+        @change="changeChenckbox"
+        icon-size="28rpx"
+        label-disabled
+      >
+        登录即代表同意
+        <span class="bold" @click="openUserTerms">《用户条款》</span>
+        和
+        <span class="bold" @click="openPrivacyPolicy">《隐私条款》</span>
+      </van-checkbox>
+    </div>
   </div>
 </template>
 
@@ -32,6 +46,10 @@ export default class extends Vue {
 
   @account.State
   logined: boolean
+
+  checked: boolean = false
+
+  code: string = ''
 
   @account.Action
   decryptionLogin: ActionMethod
@@ -79,6 +97,24 @@ export default class extends Vue {
       }
     }
   }
+  changeChenckbox(e) {
+    this.checked = e.detail
+  }
+  openUserTerms() {
+    uni.navigateTo({
+      url: `/pages/login/user/terms`
+    })
+
+    console.log(0)
+  }
+  openPrivacyPolicy() {
+    uni.navigateTo({
+      url: `/pages/login/user/privacy`
+    })
+  }
+  handleNoChecked() {
+    this.$toast('请阅读用户条款和隐私政策')
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -87,5 +123,17 @@ export default class extends Vue {
   padding-left: 0;
   padding-right: 0;
   overflow: visible;
+}
+.privacy-policy {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #8c8c8c;
+  line-height: 32rpx;
+  margin-top: 32rpx;
+  display: flex;
+  justify-content: center;
+  .bold {
+    color: #000000;
+  }
 }
 </style>

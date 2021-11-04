@@ -1,6 +1,7 @@
 <template>
   <div class="func-button-list">
     <CommonButton
+      :error="error"
       v-for="(item, index) in ButtonList"
       :key="item.type"
       :text="item.title"
@@ -17,6 +18,12 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'AddList',
+  props: {
+    error: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: { CommonButton },
   data() {
     return {
