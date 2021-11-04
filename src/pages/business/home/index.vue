@@ -68,44 +68,48 @@ export default Vue.extend({
       errorTitle: ''
     }
   },
-  onShow() {
+  async onShow() {
     wx.hideHomeButton()
+    this.init()
   },
   async onLoad(option) {
     uni.setNavigationBarTitle({
       title: '首页'
     })
-    const res = await API.partnersSBusiness.campus.list.request({})
-    const res1 = await API.partnersSBusiness.contract.detail.request({})
-    this.defaultSchool = res.data.find(item => item.isDefault).name
-    if (!res1.data) {
-      this.hasError = true
-      this.errorTitle = '暂无合约提醒'
-      this.errorMessage =
-        '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
-      return
-    }
-    if (dayjs(res1.data.startTime) > dayjs()) {
-      this.hasError = true
-      this.errorTitle = '合约暂未生效提醒'
-      this.errorMessage = `合约生效时间：${dayjs(res1.data.startTime).format(
-        'YYYY-MM-DD'
-      )}，合约生效前您的拓客卡分享功能不能使用`
-      return
-    }
-    if (dayjs(res1.data.endTime) < dayjs()) {
-      this.hasError = true
-      this.errorTitle = '合约到期提醒'
-      this.errorMessage =
-        '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
-      return
-    }
-    this.hasError = false
-    this.errorMessage = ''
+    this.init()
   },
   methods: {
     openNext() {
       console.log(222)
+    },
+    async init() {
+      const res = await API.partnersSBusiness.campus.list.request({})
+      const res1 = await API.partnersSBusiness.contract.detail.request({})
+      this.defaultSchool = res.data.find(item => item.isDefault).name
+      if (!res1.data) {
+        this.hasError = true
+        this.errorTitle = '暂无合约提醒'
+        this.errorMessage =
+          '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
+        return
+      }
+      if (dayjs(res1.data.startTime) > dayjs()) {
+        this.hasError = true
+        this.errorTitle = '合约暂未生效提醒'
+        this.errorMessage = `合约生效时间：${dayjs(res1.data.startTime).format(
+          'YYYY-MM-DD'
+        )}，合约生效前您的拓客卡分享功能不能使用`
+        return
+      }
+      if (dayjs(res1.data.endTime) < dayjs()) {
+        this.hasError = true
+        this.errorTitle = '合约到期提醒'
+        this.errorMessage =
+          '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
+        return
+      }
+      this.hasError = false
+      this.errorMessage = ''
     },
     handleDetail() {
       if (this.hasError) {

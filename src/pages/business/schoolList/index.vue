@@ -51,6 +51,7 @@ export default Vue.extend({
           campusId
         })
         this.init()
+        uni.navigateBack({ delta: 1 })
       } catch (error) {}
     }
   }
