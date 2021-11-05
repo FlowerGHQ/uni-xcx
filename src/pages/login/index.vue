@@ -4,7 +4,7 @@
       <img src="../../assets/images/login.png" class="login-icon" />
     </div>
     <div class="login-title">一群伙伴</div>
-    <auth-button redirect="/pages/business/home/index" reLaunch>
+    <auth-button redirect="/pages/home/index" reLaunch>
       <div
         class="footer-bar__item apply middle-btn green flex wx-login-btn"
         :class="{ active: current === 'applyList' }"
@@ -41,7 +41,7 @@ export default Vue.extend({
 
     openNext() {
       wx.reLaunch({
-        url: '/pages/business/home/index'
+        url: '/pages/home/index'
       })
     }
   }

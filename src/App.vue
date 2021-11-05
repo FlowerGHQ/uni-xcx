@@ -1,8 +1,18 @@
 <script>
+import { API } from '@/models/api'
 export default {
   onLaunch: function () {
     console.log('App Launch')
     this.update()
+  },
+  onShow: async function () {
+    try {
+      const res = await API.partnersSBusiness.account.authorized.request({})
+    } catch {
+      wx.reLaunch({
+        url: '/pages/login/index'
+      })
+    }
   },
   methods: {
     update: function () {

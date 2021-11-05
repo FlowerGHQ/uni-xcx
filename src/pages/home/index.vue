@@ -6,18 +6,18 @@
     <div class="change-org" @click="changeSchoolOrg">
       <div class="flex">
         <img
-          src="../../../assets/images/place.png"
+          src="../../assets/images/place.png"
           class="icon-place"
           v-if="!hasError"
         />
         <img
-          src="../../../assets/images/place-disabled.png"
+          src="../../assets/images/place-disabled.png"
           class="icon-place"
           v-else
         />
         <div class="school-title">{{ defaultSchool }}</div>
       </div>
-      <img src="../../../assets/images/right-arrow.png" class="icon-right" />
+      <img src="../../assets/images/right-arrow.png" class="icon-right" />
     </div>
     <div class="common-func">
       <div @click="openScan" class="common-func-title">常用功能</div>
@@ -28,12 +28,12 @@
       >
         <!-- <div class="talk-icon">1</div>“ -->
         <img
-          src="../../../assets/images/card.png"
+          src="../../assets/images/card.png"
           class="talk-icon"
           v-if="!hasError"
         />
         <img
-          src="../../../assets/images/card-disabled.png"
+          src="../../assets/images/card-disabled.png"
           class="talk-icon"
           v-else
         />
@@ -83,33 +83,39 @@ export default Vue.extend({
       console.log(222)
     },
     async init() {
-      const res = await API.partnersSBusiness.campus.list.request({})
-      const res1 = await API.partnersSBusiness.contract.detail.request({})
-      this.defaultSchool = res.data.find(item => item.isDefault).name
-      if (!res1.data) {
-        this.hasError = true
-        this.errorTitle = '暂无合约提醒'
-        this.errorMessage =
-          '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
-        return
+      try {
+        const res = await API.partnersSBusiness.campus.list.request({})
+        const res1 = await API.partnersSBusiness.contract.detail.request({})
+        this.defaultSchool = res.data.find(item => item.isDefault).name
+        if (!res1.data) {
+          this.hasError = true
+          this.errorTitle = '暂无合约提醒'
+          this.errorMessage =
+            '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
+          return
+        }
+        if (dayjs(res1.data.startTime) > dayjs()) {
+          this.hasError = true
+          this.errorTitle = '合约暂未生效提醒'
+          this.errorMessage = `合约生效时间：${dayjs(
+            res1.data.startTime
+          ).format('YYYY-MM-DD')}，合约生效前您的拓客卡分享功能不能使用`
+          return
+        }
+        if (dayjs(res1.data.endTime) < dayjs()) {
+          this.hasError = true
+          this.errorTitle = '合约到期提醒'
+          this.errorMessage =
+            '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
+          return
+        }
+        this.hasError = false
+        this.errorMessage = ''
+      } catch {
+        wx.reLaunch({
+          url: '/pages/login/index'
+        })
       }
-      if (dayjs(res1.data.startTime) > dayjs()) {
-        this.hasError = true
-        this.errorTitle = '合约暂未生效提醒'
-        this.errorMessage = `合约生效时间：${dayjs(res1.data.startTime).format(
-          'YYYY-MM-DD'
-        )}，合约生效前您的拓客卡分享功能不能使用`
-        return
-      }
-      if (dayjs(res1.data.endTime) < dayjs()) {
-        this.hasError = true
-        this.errorTitle = '合约到期提醒'
-        this.errorMessage =
-          '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
-        return
-      }
-      this.hasError = false
-      this.errorMessage = ''
     },
     handleDetail() {
       if (this.hasError) {

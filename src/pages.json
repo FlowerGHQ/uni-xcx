@@ -1,6 +1,14 @@
 {
   "pages": [
     {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/login/index",
       "style": {
         "navigationBarTitleText": "登录",
@@ -20,14 +28,6 @@
       "path": "pages/login/user/privacy",
       "style": {
         "navigationBarTitleText": "隐私政策",
-        "navigationBarBackgroundColor": "#FFF",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
-      "path": "pages/business/home/index",
-      "style": {
-        "navigationBarTitleText": "首页",
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }

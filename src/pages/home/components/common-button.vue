@@ -66,21 +66,21 @@ export default Vue.extend({
   }
 }
 .book {
-  background-image: url('../../../../assets/images/book.png');
+  background-image: url('../../../assets/images/book.png');
 }
 .set {
-  background-image: url('../../../../assets/images/set.png');
+  background-image: url('../../../assets/images/set.png');
 }
 .reward {
-  background-image: url('../../../../assets/images/reward.png');
+  background-image: url('../../../assets/images/reward.png');
 }
 .wallet {
-  background-image: url('../../../../assets/images/wallet.png');
+  background-image: url('../../../assets/images/wallet.png');
 }
 .contract {
-  background-image: url('../../../../assets/images/contract.png');
+  background-image: url('../../../assets/images/contract.png');
 }
 .money {
-  background-image: url('../../../../assets/images/save-money.png');
+  background-image: url('../../../assets/images/save-money.png');
 }
 </style>
