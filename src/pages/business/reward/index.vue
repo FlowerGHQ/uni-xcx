@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-sticky>
+    <van-sticky v-if="listReward.length">
       <div class="base-card tab-base">
         <div class="flex">
           <Field

@@ -98,6 +98,7 @@ export default class extends Vue {
     }
   }
   changeChenckbox(e) {
+    console.log(0)
     this.checked = e.detail
   }
   openUserTerms() {
