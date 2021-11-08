@@ -57,6 +57,8 @@ export default Vue.extend({
     background-position: center;
     background-size: contain;
     margin-bottom: 16rpx;
+    background-size: 96rpx 96rpx;
+    border-radius: 50%;
   }
   .common-text {
     font-size: 24rpx;

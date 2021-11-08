@@ -168,7 +168,7 @@ export default Vue.extend({
 }
 .common-func {
   width: 750rpx;
-  height: calc(650rpx + var(--safe-area-inset-bottom));
+  height: calc(1000rpx + var(--safe-area-inset-bottom));
   background: #ffffff;
   border-radius: 64rpx 64rpx 0rpx 0rpx;
   position: absolute;

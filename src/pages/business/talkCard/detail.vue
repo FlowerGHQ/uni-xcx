@@ -28,7 +28,7 @@
           {{ memberCard.description }}
         </div>
       </van-tab>
-      <van-tab title="校区介绍" name="school">
+      <!-- <van-tab title="校区介绍" name="school">
         <div class="tab-school">
           <van-cell-group>
             <van-cell title="校区名称" value="大同舞蹈学校城北校区" />
@@ -38,7 +38,7 @@
             />
           </van-cell-group>
         </div>
-      </van-tab>
+      </van-tab> -->
     </van-tabs>
     <div class="bottom-test">
       <img src="../../../assets/images/limited.png" class="icon-limited" />

@@ -27,24 +27,9 @@ export default Vue.extend({
     return {}
   },
   async onLoad() {
-    this.startOpen()
-
     wx.login()
   },
-  methods: {
-    async startOpen() {
-      try {
-        const res = await API.partnersSBusiness.account.authorized.request({})
-        this.openNext()
-      } catch {}
-    },
-
-    openNext() {
-      wx.reLaunch({
-        url: '/pages/home/index'
-      })
-    }
-  }
+  methods: {}
 })
 </script>
 <style lang="less" scoped>

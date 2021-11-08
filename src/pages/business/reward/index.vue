@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-sticky v-if="listReward.length">
+    <van-sticky v-if="showSticky">
       <div class="base-card tab-base">
         <div class="flex">
           <Field
@@ -34,13 +34,9 @@
           </div>
           <div class="list-center" v-if="item.type === 1 || item.type === 2">
             <div class="construct-number">
+              <div>奖励类型：{{ item.courseName ? item.courseName : '-' }}</div>
               <div>
-                奖励类型：{{
-                  item.withdrawTypeName ? item.withdrawTypeName : '-'
-                }}
-              </div>
-              <div>
-                客户姓名：{{ item.customeName ? item.customeName : '-' }}
+                客户姓名：{{ item.customerName ? item.customerName : '-' }}
               </div>
               <div>订单金额：{{ item.realAmount ? item.realAmount : '-' }}</div>
               <div>
@@ -52,10 +48,18 @@
           </div>
           <div class="list-center" v-if="item.type === 3">
             <div class="construct-number">
-              <div>
-                发放形式：{{
-                  item.withdrawTypeName ? item.withdrawTypeName : '-'
-                }}
+              <div class="mar-b-8 grant-form">
+                <span
+                  >发放形式：{{
+                    item.withdrawTypeName ? item.withdrawTypeName : '-'
+                  }}</span
+                >
+                <Tag
+                  v-if="item.cancelWithdraw"
+                  color="#FFE6E6"
+                  text-color="#FF3333"
+                  text="已撤销"
+                />
               </div>
               <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
@@ -63,7 +67,10 @@
         </div>
       </div>
     </div>
-    <Empty v-if="!listReward.length" text="暂无内容，快去使用拓客卡吸引家长吧"></Empty>
+    <Empty
+      v-if="!listReward.length && loading"
+      text="暂无内容，快去使用拓客卡吸引家长吧"
+    ></Empty>
   </div>
 </template>
 <script lang="ts">
@@ -103,7 +110,9 @@ export default Vue.extend({
         pageSize: 100,
         type: ''
       },
+      loading: true,
       rewardAmount: '',
+      showSticky: true,
       withdrawRewardAmount: '',
       leftRewardAmount: '',
       listReward: [],
@@ -138,10 +147,19 @@ export default Vue.extend({
     },
     async getRewardList() {
       // 合作人奖励金明细
+      console.log(this.showSticky)
       API.partnersSBusiness.shareholderReward.list
         .request(this.params)
         .then(res => {
+          if (!res.data.list && this.params.type === '') {
+            this.showSticky = false
+          }
+          console.log(res.data.list)
+          if (!res.data.list) {
+            this.loading = true
+          }
           if (res.data.list) {
+            this.loading = false
             this.listReward = res.data.list.map(item => {
               return {
                 ...item,
@@ -227,5 +245,12 @@ export default Vue.extend({
   line-height: 112rpx;
   padding-left: 32rpx;
   background-color: #f6f7f8;
+}
+.mar-b-8 {
+  margin-bottom: 8rpx;
+}
+.grant-form {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

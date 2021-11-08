@@ -79,19 +79,22 @@ methods.forEach(method => {
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
-                await store.dispatch('account/reset')
-                await store.dispatch('account/auth')
-                wx.showToast({
-                  icon: 'none',
-                  mask: true,
-                  title: '登录过期，已重新登录',
-                  duration: 3000
+                uni.reLaunch({
+                  url: '/pages/login/index'
                 })
-                var pages = getCurrentPages()
-                var currentPage = pages[pages.length - 1] // 当前页面
-                if (currentPage) {
-                  uni.reLaunch({ url: currentPage.$page.fullPath })
-                }
+                // await store.dispatch('account/reset')
+                // await store.dispatch('account/auth')
+                // wx.showToast({
+                //   icon: 'none',
+                //   mask: true,
+                //   title: '登录过期，已重新登录',
+                //   duration: 3000
+                // })
+                // var pages = getCurrentPages()
+                // var currentPage = pages[pages.length - 1] // 当前页面
+                // if (currentPage) {
+                //   uni.reLaunch({ url: currentPage.$page.fullPath })
+                // }
               } else {
                 reject(responseBody)
               }
