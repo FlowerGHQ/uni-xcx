@@ -7,7 +7,11 @@ export default {
   },
   onShow: async function () {
     try {
-      const res = await API.partnersSBusiness.account.authorized.request({})
+      const res = await wx.login()
+      const res1 = await API.oauth.login.miniProgramLogin.request({
+        code: res.code,
+        notAutoLogin: false
+      })
     } catch {
       wx.reLaunch({
         url: '/pages/login/index'

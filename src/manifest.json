@@ -56,7 +56,8 @@
     "appid": "wxcc8d7cb6b0bc8037",
     "setting": {
       "urlCheck": true
-    }
+    },
+    "optimization": { "subPackages": true }
   },
   "mp-alipay": {
     "usingComponents": true

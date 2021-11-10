@@ -1,7 +1,7 @@
 module.exports = {
   api: {
     release: 'https://partners-s.schoolpal.cn',
-    trial: 'https://pre-partners-s.schoolpal.cn',
+    trial: 'https://partners-s.schoolpal.cn',
     test: 'https://test-partners-s.schoolpal.cn',
     dev: 'https://test-partners-s.schoolpal.cn'
   },

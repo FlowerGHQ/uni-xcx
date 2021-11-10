@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env APP_ENV=dev NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
-    "test": "cross-env APP_ENV=test NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
-    "prod": "cross-env APP_ENV=prod NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+    "test": "cross-env APP_ENV=test NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize",
+    "prod": "cross-env APP_ENV=prod NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize",
     "build:dev": "cross-env APP_ENV=dev NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
     "build:test": "cross-env APP_ENV=test NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
     "build:prod": "cross-env APP_ENV=prod NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build"
