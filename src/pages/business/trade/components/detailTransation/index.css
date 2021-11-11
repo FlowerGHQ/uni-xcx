@@ -1,0 +1,66 @@
+.detail-page {
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding: 0 48rpx 32rpx;
+}
+.detail-page .round {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 48rpx;
+  margin-bottom: 64rpx;
+}
+.detail-page .round .incom {
+  margin-bottom: 16rpx;
+}
+.detail-page .round .number {
+  font-size: 48rpx;
+  font-family: DINAlternate-Bold, DINAlternate;
+  font-weight: bold;
+  color: #222222;
+}
+.detail-page .round .top-bottom {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #888888;
+}
+.detail-page .round img {
+  display: block;
+  margin: auto;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  margin-bottom: 32rpx;
+}
+.detail-page .detail-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  margin-bottom: 16rpx;
+}
+.detail-page .gray-text {
+  color: #888888;
+}
+.detail-page .black-text {
+  color: #222222;
+}
+.detail-page .detail-bottom {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.detail-page .detail-bottom .refund {
+  width: 120rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  text-align: center;
+  color: #ff3333;
+  border-radius: 24rpx;
+  border: 1px solid #f86744;
+}

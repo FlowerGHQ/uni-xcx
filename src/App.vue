@@ -12,6 +12,7 @@ export default {
         code: res.code,
         notAutoLogin: false
       })
+      await API.partnersSBusiness.account.authorized.request({})
     } catch {
       wx.reLaunch({
         url: '/pages/login/index'

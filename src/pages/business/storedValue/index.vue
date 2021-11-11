@@ -1,15 +1,15 @@
 <template>
   <div>
-    <van-sticky v-if="showSticky">
+    <van-sticky>
       <div class="base-card tab-base">
         <div class="flex">
           <Field
-            title="累计奖励金"
-            :text="`${rewardAmount}`"
+            title="总储值金"
+            :text="`${storedAmount}`"
             :showBorder="false"
           />
-          <Field title="已提现奖励金" :text="`${withdrawRewardAmount}`" />
-          <Field title="可提现奖励" :text="`${leftRewardAmount}`" />
+          <Field title="已消费储值金" :text="`${usedAmount}`" />
+          <Field title="剩余储值金" :text="`${leftAmount}`" />
         </div>
       </div>
       <div class="base-title-all">
@@ -34,43 +34,18 @@
           </div>
           <div class="list-center" v-if="item.type === 1 || item.type === 2">
             <div class="construct-number">
-              <div>奖励类型：{{ item.courseName ? item.courseName : '-' }}</div>
-              <div>
-                客户姓名：{{ item.customerName ? item.customerName : '-' }}
-              </div>
-              <div>订单金额：{{ item.realAmount ? item.realAmount : '-' }}</div>
-              <div>
-                {{ item.typeName }}时间：{{
-                  item.createdAt ? item.createdAt : '-'
-                }}
-              </div>
+              <div>变动时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
           </div>
           <div class="list-center" v-if="item.type === 3">
             <div class="construct-number">
-              <div class="mar-b-8 grant-form">
-                <span
-                  >发放形式：{{
-                    item.withdrawTypeName ? item.withdrawTypeName : '-'
-                  }}</span
-                >
-                <Tag
-                  v-if="item.cancelWithdraw"
-                  color="#FFE6E6"
-                  text-color="#FF3333"
-                  text="已撤销"
-                />
-              </div>
               <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <Empty
-      v-if="!listReward.length && loading"
-      text="暂无内容，快去使用拓客卡吸引家长吧"
-    ></Empty>
+    <Empty v-if="!listReward.length && loading" text="暂无信息"></Empty>
   </div>
 </template>
 <script lang="ts">
@@ -80,19 +55,11 @@ import Field from '@/components/field.vue'
 import { API } from '@/models/api'
 
 const TYPE_NAME = {
-  1: '收入',
-  2: '退款',
-  3: '奖励发放'
+  1: '增加',
+  2: '减少',
+  3: '消费',
+  4: '退款'
 }
-const WITH_DRAW_TYPE_NAME = {
-  1: '微信',
-  2: '支付宝',
-  3: '银行转账',
-  4: 'POS机',
-  5: '现金',
-  99: '其它方式'
-}
-
 export default Vue.extend({
   name: '',
   components: { Empty, Field },
@@ -103,35 +70,26 @@ export default Vue.extend({
   },
   data() {
     return {
-      activeClick: '',
+      activeClick: 1,
       showDialog: false,
       params: {
         pageIndex: 1,
         pageSize: 100,
-        type: ''
+        type: 1
       },
       loading: true,
-      rewardAmount: '',
-      showSticky: true,
-      withdrawRewardAmount: '',
-      leftRewardAmount: '',
+      storedAmount: '',
+      usedAmount: '',
+      leftAmount: '',
       listReward: [],
       listUpAndDown: [
         {
-          key: '',
-          name: '全部'
-        },
-        {
           key: 1,
-          name: '收入'
+          name: '储值金变动'
         },
         {
           key: 2,
-          name: '退款'
-        },
-        {
-          key: 3,
-          name: '奖励发放'
+          name: '消费变动'
         }
       ],
       shareholderRewardDetailId: ''
@@ -141,20 +99,15 @@ export default Vue.extend({
     async getHistoryData() {
       const res = await API.partnersSBusiness.shareholder.detail.request({})
       console.log(res.data)
-      this.rewardAmount = res.data.rewardAmount
-      this.withdrawRewardAmount = res.data.withdrawRewardAmount
-      this.leftRewardAmount = res.data.leftRewardAmount
+      this.storedAmount = res.data.storedAmount
+      this.usedAmount = res.data.usedAmount
+      this.leftAmount = res.data.leftAmount
     },
     async getRewardList() {
       // 合作人奖励金明细
-      console.log(this.showSticky)
-      API.partnersSBusiness.shareholderReward.list
+      API.partnersSBusiness.shareholderStored.list
         .request(this.params)
         .then(res => {
-          if (!res.data.list && this.params.type === '') {
-            this.showSticky = false
-          }
-          console.log(res.data.list)
           if (!res.data.list) {
             this.loading = true
           }
@@ -164,7 +117,6 @@ export default Vue.extend({
               return {
                 ...item,
                 typeName: TYPE_NAME[item.type],
-                withdrawTypeName: WITH_DRAW_TYPE_NAME[item.withdrawType],
                 amount:
                   item.amount.charAt(0) === '-'
                     ? item.amount

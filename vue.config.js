@@ -36,7 +36,8 @@ const vantComponents = [
   'goods-action',
   'goods-action-button',
   'search',
-  'action-sheet'
+  'action-sheet',
+  'notice-bar'
 ]
 const vantIgnored = fs
   .readdirSync(path.resolve(__dirname, './node_modules/@vant/weapp/dist'))

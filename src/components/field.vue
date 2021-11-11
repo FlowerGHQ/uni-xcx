@@ -3,8 +3,15 @@
     <div class="field-title">
       {{ title }}
     </div>
-    <div class="field-text">
-      {{ text }}
+    <div class="field-text" v-if="location === '0'">
+      <span v-if="Number(text) !== 0">{{ unit }}</span>
+      <span class="field-text-t" v-if="Number(text) !== 0">{{ text }}</span>
+      <span class="field-text-t" v-else>--</span>
+    </div>
+    <div class="field-text" v-if="location === '1'">
+      <span class="field-text-t" v-if="Number(text) !== 0">{{ text }}</span>
+      <span class="field-text-t" v-if="Number(text) !== 0">{{ unit }}</span>
+      <span class="field-text-t" v-else>--</span>
     </div>
   </div>
 </template>
@@ -25,6 +32,15 @@ export default Vue.extend({
     showBorder: {
       type: Boolean,
       default: true
+    },
+    unit: {
+      type: String,
+      default: '￥'
+    },
+    location: {
+      type: String,
+      // 0为前1为后
+      default: '0'
     }
   },
   data() {
@@ -51,6 +67,12 @@ export default Vue.extend({
   }
   .field-text {
     font-size: 24rpx;
+    font-weight: bold;
+    color: #222222;
+    line-height: 48rpx;
+  }
+  .field-text-t {
+    font-size: 28rpx;
     font-weight: bold;
     color: #222222;
     line-height: 48rpx;

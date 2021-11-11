@@ -5,7 +5,8 @@
       "style": {
         "navigationBarTitleText": "首页",
         "navigationBarBackgroundColor": "#FFF",
-        "navigationBarTextStyle": "black"
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -71,7 +72,48 @@
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/business/storedValue/index",
+      "style": {
+        "navigationBarTitleText": "储值金查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/customer/index",
+      "style": {
+        "navigationBarTitleText": "客源查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/customer/detail",
+      "style": {
+        "navigationBarTitleText": "客户详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/trade/index",
+      "style": {
+        "navigationBarTitleText": "交易管理",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/trade/components/detailTransation/index",
+      "style": {
+        "navigationBarTitleText": "订单详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
     }
+    
   ],
   "globalStyle": {
     "navigationBarTextStyle": "white",
@@ -98,7 +140,8 @@
       "van-search": "/static/vant/search/index",
       "van-action-sheet": "/static/vant/action-sheet/index",
       "van-checkbox-group": "/static/vant/checkbox-group/index",
-      "van-checkbox": "/static/vant/checkbox/index"
+      "van-checkbox": "/static/vant/checkbox/index",
+      "van-notice-bar": "/static/vant/notice-bar/index"
     }
   }
 }

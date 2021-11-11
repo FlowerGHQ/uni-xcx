@@ -9,6 +9,17 @@ declare namespace defs {
       login?: boolean
     }
 
+    export class AccountDto {
+      /** 头像url */
+      avatar?: string
+
+      /** 姓名 */
+      name?: string
+
+      /** 手机号 */
+      phone?: string
+    }
+
     export class CampusListBo {
       /** 校区id */
       campusId?: number
@@ -43,7 +54,7 @@ declare namespace defs {
       startTime?: string
 
       /** 合约储值金额，单位元 */
-      storedAmount?: number
+      storedAmount?: string
     }
 
     export class CouponDto {
@@ -51,13 +62,13 @@ declare namespace defs {
       canUsed?: boolean
 
       /** 满足金额，单位元 */
-      conditionAmount?: number
+      conditionAmount?: string
 
       /** 优惠券说明 */
       description?: string
 
       /** 减金额，单位元 */
-      discountAmount?: number
+      discountAmount?: string
 
       /** 过期时间 */
       effectEndTime?: string
@@ -98,7 +109,7 @@ declare namespace defs {
       phone?: string
 
       /** 总金额，单位元 */
-      totalAmount?: number
+      totalAmount?: string
     }
 
     export class MemberCardDetailDto {
@@ -124,7 +135,7 @@ declare namespace defs {
       state?: boolean
 
       /** 价值，单位元 */
-      value?: number
+      value?: string
     }
 
     export class MemberCardDto {
@@ -147,7 +158,7 @@ declare namespace defs {
       state?: boolean
 
       /** 价值，单位元 */
-      value?: number
+      value?: string
     }
 
     export class MemberCardShareDto {
@@ -198,10 +209,10 @@ declare namespace defs {
       hasContract?: boolean
 
       /** 合作人剩余储值金额，单位元 */
-      leftAmount?: number
+      leftAmount?: string
 
       /** 合作人待提现奖励金额，单位元 */
-      leftRewardAmount?: number
+      leftRewardAmount?: string
 
       /** 合作人姓名 */
       name?: string
@@ -210,21 +221,21 @@ declare namespace defs {
       phone?: string
 
       /** 合作人总奖励金额，单位元 */
-      rewardAmount?: number
+      rewardAmount?: string
 
       /** 合作人总储值金额，单位元 */
-      storedAmount?: number
+      storedAmount?: string
 
       /** 合作人已消费储值金额，单位元 */
-      usedAmount?: number
+      usedAmount?: string
 
       /** 合作人已提现奖励金额，单位元 */
-      withdrawRewardAmount?: number
+      withdrawRewardAmount?: string
     }
 
     export class ShareholderRewardDetailDto {
       /** 奖励金变更金额，单位元 */
-      amount?: number
+      amount?: string
 
       /** 是否撤销发放 */
       cancelWithdraw?: boolean
@@ -242,7 +253,7 @@ declare namespace defs {
       id?: number
 
       /** 订单实际金额，单位元 */
-      realAmount?: number
+      realAmount?: string
 
       /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
       type?: number
@@ -273,15 +284,18 @@ declare namespace defs {
       totalCustomerCount?: number
 
       /** 累计交易金额（交易+退款），单位元 */
-      totalTransactionAmount?: number
+      totalTransactionAmount?: string
     }
 
     export class StatisticShareHolderHistoryDto {
       /** 历史客源数，单位个 */
       totalCustomerCount?: number
 
-      /** 历史奖励金，单位元 */
-      totalRewardAmount?: number
+      /** 历史奖励金 */
+      totalRewardAmount?: string
+
+      /** 历史奖励金单位 */
+      totalRewardAmountUnit?: string
 
       /** 历史交易数，单位笔 */
       totalTransactionCount?: number
@@ -291,14 +305,20 @@ declare namespace defs {
       /** 新增客源数，单位个 */
       increaseCustomerCount?: number
 
-      /** 新增的奖励金额，单位元 */
-      increaseRewardAmount?: number
+      /** 新增的奖励金额 */
+      increaseRewardAmount?: string
+
+      /** 新增的奖励金额单位 */
+      increaseRewardAmountUnit?: string
 
       /** 新增交易数，单位笔 */
       increaseTransactionCount?: number
 
-      /** 减少的奖励金额，单位元 */
-      refundRewardAmount?: number
+      /** 减少的奖励金额 */
+      refundRewardAmount?: string
+
+      /** 减少的奖励金额单位 */
+      refundRewardAmountUnit?: string
 
       /** 退款交易数，单位笔 */
       refundTransactionCount?: number
@@ -306,13 +326,112 @@ declare namespace defs {
 
     export class StoredAmountDetailListDto {
       /** 变更金额，单位元 */
-      amount?: number
+      amount?: string
 
       /** 变动时间 */
       createdAt?: string
 
       /** 变更类型：1-充值，2-退还，3-消费，4-消费退款 */
       type?: number
+    }
+
+    export class TransactionDetailDto {
+      /** 课程名称 */
+      courseName?: string
+
+      /** 消费者姓名 */
+      customerName?: string
+
+      /** 消费者手机号 */
+      customerPhone?: string
+
+      /** 额外优惠金额，单位元 */
+      extraDiscountAmount?: string
+
+      /** 是否存在退款 */
+      hasRefund?: boolean
+
+      /** 交易id */
+      id?: number
+
+      /** 课程原价，单位元 */
+      originalAmount?: string
+
+      /** 支付方式 */
+      payMethodType?: string
+
+      /** 实际交易金额，单位元 */
+      realAmount?: string
+
+      /** 退款交易id，存在退款记录时有值，否则为null */
+      refundTransactionId?: number
+
+      /** 退款交易时间，存在退款记录时有值，否则为null */
+      refundTransactionTime?: string
+
+      /** 合作人姓名 */
+      shareholderName?: string
+
+      /** 订单编号 */
+      transactionNo?: string
+
+      /** 交易时间 */
+      transactionTime?: string
+
+      /** 使用优惠券优惠金额，单位元 */
+      useCouponAmount?: string
+
+      /** 使用优惠券列表 */
+      useCoupons?: Array<defs.partnersSBusiness.TransactionUseCouponDto>
+    }
+
+    export class TransactionListDto {
+      /** 课程名称 */
+      courseName?: string
+
+      /** 消费者id */
+      customerId?: number
+
+      /** 消费者姓名 */
+      customerName?: string
+
+      /** 消费者手机号 */
+      customerPhone?: string
+
+      /** 是否存在退款 */
+      hasRefund?: boolean
+
+      /** 正向交易id */
+      id?: number
+
+      /** 实际交易金额，单位元 */
+      realAmount?: string
+
+      /** 退款交易id，存在退款记录时有值，否则为null */
+      refundTransactionId?: number
+
+      /** 退款交易时间，存在退款记录时有值，否则为null */
+      refundTransactionTime?: string
+
+      /** 合作人id */
+      shareholderId?: number
+
+      /** 合作人姓名 */
+      shareholderName?: string
+
+      /** 正向交易时间 */
+      transactionTime?: string
+    }
+
+    export class TransactionUseCouponDto {
+      /** 优惠券名称 */
+      couponName?: string
+
+      /** 优惠券规则类型：1-满减，2-赠送 */
+      couponRuleType?: number
+
+      /** 优惠券金额，单位元 */
+      discountAmount?: string
     }
 
     export class UpdateDefaultCampusVo {
@@ -344,6 +463,26 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.AccountAuthorizedDto
+          >
+        >
+      }
+
+      /**
+       * 当前用户信息
+       * /account/info
+       */
+      export namespace info {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.AccountDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.AccountDto
           >
         >
       }
@@ -481,8 +620,6 @@ declare namespace API {
           pageSize?: number
           /** searchKey */
           searchKey?: string
-          /** shareholderId */
-          shareholderId?: number
         }
 
         export type Response = defs.partnersSBusiness.SimpleResponse<
@@ -739,6 +876,65 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.StatisticShareholderPeriodDto
+          >
+        >
+      }
+    }
+
+    /**
+     * Transaction Controller
+     */
+    export namespace transaction {
+      /**
+       * 交易详情
+       * /transaction/detail
+       */
+      export namespace detail {
+        export class Params {
+          /** 正向交易id */
+          id?: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.TransactionDetailDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.TransactionDetailDto
+          >
+        >
+      }
+
+      /**
+       * 交易列表
+       * /transaction/list
+       */
+      export namespace list {
+        export class Params {
+          /** 消费者id，查询客户详情交易列表时传入 */
+          customerId?: number
+          /** pageIndex */
+          pageIndex?: number
+          /** pageSize */
+          pageSize?: number
+          /** 搜索字段：消费者手机号或姓名 */
+          searchKey?: string
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.Page<defs.partnersSBusiness.TransactionListDto>
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.Page<
+              defs.partnersSBusiness.TransactionListDto
+            >
           >
         >
       }

@@ -3,6 +3,17 @@ class AccountAuthorizedDto {
   login = false
 }
 
+class AccountDto {
+  /** 头像url */
+  avatar = ''
+
+  /** 姓名 */
+  name = ''
+
+  /** 手机号 */
+  phone = ''
+}
+
 class CampusListBo {
   /** 校区id */
   campusId = undefined
@@ -37,7 +48,7 @@ class ContractDetailDto {
   startTime = ''
 
   /** 合约储值金额，单位元 */
-  storedAmount = undefined
+  storedAmount = ''
 }
 
 class CouponDto {
@@ -45,13 +56,13 @@ class CouponDto {
   canUsed = false
 
   /** 满足金额，单位元 */
-  conditionAmount = undefined
+  conditionAmount = ''
 
   /** 优惠券说明 */
   description = ''
 
   /** 减金额，单位元 */
-  discountAmount = undefined
+  discountAmount = ''
 
   /** 过期时间 */
   effectEndTime = ''
@@ -92,7 +103,7 @@ class CustomerListDto {
   phone = ''
 
   /** 总金额，单位元 */
-  totalAmount = undefined
+  totalAmount = ''
 }
 
 class MemberCardDetailDto {
@@ -118,7 +129,7 @@ class MemberCardDetailDto {
   state = false
 
   /** 价值，单位元 */
-  value = undefined
+  value = ''
 }
 
 class MemberCardDto {
@@ -141,7 +152,7 @@ class MemberCardDto {
   state = false
 
   /** 价值，单位元 */
-  value = undefined
+  value = ''
 }
 
 class MemberCardShareDto {
@@ -192,10 +203,10 @@ class ShareholderDetailDto {
   hasContract = false
 
   /** 合作人剩余储值金额，单位元 */
-  leftAmount = undefined
+  leftAmount = ''
 
   /** 合作人待提现奖励金额，单位元 */
-  leftRewardAmount = undefined
+  leftRewardAmount = ''
 
   /** 合作人姓名 */
   name = ''
@@ -204,21 +215,21 @@ class ShareholderDetailDto {
   phone = ''
 
   /** 合作人总奖励金额，单位元 */
-  rewardAmount = undefined
+  rewardAmount = ''
 
   /** 合作人总储值金额，单位元 */
-  storedAmount = undefined
+  storedAmount = ''
 
   /** 合作人已消费储值金额，单位元 */
-  usedAmount = undefined
+  usedAmount = ''
 
   /** 合作人已提现奖励金额，单位元 */
-  withdrawRewardAmount = undefined
+  withdrawRewardAmount = ''
 }
 
 class ShareholderRewardDetailDto {
   /** 奖励金变更金额，单位元 */
-  amount = undefined
+  amount = ''
 
   /** 是否撤销发放 */
   cancelWithdraw = false
@@ -236,7 +247,7 @@ class ShareholderRewardDetailDto {
   id = undefined
 
   /** 订单实际金额，单位元 */
-  realAmount = undefined
+  realAmount = ''
 
   /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
   type = undefined
@@ -267,15 +278,18 @@ class StatisticShareHolderCustomerDto {
   totalCustomerCount = undefined
 
   /** 累计交易金额（交易+退款），单位元 */
-  totalTransactionAmount = undefined
+  totalTransactionAmount = ''
 }
 
 class StatisticShareHolderHistoryDto {
   /** 历史客源数，单位个 */
   totalCustomerCount = undefined
 
-  /** 历史奖励金，单位元 */
-  totalRewardAmount = undefined
+  /** 历史奖励金 */
+  totalRewardAmount = ''
+
+  /** 历史奖励金单位 */
+  totalRewardAmountUnit = ''
 
   /** 历史交易数，单位笔 */
   totalTransactionCount = undefined
@@ -285,14 +299,20 @@ class StatisticShareholderPeriodDto {
   /** 新增客源数，单位个 */
   increaseCustomerCount = undefined
 
-  /** 新增的奖励金额，单位元 */
-  increaseRewardAmount = undefined
+  /** 新增的奖励金额 */
+  increaseRewardAmount = ''
+
+  /** 新增的奖励金额单位 */
+  increaseRewardAmountUnit = ''
 
   /** 新增交易数，单位笔 */
   increaseTransactionCount = undefined
 
-  /** 减少的奖励金额，单位元 */
-  refundRewardAmount = undefined
+  /** 减少的奖励金额 */
+  refundRewardAmount = ''
+
+  /** 减少的奖励金额单位 */
+  refundRewardAmountUnit = ''
 
   /** 退款交易数，单位笔 */
   refundTransactionCount = undefined
@@ -300,13 +320,112 @@ class StatisticShareholderPeriodDto {
 
 class StoredAmountDetailListDto {
   /** 变更金额，单位元 */
-  amount = undefined
+  amount = ''
 
   /** 变动时间 */
   createdAt = ''
 
   /** 变更类型：1-充值，2-退还，3-消费，4-消费退款 */
   type = undefined
+}
+
+class TransactionDetailDto {
+  /** 课程名称 */
+  courseName = ''
+
+  /** 消费者姓名 */
+  customerName = ''
+
+  /** 消费者手机号 */
+  customerPhone = ''
+
+  /** 额外优惠金额，单位元 */
+  extraDiscountAmount = ''
+
+  /** 是否存在退款 */
+  hasRefund = false
+
+  /** 交易id */
+  id = undefined
+
+  /** 课程原价，单位元 */
+  originalAmount = ''
+
+  /** 支付方式 */
+  payMethodType = ''
+
+  /** 实际交易金额，单位元 */
+  realAmount = ''
+
+  /** 退款交易id，存在退款记录时有值，否则为null */
+  refundTransactionId = undefined
+
+  /** 退款交易时间，存在退款记录时有值，否则为null */
+  refundTransactionTime = ''
+
+  /** 合作人姓名 */
+  shareholderName = ''
+
+  /** 订单编号 */
+  transactionNo = ''
+
+  /** 交易时间 */
+  transactionTime = ''
+
+  /** 使用优惠券优惠金额，单位元 */
+  useCouponAmount = ''
+
+  /** 使用优惠券列表 */
+  useCoupons = []
+}
+
+class TransactionListDto {
+  /** 课程名称 */
+  courseName = ''
+
+  /** 消费者id */
+  customerId = undefined
+
+  /** 消费者姓名 */
+  customerName = ''
+
+  /** 消费者手机号 */
+  customerPhone = ''
+
+  /** 是否存在退款 */
+  hasRefund = false
+
+  /** 正向交易id */
+  id = undefined
+
+  /** 实际交易金额，单位元 */
+  realAmount = ''
+
+  /** 退款交易id，存在退款记录时有值，否则为null */
+  refundTransactionId = undefined
+
+  /** 退款交易时间，存在退款记录时有值，否则为null */
+  refundTransactionTime = ''
+
+  /** 合作人id */
+  shareholderId = undefined
+
+  /** 合作人姓名 */
+  shareholderName = ''
+
+  /** 正向交易时间 */
+  transactionTime = ''
+}
+
+class TransactionUseCouponDto {
+  /** 优惠券名称 */
+  couponName = ''
+
+  /** 优惠券规则类型：1-满减，2-赠送 */
+  couponRuleType = undefined
+
+  /** 优惠券金额，单位元 */
+  discountAmount = ''
 }
 
 class UpdateDefaultCampusVo {
@@ -316,6 +435,7 @@ class UpdateDefaultCampusVo {
 
 export const partnersSBusiness = {
   AccountAuthorizedDto,
+  AccountDto,
   CampusListBo,
   ContractDetailDto,
   CouponDto,
@@ -331,5 +451,8 @@ export const partnersSBusiness = {
   StatisticShareHolderHistoryDto,
   StatisticShareholderPeriodDto,
   StoredAmountDetailListDto,
+  TransactionDetailDto,
+  TransactionListDto,
+  TransactionUseCouponDto,
   UpdateDefaultCampusVo
 }

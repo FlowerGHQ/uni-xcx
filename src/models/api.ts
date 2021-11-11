@@ -6,7 +6,7 @@ import {
 import { defs as oauthDefs, oauth } from '@/pont/oauth'
 
 export const defs = {
-  partnersBBusiness: partnersSBusinessDefs,
+  partnersSBusiness: partnersSBusinessDefs,
   oauth: oauthDefs
 }
 export const API = {

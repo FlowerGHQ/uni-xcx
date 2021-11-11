@@ -3885,6 +3885,32 @@
               "typeProperties": []
             },
             "parameters": []
+          },
+          {
+            "description": "当前用户信息",
+            "name": "info",
+            "method": "get",
+            "path": "/account/info",
+            "response": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "AccountDto",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "SimpleResponse",
+              "isDefsType": true,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "parameters": []
           }
         ],
         "name": "account"
@@ -4208,21 +4234,6 @@
                 "dataType": {
                   "typeArgs": [],
                   "typeName": "string",
-                  "isDefsType": false,
-                  "templateIndex": -1,
-                  "compileTemplateKeyword": "#/definitions/",
-                  "enum": [],
-                  "typeProperties": []
-                }
-              },
-              {
-                "in": "query",
-                "description": "shareholderId",
-                "name": "shareholderId",
-                "required": false,
-                "dataType": {
-                  "typeArgs": [],
-                  "typeName": "number",
                   "isDefsType": false,
                   "templateIndex": -1,
                   "compileTemplateKeyword": "#/definitions/",
@@ -4729,6 +4740,154 @@
           }
         ],
         "name": "statistic"
+      },
+      {
+        "description": "Transaction Controller",
+        "interfaces": [
+          {
+            "description": "交易详情",
+            "name": "detail",
+            "method": "get",
+            "path": "/transaction/detail",
+            "response": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "TransactionDetailDto",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "SimpleResponse",
+              "isDefsType": true,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "parameters": [
+              {
+                "in": "query",
+                "description": "正向交易id",
+                "name": "id",
+                "required": false,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "number",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              }
+            ]
+          },
+          {
+            "consumes": [
+              "application/json"
+            ],
+            "description": "交易列表",
+            "name": "list",
+            "method": "post",
+            "path": "/transaction/list",
+            "response": {
+              "typeArgs": [
+                {
+                  "typeArgs": [
+                    {
+                      "typeArgs": [],
+                      "typeName": "TransactionListDto",
+                      "isDefsType": true,
+                      "templateIndex": -1,
+                      "compileTemplateKeyword": "#/definitions/",
+                      "enum": [],
+                      "typeProperties": []
+                    }
+                  ],
+                  "typeName": "Page",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "SimpleResponse",
+              "isDefsType": true,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "parameters": [
+              {
+                "in": "query",
+                "description": "消费者id，查询客户详情交易列表时传入",
+                "name": "customerId",
+                "required": false,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "number",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              },
+              {
+                "in": "query",
+                "description": "pageIndex",
+                "name": "pageIndex",
+                "required": false,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "number",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              },
+              {
+                "in": "query",
+                "description": "pageSize",
+                "name": "pageSize",
+                "required": false,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "number",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              },
+              {
+                "in": "query",
+                "description": "搜索字段：消费者手机号或姓名",
+                "name": "searchKey",
+                "required": false,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "string",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              }
+            ]
+          }
+        ],
+        "name": "transaction"
       }
     ],
     "name": "partnersSBusiness",
@@ -4748,6 +4907,54 @@
             },
             "name": "login",
             "description": "是否已登录",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
+        "name": "AccountDto",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "avatar",
+            "description": "头像url",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "name",
+            "description": "姓名",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "phone",
+            "description": "手机号",
             "required": false
           }
         ],
@@ -4905,7 +5112,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -4939,7 +5146,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -4967,7 +5174,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5159,7 +5366,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5287,7 +5494,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5391,7 +5598,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5631,7 +5838,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5645,7 +5852,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5687,7 +5894,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5701,7 +5908,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5715,7 +5922,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5729,7 +5936,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5749,7 +5956,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5833,7 +6040,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -5977,7 +6184,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -6011,7 +6218,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -6019,7 +6226,21 @@
               "typeProperties": []
             },
             "name": "totalRewardAmount",
-            "description": "历史奖励金，单位元",
+            "description": "历史奖励金",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "totalRewardAmountUnit",
+            "description": "历史奖励金单位",
             "required": false
           },
           {
@@ -6059,7 +6280,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -6067,7 +6288,21 @@
               "typeProperties": []
             },
             "name": "increaseRewardAmount",
-            "description": "新增的奖励金额，单位元",
+            "description": "新增的奖励金额",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "increaseRewardAmountUnit",
+            "description": "新增的奖励金额单位",
             "required": false
           },
           {
@@ -6087,7 +6322,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -6095,7 +6330,21 @@
               "typeProperties": []
             },
             "name": "refundRewardAmount",
-            "description": "减少的奖励金额，单位元",
+            "description": "减少的奖励金额",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "refundRewardAmountUnit",
+            "description": "减少的奖励金额单位",
             "required": false
           },
           {
@@ -6121,7 +6370,7 @@
           {
             "dataType": {
               "typeArgs": [],
-              "typeName": "number",
+              "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
               "compileTemplateKeyword": "#/definitions/",
@@ -6158,6 +6407,468 @@
             },
             "name": "type",
             "description": "变更类型：1-充值，2-退还，3-消费，4-消费退款",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
+        "name": "TransactionDetailDto",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "courseName",
+            "description": "课程名称",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "customerName",
+            "description": "消费者姓名",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "customerPhone",
+            "description": "消费者手机号",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "extraDiscountAmount",
+            "description": "额外优惠金额，单位元",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "boolean",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "hasRefund",
+            "description": "是否存在退款",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "id",
+            "description": "交易id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "originalAmount",
+            "description": "课程原价，单位元",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "payMethodType",
+            "description": "支付方式",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "realAmount",
+            "description": "实际交易金额，单位元",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "refundTransactionId",
+            "description": "退款交易id，存在退款记录时有值，否则为null",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "refundTransactionTime",
+            "description": "退款交易时间，存在退款记录时有值，否则为null",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "shareholderName",
+            "description": "合作人姓名",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "transactionNo",
+            "description": "订单编号",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "transactionTime",
+            "description": "交易时间",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "useCouponAmount",
+            "description": "使用优惠券优惠金额，单位元",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "TransactionUseCouponDto",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "Array",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "useCoupons",
+            "description": "使用优惠券列表",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
+        "name": "TransactionListDto",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "courseName",
+            "description": "课程名称",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "customerId",
+            "description": "消费者id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "customerName",
+            "description": "消费者姓名",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "customerPhone",
+            "description": "消费者手机号",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "boolean",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "hasRefund",
+            "description": "是否存在退款",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "id",
+            "description": "正向交易id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "realAmount",
+            "description": "实际交易金额，单位元",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "refundTransactionId",
+            "description": "退款交易id，存在退款记录时有值，否则为null",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "refundTransactionTime",
+            "description": "退款交易时间，存在退款记录时有值，否则为null",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "shareholderId",
+            "description": "合作人id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "shareholderName",
+            "description": "合作人姓名",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "transactionTime",
+            "description": "正向交易时间",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
+        "name": "TransactionUseCouponDto",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "couponName",
+            "description": "优惠券名称",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "couponRuleType",
+            "description": "优惠券规则类型：1-满减，2-赠送",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "discountAmount",
+            "description": "优惠券金额，单位元",
             "required": false
           }
         ],

@@ -4,12 +4,20 @@
       <div class="base-card tab-base">
         <div class="flex">
           <Field
-            title="累计奖励金"
-            :text="`${rewardAmount}`"
+            title="累计拓客数"
+            :text="shareRecordObj.totalCustomerCount"
             :showBorder="false"
+            unit=" "
           />
-          <Field title="已提现奖励金" :text="`${withdrawRewardAmount}`" />
-          <Field title="可提现奖励" :text="`${leftRewardAmount}`" />
+          <Field
+            title="待成交客户"
+            :text="shareRecordObj.noTransactionCustomerCount"
+            unit=" "
+          />
+          <Field
+            title="累计成交额"
+            :text="shareRecordObj.totalTransactionAmount"
+          />
         </div>
       </div>
       <div class="base-title-all">
@@ -25,43 +33,22 @@
     </van-sticky>
     <div class="list-content">
       <div class="list-all" v-for="item in listReward" :key="item.id">
-        <div class="partner-list">
+        <div class="partner-list base-card" @click="openDetail(item.id)">
           <div class="list-top">
             <div class="list-top-left list-top-text">
-              {{ item.typeName ? item.typeName : '-' }}
+              {{ item.name ? item.name : '-' }}
             </div>
-            <div class="number">{{ item.amount }}</div>
-          </div>
-          <div class="list-center" v-if="item.type === 1 || item.type === 2">
-            <div class="construct-number">
-              <div>奖励类型：{{ item.courseName ? item.courseName : '-' }}</div>
-              <div>
-                客户姓名：{{ item.customerName ? item.customerName : '-' }}
-              </div>
-              <div>订单金额：{{ item.realAmount ? item.realAmount : '-' }}</div>
-              <div>
-                {{ item.typeName }}时间：{{
-                  item.createdAt ? item.createdAt : '-'
-                }}
-              </div>
+            <div class="list-top-number">
+              <span v-if="Number(item.totalAmount) > 0" class="small-add"
+                >+</span
+              >{{ item.totalAmount }}
             </div>
           </div>
-          <div class="list-center" v-if="item.type === 3">
+          <div class="list-center">
             <div class="construct-number">
-              <div class="mar-b-8 grant-form">
-                <span
-                  >发放形式：{{
-                    item.withdrawTypeName ? item.withdrawTypeName : '-'
-                  }}</span
-                >
-                <Tag
-                  v-if="item.cancelWithdraw"
-                  color="#FFE6E6"
-                  text-color="#FF3333"
-                  text="已撤销"
-                />
-              </div>
-              <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
+              <div class="">{{ item.phone }}</div>
+              <div class="thin-line"></div>
+              <div>录入时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
           </div>
         </div>
@@ -103,35 +90,33 @@ export default Vue.extend({
   },
   data() {
     return {
-      activeClick: '',
+      activeClick: 0,
       showDialog: false,
       params: {
         pageIndex: 1,
         pageSize: 100,
-        type: ''
+        hasTransactionType: 0
       },
       loading: true,
-      rewardAmount: '',
       showSticky: true,
-      withdrawRewardAmount: '',
-      leftRewardAmount: '',
+      shareRecordObj: {
+        noTransactionCustomerCount: '',
+        totalCustomerCount: '',
+        totalTransactionAmount: ''
+      },
       listReward: [],
       listUpAndDown: [
         {
-          key: '',
+          key: 0,
           name: '全部'
         },
         {
           key: 1,
-          name: '收入'
+          name: '已成交'
         },
         {
           key: 2,
-          name: '退款'
-        },
-        {
-          key: 3,
-          name: '奖励发放'
+          name: '未成交'
         }
       ],
       shareholderRewardDetailId: ''
@@ -139,44 +124,27 @@ export default Vue.extend({
   },
   methods: {
     async getHistoryData() {
-      const res = await API.partnersSBusiness.shareholder.detail.request({})
-      console.log(res.data)
-      this.rewardAmount = res.data.rewardAmount
-      this.withdrawRewardAmount = res.data.withdrawRewardAmount
-      this.leftRewardAmount = res.data.leftRewardAmount
+      const res = await API.partnersSBusiness.customer.statistic.request({})
+      this.shareRecordObj = Object.assign({}, res.data)
     },
     async getRewardList() {
-      // 合作人奖励金明细
-      console.log(this.showSticky)
-      API.partnersSBusiness.shareholderReward.list
-        .request(this.params)
-        .then(res => {
-          if (!res.data.list && this.params.type === '') {
-            this.showSticky = false
-          }
-          console.log(res.data.list)
-          if (!res.data.list) {
-            this.loading = true
-          }
-          if (res.data.list) {
-            this.loading = false
-            this.listReward = res.data.list.map(item => {
-              return {
-                ...item,
-                typeName: TYPE_NAME[item.type],
-                withdrawTypeName: WITH_DRAW_TYPE_NAME[item.withdrawType],
-                amount:
-                  item.amount.charAt(0) === '-'
-                    ? item.amount
-                    : `+${item.amount}`
-              }
-            })
-          }
-        })
+      API.partnersSBusiness.customer.list.request(this.params).then(res => {
+        if (!res.data.list && this.params.hasTransactionType === 0) {
+          this.showSticky = false
+        }
+        console.log(res.data.list)
+        if (!res.data.list) {
+          this.loading = true
+        }
+        if (res.data.list) {
+          this.loading = false
+          this.listReward = res.data.list
+        }
+      })
     },
     onUpAndDown(key) {
       this.activeClick = key
-      this.params.type = key
+      this.params.hasTransactionType = key
       // 每次切换的时候清空列表并且将pageIndex重置
       this.listReward = []
       this.params.pageIndex = 1
@@ -185,20 +153,31 @@ export default Vue.extend({
 
     onConfirm() {
       this.showDialog = false
+    },
+    openDetail(id){
+      uni.navigateTo({
+        url: `/pages/business/customer/detail?customerId=${id}`
+      })
     }
   }
 })
 </script>
 <style lang="less" scoped>
+.list-all {
+  margin: 0 32rpx 32rpx;
+}
 .partner-list {
   background: #ffffff;
   border-radius: 16rpx;
-  border: 1rpx solid #ecedf4;
-  padding: 32rpx;
   .list-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    &-number {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #222222;
+    }
     &-text {
       font-size: 32rpx;
       font-weight: 500;
@@ -215,10 +194,9 @@ export default Vue.extend({
   .list-center {
     font-size: 24rpx;
     font-weight: 400;
-    padding-bottom: 16rpx;
     color: #666666;
     line-height: 32rpx;
-    margin: 4rpx 0 32rpx;
+    margin: 4rpx 0 0;
   }
 }
 .list-content {
@@ -252,5 +230,17 @@ export default Vue.extend({
 .grant-form {
   display: flex;
   justify-content: space-between;
+}
+.thin-line {
+  margin: 16rpx 0;
+  height: 1rpx;
+  width: 100%;
+  background-color: #eeeeee;
+}
+.small-add {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #222222;
+  line-height: 48rpx;
 }
 </style>

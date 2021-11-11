@@ -3,7 +3,7 @@
     <div class="error-login" v-if="hasError">
       {{ errorMessage }}
     </div>
-    <div class="change-org" @click="changeSchoolOrg">
+    <!-- <div class="change-org" @click="changeSchoolOrg">
       <div class="flex">
         <img
           src="../../assets/images/place.png"
@@ -18,6 +18,33 @@
         <div class="school-title">{{ defaultSchool }}</div>
       </div>
       <img src="../../assets/images/right-arrow.png" class="icon-right" />
+    </div> -->
+    <div class="top">
+      <van-nav-bar
+        title="首页"
+        @click-left="onClickLeft"
+        custom-style="background-color:transparent"
+      />
+      <div class="change-org" @click="changeSchoolOrg">
+        <div class="flex">
+          <img
+            src="../../assets/images/place.png"
+            class="icon-place"
+            v-if="!hasError"
+          />
+          <img
+            src="../../assets/images/place-disabled.png"
+            class="icon-place"
+            v-else
+          />
+          <div class="school-title">{{ defaultSchool }}</div>
+        </div>
+        <img src="../../assets/images/right-arrow.png" class="icon-right" />
+      </div>
+      <img src="../../assets/images/background-home.png" class="icon-inmage" />
+    </div>
+    <div class="middle-item">
+      <ScrollMiddle ref="scrollMiddle"></ScrollMiddle>
     </div>
     <div class="common-func">
       <div @click="openScan" class="common-func-title">常用功能</div>
@@ -26,7 +53,6 @@
         @click="shareCard"
         :class="{ 'error-card': hasError, 'normal-card': !hasError }"
       >
-        <!-- <div class="talk-icon">1</div>“ -->
         <img
           src="../../assets/images/card.png"
           class="talk-icon"
@@ -53,13 +79,14 @@
 </template>
 <script lang="ts">
 import CommonList from './components/common-button-list.vue'
+import ScrollMiddle from './components/scrollMiddle/scroll-middle.vue'
 import Vue from 'vue'
 import { API } from '@/models/api'
 import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { CommonList },
+  components: { CommonList, ScrollMiddle },
   data() {
     return {
       defaultSchool: '切换校区',
@@ -79,9 +106,6 @@ export default Vue.extend({
     this.init()
   },
   methods: {
-    openNext() {
-      console.log(222)
-    },
     async init() {
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
@@ -140,7 +164,6 @@ export default Vue.extend({
       })
     },
     changeSchoolOrg() {
-      console.log(1)
       uni.navigateTo({
         url: '/pages/business/schoolList/index'
       })
@@ -168,7 +191,7 @@ export default Vue.extend({
 }
 .common-func {
   width: 750rpx;
-  height: calc(1000rpx + var(--safe-area-inset-bottom));
+  height: 900rpx;
   background: #ffffff;
   border-radius: 64rpx 64rpx 0rpx 0rpx;
   position: absolute;
@@ -265,5 +288,19 @@ export default Vue.extend({
   line-height: 44rpx;
   padding: 22rpx 32rpx;
   text-align: center;
+}
+.icon-inmage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.74) 0%,
+    rgba(255, 255, 255, 0.21) 100%
+  );
+  filter: blur(70rpx);
+  z-index: -1;
+  width: 750rpx;
+  height: 1116rpx;
 }
 </style>

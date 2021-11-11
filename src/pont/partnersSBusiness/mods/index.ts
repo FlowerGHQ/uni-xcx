@@ -7,6 +7,7 @@ import * as shareholder from './shareholder'
 import * as shareholderReward from './shareholderReward'
 import * as shareholderStored from './shareholderStored'
 import * as statistic from './statistic'
+import * as transaction from './transaction'
 
 export const partnersSBusiness = {
   account,
@@ -17,5 +18,6 @@ export const partnersSBusiness = {
   shareholder,
   shareholderReward,
   shareholderStored,
-  statistic
+  statistic,
+  transaction
 }
