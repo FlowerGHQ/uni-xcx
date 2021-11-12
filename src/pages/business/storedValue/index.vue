@@ -144,8 +144,7 @@ export default Vue.extend({
 <style lang="less" scoped>
 .partner-list {
   background: #ffffff;
-  border-radius: 16rpx;
-  border: 1rpx solid #ecedf4;
+  border-bottom: 1rpx solid #ecedf4;
   padding: 32rpx;
   .list-top {
     display: flex;

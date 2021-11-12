@@ -23,7 +23,8 @@
               {{ item.customerName ? item.customerName : '-' }}
             </div>
             <div class="list-top-number">
-              {{ item.realAmount ? '+' + item.realAmount : '-' }}
+              <span v-if="Number(item.realAmount) > 0" class="small-add">+</span
+              >{{ item.realAmount }}
             </div>
           </div>
           <div class="list-center">
@@ -158,13 +159,13 @@ export default Vue.extend({
 .partner-list {
   background: #ffffff;
   border-radius: 16rpx;
-  border: 1rpx solid #ecedf4;
-  padding: 32rpx;
+  padding: 32rpx 0 32rpx 32rpx;
   .list-center,
   .list-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    padding-right: 32rpx;
     &-text {
       font-size: 32rpx;
       font-weight: 500;
@@ -172,10 +173,13 @@ export default Vue.extend({
       line-height: 44rpx;
     }
     &-number {
-      font-size: 24rpx;
+      font-size: 32rpx;
       font-weight: 500;
       color: #222222;
       line-height: 48rpx;
+      .small-add {
+        font-size: 24rpx;
+      }
     }
   }
   .list-center {
@@ -184,12 +188,14 @@ export default Vue.extend({
     color: #666666;
     line-height: 32rpx;
     margin: 4rpx 0 32rpx;
+    padding-right: 32rpx;
   }
   .list-bottom {
     font-size: 24rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #888888;
+    padding-right: 32rpx;
     &-test {
       margin-top: 8rpx;
     }

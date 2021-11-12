@@ -77,6 +77,7 @@
 import Vue from 'vue'
 import Empty from '@/components/empty.vue'
 import Field from '@/components/field.vue'
+import Tag from '@/components/tag.vue'
 import { API } from '@/models/api'
 
 const TYPE_NAME = {
@@ -95,7 +96,7 @@ const WITH_DRAW_TYPE_NAME = {
 
 export default Vue.extend({
   name: '',
-  components: { Empty, Field },
+  components: { Empty, Field,Tag },
   props: {},
   onLoad(option: any) {
     this.getRewardList()
@@ -192,13 +193,13 @@ export default Vue.extend({
 <style lang="less" scoped>
 .partner-list {
   background: #ffffff;
-  border-radius: 16rpx;
-  border: 1rpx solid #ecedf4;
+  border-bottom: 1rpx solid #ecedf4;
   padding: 32rpx;
   .list-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    margin-bottom: 16rpx;
     &-text {
       font-size: 32rpx;
       font-weight: 500;
@@ -219,6 +220,9 @@ export default Vue.extend({
     color: #666666;
     line-height: 32rpx;
     margin: 4rpx 0 32rpx;
+    .construct-number > div{
+      margin-bottom: 8rpx;
+    }
   }
 }
 .list-content {

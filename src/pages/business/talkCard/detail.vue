@@ -49,7 +49,7 @@
         @change="onChange"
         @finish="onFinish"
       >
-        <span class="count-down">{{ timeData.curHour }}</span>
+        <span class="count-down">{{ timeData.hours }}</span>
         <span class="span-spacing">:</span>
         <span class="count-down">{{ timeData.minutes }}</span>
         <span class="span-spacing">:</span>
@@ -117,8 +117,13 @@ export default Vue.extend({
       console.log(e.target.name)
     },
     onChange(e) {
-      const curHour = 24 * e.detail.days
-      this.timeData = { ...e.detail, curHour }
+     const curH = 24 * e.detail.days + e.detail.hours
+      this.timeData = {
+        ...e.detail,
+        hours: curH.length > 1 ? curH : `0${curH}`,
+        minutes: e.detail.hours.length > 1 ? e.detail.minutes : `0${e.detail.minutes}`,
+        seconds: e.detail.seconds.length > 1 ? e.detail.seconds : `0${e.detail.seconds}`
+      }
     },
     onFinish() {
       this.isFinish = true

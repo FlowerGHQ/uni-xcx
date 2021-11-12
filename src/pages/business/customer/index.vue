@@ -154,7 +154,7 @@ export default Vue.extend({
     onConfirm() {
       this.showDialog = false
     },
-    openDetail(id){
+    openDetail(id) {
       uni.navigateTo({
         url: `/pages/business/customer/detail?customerId=${id}`
       })
@@ -169,14 +169,20 @@ export default Vue.extend({
 .partner-list {
   background: #ffffff;
   border-radius: 16rpx;
+  padding: 32rpx 0 32rpx 32rpx;
   .list-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    padding-right: 32rpx;
     &-number {
       font-size: 32rpx;
-      font-weight: bold;
+      font-weight: 500;
       color: #222222;
+      line-height: 48rpx;
+      .small-add {
+        font-size: 24rpx;
+      }
     }
     &-text {
       font-size: 32rpx;

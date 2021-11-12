@@ -2,20 +2,18 @@
   <div class="list-view" :class="tagObj.className">
     <div class="title mar-b-8">{{ tagObj.name }}</div>
     <div class="number mar-b-8">
-      {{ tagObj.totalNumber }}
+      {{ tagObj.totalNumber || 0 }}
       <span class="number-unit mar-l-10">{{ tagObj.totalUnit }}</span>
     </div>
     <div class="add-number mar-b-8 base-nowrap">
       <span class="mar-r-10">新增</span>
-      <span class="font-28 number-family">{{ tagObj.addNumber }}</span>
+      <span class="font-28 number-family">{{ tagObj.addNumber || 0  }}</span>
       <img :src="imageUp" class="mar-l-10" />
     </div>
-    <div class="refund-number base-nowrap" v-if="tagObj.typeName">
+    <div class="refund-number base-nowrap">
       <span class="mar-r-10">{{ tagObj.typeName }}</span>
-      <span class="font-28 number-family">{{
-        tagObj.refundNumber ? tagObj.refundNumber : '-'
-      }}</span>
-      <img :src="imageDown" class="mar-l-10" />
+      <span class="font-28 number-family" v-if="tagObj.typeName" >{{ tagObj.refundNumber || 0}}</span>
+      <img :src="imageDown" class="mar-l-10" v-if="tagObj.typeName" />
     </div>
   </div>
 </template>
@@ -54,13 +52,12 @@ img {
 }
 .list-view {
   width: 260rpx;
-  height: 256rpx;
-  background: linear-gradient(209deg, #ffb3a0 0%, #fc776c 100%);
-  box-shadow: 0px 20rpx 40rpx 0px rgba(254, 88, 49, 0.37);
+  background: #ffffff;
+  box-shadow: 0px 20rpx 40rpx 0px rgba(3, 3, 3, 0.06);
   border-radius: 16rpx;
   padding: 32rpx 0 32rpx 32rpx;
   box-sizing: border-box;
-  margin-left: 16rpx;
+  margin-right: 16rpx;
   margin-bottom: 16rpx;
   .title {
     font-size: 24rpx;
@@ -90,9 +87,5 @@ img {
     font-family: D-DIN, D;
     font-weight: normal;
   }
-}
-.white {
-  background: #ffffff;
-  box-shadow: 0px 10px 20px 0px rgba(3, 3, 3, 0.06);
 }
 </style>

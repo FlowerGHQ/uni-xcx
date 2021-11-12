@@ -126,7 +126,7 @@ export default Vue.extend({
           id: 4,
           name: '历史客源数(个）',
           className: 'white',
-          type: 'shareholder',
+          type: 'customer',
           totalNumber: '',
           addNumber: '',
           refundNumber: '',
@@ -135,7 +135,7 @@ export default Vue.extend({
         {
           id: 5,
           name: '历史交易笔数(笔)',
-          type: 'storedAmount',
+          type: 'transationCount',
           className: 'white',
           totalNumber: '',
           addNumber: '',
@@ -162,23 +162,24 @@ export default Vue.extend({
     scroll() {},
     // 点击跳转
     clickItem(type) {
-      // switch (type) {
-      //   case 'customer':
-      //     uni.navigateTo({
-      //       url: '/pages/customer/customManage/index'
-      //     })
-      //     break
-      //   case 'transationCount':
-      //     uni.navigateTo({
-      //       url: '/pages/business/transation/index'
-      //     })
-      //     break
-      //   case 'rewardAmount':
-      //     uni.navigateTo({
-      //       url: '/pages/business/transation/index'
-      //     })
-      //     break
-      // }
+      console.log(type)
+      switch (type) {
+        case 'customer':
+          uni.navigateTo({
+            url: '/pages/business/customer/index'
+          })
+          break
+        case 'transationCount':
+          uni.navigateTo({
+            url: '/pages/business/trade/index'
+          })
+          break
+        case 'rewardAmount':
+          uni.navigateTo({
+            url: '/pages/business/reward/index'
+          })
+          break
+      }
     },
     async onUpAndDown(key) {
       switch (key) {
@@ -230,50 +231,17 @@ export default Vue.extend({
     // 添加属性主要为了好循环
     getNumberChange(res) {
       if (res.data) {
-        this.list.forEach(item => {
-          if (item.id === 1) {
-            item.addNumber = res.data.increaseCustomerCount
-              ? `${res.data.increaseCustomerCount}`
-              : '-'
-          }
-          if (item.id === 2) {
-            item.addNumber = res.data.increaseTransactionCount
-              ? `${res.data.increaseTransactionCount}`
-              : '-'
-            item.refundNumber = res.data.refundTransactionCount
-              ? `${res.data.refundTransactionCount}`
-              : '-'
-          }
-          if (item.id === 3) {
-            item.addNumber = res.data.increaseTransactionAmount
-              ? `${res.data.increaseTransactionAmount}${res.data.increaseTransactionAmountUnit}`
-              : `-`
-            item.refundNumber = res.data.refundTransactionAmount
-              ? `${res.data.refundTransactionAmount}${res.data.refundTransactionAmountUnit}`
-              : '-'
-          }
-        })
         this.listBottom.forEach(item => {
           if (item.id === 4) {
-            item.addNumber = res.data.increaseShareholderCount
-              ? `${res.data.increaseShareholderCount}`
-              : '-'
+            item.addNumber = res.data.increaseCustomerCount || 0
           }
           if (item.id === 5) {
-            item.addNumber = res.data.increaseStoredAmount
-              ? `${res.data.increaseStoredAmount}${res.data.increaseStoredAmountUnit}`
-              : '-'
-            item.refundNumber = res.data.usedStoredAmount
-              ? `${res.data.usedStoredAmount}${res.data.usedStoredAmountUnit}`
-              : '-'
+            item.addNumber = res.data.increaseTransactionCount || 0
+            item.refundNumber = res.data.refundTransactionCount || 0
           }
           if (item.id === 6) {
-            item.addNumber = Number(res.data.increaseRewardAmount)
-              ? `${res.data.increaseRewardAmount}${res.data.increaseRewardAmountUnit}`
-              : `-`
-            item.refundNumber = res.data.withdrawRewardAmount
-              ? `${res.data.withdrawRewardAmount}${res.data.withdrawRewardAmountUnit}`
-              : '-'
+            item.addNumber = `${res.data.increaseRewardAmount}${res.data.increaseRewardAmountUnit}`
+            item.refundNumber = `${res.data.refundRewardAmount}${res.data.refundRewardAmountUnit}`
           }
         })
       }

@@ -59,7 +59,7 @@ export default class extends Vue {
       let data = await wx.login()
       await API.oauth.login.miniProgramLogin.request({
         code: data.code,
-        notAutoLogin: true
+        notAutoLogin: false
       })
       const { detail } = e
       if (detail.errMsg !== 'getPhoneNumber:ok') {

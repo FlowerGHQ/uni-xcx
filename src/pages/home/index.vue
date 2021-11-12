@@ -1,8 +1,5 @@
 <template>
   <div class="user-login">
-    <div class="error-login" v-if="hasError">
-      {{ errorMessage }}
-    </div>
     <!-- <div class="change-org" @click="changeSchoolOrg">
       <div class="flex">
         <img
@@ -25,6 +22,9 @@
         @click-left="onClickLeft"
         custom-style="background-color:transparent"
       />
+      <div class="error-login" v-if="hasError">
+        {{ errorMessage }}
+      </div>
       <div class="change-org" @click="changeSchoolOrg">
         <div class="flex">
           <img
@@ -46,7 +46,7 @@
     <div class="middle-item">
       <ScrollMiddle ref="scrollMiddle"></ScrollMiddle>
     </div>
-    <div class="common-func">
+    <div class="common-func" :class="{ 'common-func-height': hasError }">
       <div @click="openScan" class="common-func-title">常用功能</div>
       <div
         class="flex talk-card base-card"
@@ -96,6 +96,8 @@ export default Vue.extend({
     }
   },
   async onShow() {
+    ;(this.$refs.scrollMiddle as any).getCampuHistory()
+    ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
     wx.hideHomeButton()
     this.init()
   },
@@ -197,6 +199,9 @@ export default Vue.extend({
   position: absolute;
   bottom: 0;
   left: 0;
+}
+.common-func-height {
+  height: 750rpx;
 }
 .common-func-title {
   padding: 48rpx 32rpx 48rpx;
