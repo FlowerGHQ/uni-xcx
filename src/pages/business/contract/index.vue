@@ -29,7 +29,7 @@
           <div class="title">合同结束时间</div>
           <div class="content">{{ endTime }}</div>
         </div>
-        <div class="flex contract-list">
+        <div class="flex contract-list" v-if="remark">
           <div class="title">备注</div>
           <div class="content">
             {{ remark }}
@@ -93,7 +93,7 @@ export default Vue.extend({
 .partner-card {
   width: 686rpx;
   height: 212rpx;
-  margin: 32rpx;
+  margin: 32rpx 32rpx 0;
   background: linear-gradient(223deg, #fdb2a1 0%, #fd776c 100%);
   color: #ffffff;
   &-name {

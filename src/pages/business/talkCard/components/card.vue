@@ -135,7 +135,6 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 48rpx;
   .icon-picture {
     width: 64rpx;
     height: 64rpx;

@@ -82,7 +82,7 @@ export default Vue.extend({
         pageIndex: 1,
         pageSize: 10
       },
-      total: '',
+      total: 0,
       transationList: [],
       finished: false
     }
@@ -126,7 +126,7 @@ export default Vue.extend({
           // this.changeTransationList(res.data.list)
           ;(this.transationList as any).push(...res.data.list)
         }
-        if (res.data.total === this.transationList.length) {
+        if (res.data.total === this.transationList?.length) {
           this.finished = true
         } else {
           this.formObj.pageIndex++

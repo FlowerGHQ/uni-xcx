@@ -30,7 +30,7 @@
             <div class="list-top-left list-top-text">
               {{ item.typeName ? item.typeName : '-' }}
             </div>
-            <div class="number">{{ item.amount }}</div>
+            <div class="list-top-number">{{ item.amount }}</div>
           </div>
           <div class="list-center" v-if="item.type === 1 || item.type === 2">
             <div class="construct-number">
@@ -162,14 +162,17 @@ export default Vue.extend({
         font-weight: 400;
       }
     }
+    &-number {
+      font-weight: 500;
+    }
   }
   .list-center {
     font-size: 24rpx;
     font-weight: 400;
-    padding-bottom: 16rpx;
+    // padding-bottom: 16rpx;
     color: #666666;
     line-height: 32rpx;
-    margin: 4rpx 0 32rpx;
+    margin: 4rpx 0 0;
   }
 }
 .list-content {

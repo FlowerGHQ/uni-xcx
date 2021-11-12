@@ -69,8 +69,8 @@
         </div>
         <div class="share-button">立即分享</div>
       </div>
-      <div class="common-func-list" @click="hasError ? handleDetail() : null">
-        <CommonList :error="hasError" />
+      <div class="common-func-list" @click="notClick ? handleDetail() : null">
+        <CommonList :error="notClick" />
       </div>
     </div>
 
@@ -92,7 +92,8 @@ export default Vue.extend({
       defaultSchool: '切换校区',
       errorMessage: '',
       hasError: false,
-      errorTitle: ''
+      errorTitle: '',
+      notClick: false
     }
   },
   async onShow() {
@@ -115,6 +116,7 @@ export default Vue.extend({
         this.defaultSchool = res.data.find(item => item.isDefault).name
         if (!res1.data) {
           this.hasError = true
+          this.notClick = true
           this.errorTitle = '暂无合约提醒'
           this.errorMessage =
             '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
@@ -144,7 +146,7 @@ export default Vue.extend({
       }
     },
     handleDetail() {
-      if (this.hasError) {
+      if (this.notClick) {
         this.$dialog.alert({
           title: this.errorTitle,
           message: this.errorMessage,
@@ -193,7 +195,7 @@ export default Vue.extend({
 }
 .common-func {
   width: 750rpx;
-  height: 900rpx;
+  height: 950rpx;
   background: #ffffff;
   border-radius: 64rpx 64rpx 0rpx 0rpx;
   position: absolute;
@@ -201,7 +203,7 @@ export default Vue.extend({
   left: 0;
 }
 .common-func-height {
-  height: 750rpx;
+  height: 830rpx;
 }
 .common-func-title {
   padding: 48rpx 32rpx 48rpx;

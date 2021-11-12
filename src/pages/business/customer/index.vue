@@ -164,7 +164,7 @@ export default Vue.extend({
 </script>
 <style lang="less" scoped>
 .list-all {
-  margin: 0 32rpx 32rpx;
+  margin: 0 32rpx 16rpx;
 }
 .partner-list {
   background: #ffffff;

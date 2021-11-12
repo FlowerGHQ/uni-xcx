@@ -19,8 +19,8 @@ export default class extends Vue {
 <style lang="less" scoped>
 .empty {
   .empty-image {
-    width: 300rpx;
-    height: 300rpx;
+    width: 200rpx;
+    height: 200rpx;
     margin: 0 auto;
     background-color: transparent;
     background-position: center;

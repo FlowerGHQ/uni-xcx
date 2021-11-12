@@ -20,12 +20,13 @@
               @shelfClick="shelfClick(item)"
             />
           </div>
-           <Empty v-if="!memberCard.couponList.length" text="暂无内容" />
+          <Empty v-if="!memberCard.couponList.length" text="暂无内容" />
         </div>
       </van-tab>
       <van-tab title="权益介绍" name="introdece">
         <div class="tab-rights">
           {{ memberCard.description }}
+           <Empty v-if="!memberCard.description" text="暂无内容" />
         </div>
       </van-tab>
       <!-- <van-tab title="校区介绍" name="school">
@@ -83,7 +84,7 @@ import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { Card, DiscountItem, SaveAlbum,Empty },
+  components: { Card, DiscountItem, SaveAlbum, Empty },
   data() {
     return {
       defaultSchool: '',
@@ -117,12 +118,19 @@ export default Vue.extend({
       console.log(e.target.name)
     },
     onChange(e) {
-     const curH = 24 * e.detail.days + e.detail.hours
+      const curH = 24 * e.detail.days + e.detail.hours
+      console.log(e.detail.minutes)
       this.timeData = {
         ...e.detail,
-        hours: curH.length > 1 ? curH : `0${curH}`,
-        minutes: e.detail.hours.length > 1 ? e.detail.minutes : `0${e.detail.minutes}`,
-        seconds: e.detail.seconds.length > 1 ? e.detail.seconds : `0${e.detail.seconds}`
+        hours: curH < 10 ? `0${curH}` : curH,
+        minutes:
+          e.detail.minutes < 10
+            ? `0${e.detail.minutes}`
+            : e.detail.minutes,
+        seconds:
+          e.detail.seconds < 10
+            ? `0${e.detail.seconds}`
+            : e.detail.seconds
       }
     },
     onFinish() {
@@ -140,8 +148,7 @@ export default Vue.extend({
     closeQRcode() {
       this.showQRcode = false
       console.log(11)
-    },
-  
+    }
   }
 })
 </script>
@@ -154,7 +161,7 @@ export default Vue.extend({
   margin: 32rpx;
 }
 .change-org {
-  margin: 32rpx;
+  margin: 0 32rpx 32rpx;
   width: 686rpx;
   height: 96rpx;
   background: #ffffff;
@@ -187,6 +194,7 @@ export default Vue.extend({
 .icon-place {
   width: 44rpx;
   height: 44rpx;
+  margin-right: 8rpx;
 }
 .icon-right {
   width: 24rpx;
