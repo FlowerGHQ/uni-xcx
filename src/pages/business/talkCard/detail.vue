@@ -18,6 +18,7 @@
               :discountObj="item"
               @viewClick="viewClick(item.id)"
               @shelfClick="shelfClick(item)"
+              @openDetail="openDetail"
             />
           </div>
           <Empty v-if="!memberCard.couponList.length" text="暂无内容" />
@@ -26,7 +27,7 @@
       <van-tab title="权益介绍" name="introdece">
         <div class="tab-rights">
           {{ memberCard.description }}
-           <Empty v-if="!memberCard.description" text="暂无内容" />
+          <Empty v-if="!memberCard.description" text="暂无内容" />
         </div>
       </van-tab>
       <!-- <van-tab title="校区介绍" name="school">
@@ -71,6 +72,22 @@
     >
       <SaveAlbum :src="src" />
     </van-popup>
+    <van-popup
+      :show="showDetail"
+      position="bottom"
+      round
+      closeable
+      custom-style="height: 70%;"
+      @close="closeDetail"
+    >
+      <div class="popup-title popup-detail">优惠券详情</div>
+      <div class="popup-title popup-field">
+        {{ disCountName }}
+      </div>
+      <div class="popup-text popup-field">
+        {{ disCountDesc }}
+      </div>
+    </van-popup>
   </div>
 </template>
 <script lang="ts">
@@ -94,7 +111,10 @@ export default Vue.extend({
       timeData: {},
       isFinish: false,
       showQRcode: false,
-      src: ''
+      src: '',
+      disCountName: '',
+      disCountDesc: '',
+      showDetail: false
     }
   },
   async onLoad(option) {
@@ -124,18 +144,22 @@ export default Vue.extend({
         ...e.detail,
         hours: curH < 10 ? `0${curH}` : curH,
         minutes:
-          e.detail.minutes < 10
-            ? `0${e.detail.minutes}`
-            : e.detail.minutes,
+          e.detail.minutes < 10 ? `0${e.detail.minutes}` : e.detail.minutes,
         seconds:
-          e.detail.seconds < 10
-            ? `0${e.detail.seconds}`
-            : e.detail.seconds
+          e.detail.seconds < 10 ? `0${e.detail.seconds}` : e.detail.seconds
       }
     },
     onFinish() {
       this.isFinish = true
       console.log(1, 'end')
+    },
+    openDetail(name: string, desc: string) {
+      this.disCountName = name
+      this.disCountDesc = desc
+      this.showDetail = true
+    },
+    closeDetail() {
+      this.showDetail = false
     },
     async openQRcode() {
       const res = await API.partnersSBusiness.memberCard.shareInfo.request({
@@ -377,5 +401,28 @@ export default Vue.extend({
 
 .discount-list {
   height: 540rpx;
+}
+
+.popup-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #222222;
+  line-height: 48rpx;
+  padding: 22rpx 80rpx 22rpx 0;
+}
+.popup-detail {
+  text-align: center;
+  padding: 36rpx;
+}
+.popup-text {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #888888;
+  line-height: 44rpx;
+  padding: 22rpx 32rpx 22rpx 0;
+}
+.popup-field {
+  margin-left: 32rpx;
+  border-bottom: 1rpx solid #eeeeee;
 }
 </style>

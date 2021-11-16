@@ -6,12 +6,12 @@ export default {
     this.update()
   },
   onShow: async function () {
+    const res = await wx.login()
+    const res1 = await API.oauth.login.miniProgramLogin.request({
+      code: res.code,
+      notAutoLogin: false
+    })
     try {
-      const res = await wx.login()
-      const res1 = await API.oauth.login.miniProgramLogin.request({
-        code: res.code,
-        notAutoLogin: false
-      })
       await API.partnersSBusiness.account.authorized.request({})
     } catch {
       wx.reLaunch({

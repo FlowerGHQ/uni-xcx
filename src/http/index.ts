@@ -79,9 +79,14 @@ methods.forEach(method => {
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
-                uni.reLaunch({
-                  url: '/pages/login/index'
-                })
+                var pages = getCurrentPages()
+                var currentPage = pages[pages.length - 1] // 当前页面
+                if (currentPage) {
+                  uni.reLaunch({ url: currentPage.$page.fullPath })
+                }
+                // uni.reLaunch({
+                //   url: '/pages/login/index'
+                // })
                 // await store.dispatch('account/reset')
                 // await store.dispatch('account/auth')
                 // wx.showToast({
