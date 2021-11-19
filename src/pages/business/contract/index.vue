@@ -37,8 +37,9 @@
         </div>
       </div>
       <div class="button-list flex">
-        <!-- <div class="middle-btn red" @click="openNext">下一步</div>
-            <div class="middle-btn red" @click="openNext">下一步</div> -->
+        <div class="middle-btn red plain btn-reward" @click="historyContract">
+          历史合同
+        </div>
       </div>
     </div>
   </div>
@@ -85,11 +86,33 @@ export default Vue.extend({
     this.name = name
     this.phone = phone
     console.log(data)
+  },
+  methods: {
+    // 历史合同
+    historyContract() {
+      uni.navigateTo({
+        url: `/pages/business/historyContract/index`
+      })
+    }
   }
 })
 </script>
 
 <style lang="less" scoped>
+.button-list {
+  justify-content: flex-end;
+}
+.button-reward {
+  margin-top: 48rpx;
+}
+.btn-reward {
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0rpx 44rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+}
 .partner-card {
   width: 686rpx;
   height: 212rpx;
