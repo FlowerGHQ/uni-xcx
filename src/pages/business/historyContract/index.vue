@@ -29,6 +29,7 @@ import Vue from 'vue'
 import PageLoading from '@/components/page-loading.vue'
 import Empty from '@/components/empty.vue'
 import { historicalList } from '@/pont/partnersSBusiness/mods/contract/index'
+import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: '',
@@ -67,6 +68,8 @@ export default Vue.extend({
           res.data.list.forEach(element => {
             element.commissionRate = `<span class="number-font">${element.commissionRate}</span><span class="font-32">%</span>`
             element.storedAmount = `<span class="font-24"> ¥ <span><span class="number-font">${element.storedAmount}</span>`
+            element.startTime = dayjs(element.startTime).format('YYYY-MM-DD')
+            element.endTime = dayjs(element.endTime).format('YYYY-MM-DD')
           })
           this.list = [...res.data.list]
         } else {
@@ -74,6 +77,8 @@ export default Vue.extend({
             res.data.list.forEach(element => {
               element.commissionRate = `<span class="number-font">${element.commissionRate}</span><span class="font-32">%</span>`
               element.storedAmount = `<span class="font-24"> ¥ <span><span class="number-font">${element.storedAmount}</span>`
+              element.startTime = dayjs(element.startTime).format('YYYY-MM-DD')
+              element.endTime = dayjs(element.endTime).format('YYYY-MM-DD')
             })
             this.list.push(...res.data.list)
           }
