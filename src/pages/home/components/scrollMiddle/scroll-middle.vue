@@ -284,11 +284,11 @@ export default Vue.extend({
         })
     }
   },
-  created() {
+  async onLoad() {
     // // 按校区统计历史数据
-    this.getCampuHistory()
+    await this.getCampuHistory()
     // // 按校区统计周期数据
-    this.onUpAndDown(1)
+    await this.onUpAndDown(1)
   }
 })
 </script>

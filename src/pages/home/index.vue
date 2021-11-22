@@ -47,7 +47,7 @@
       <ScrollMiddle ref="scrollMiddle"></ScrollMiddle>
     </div>
     <div class="common-func" :class="{ 'common-func-height': hasError }">
-      <div @click="openScan" class="common-func-title">常用功能</div>
+      <div class="common-func-title">常用功能</div>
       <div
         class="flex talk-card base-card"
         @click="shareCard"
@@ -96,9 +96,13 @@ export default Vue.extend({
       notClick: false
     }
   },
+  onLoad() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+  },
   async onShow() {
-    ;(this.$refs.scrollMiddle as any).getCampuHistory()
-    ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
     wx.hideHomeButton()
     uni.setNavigationBarTitle({
       title: '首页'
@@ -107,9 +111,11 @@ export default Vue.extend({
   },
   methods: {
     async init() {
-      // try {
+      try {
         const res = await API.partnersSBusiness.campus.list.request({})
         const res1 = await API.partnersSBusiness.contract.detail.request({})
+        ;(this.$refs.scrollMiddle as any).getCampuHistory()
+        ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
         this.defaultSchool = res.data.find(item => item.isDefault).name
         if (!res1.data) {
           this.hasError = true
@@ -136,11 +142,11 @@ export default Vue.extend({
         }
         this.hasError = false
         this.errorMessage = ''
-      // } catch {
-      //   wx.reLaunch({
-      //     url: '/pages/login/index'
-      //   })
-      // }
+      } catch {
+        //   wx.reLaunch({
+        //     url: '/pages/login/index'
+        //   })
+      }
     },
     handleDetail() {
       if (this.notClick) {

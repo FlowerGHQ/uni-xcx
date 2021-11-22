@@ -1,6 +1,7 @@
 import httpConfig from '@/config/http'
 import weuse from 'weuse'
 import store from '@/store'
+import { API } from '@/models/api'
 
 export class ApiError extends Error {
   readonly code: number | string
@@ -79,11 +80,22 @@ methods.forEach(method => {
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
-                var pages = getCurrentPages()
-                var currentPage = pages[pages.length - 1] // 当前页面
-                if (currentPage) {
-                  uni.reLaunch({ url: currentPage.$page.fullPath })
+                try {
+                  const res = await wx.login()
+                  const res1 = await API.oauth.login.miniProgramLogin.request({
+                    code: res.code,
+                    notAutoLogin: false
+                  })
+                  await API.partnersSBusiness.account.authorized.request({})
+                  var pages = getCurrentPages()
+                  var currentPage = pages[pages.length - 1] // 当前页面
+                  if (currentPage) {
+                    uni.reLaunch({ url: currentPage.$page.fullPath })
+                  }
+                } catch {
+                 
                 }
+
                 // uni.reLaunch({
                 //   url: '/pages/login/index'
                 // })

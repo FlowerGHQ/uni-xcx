@@ -70,10 +70,30 @@ export default class extends Vue {
         title: '登录中',
         mask: true
       })
-      await API.oauth.login.miniProgramDecryptionLogin.request({
+      const res1 = await API.oauth.login.miniProgramDecryptionLogin.request({
         iv: detail.iv,
         encryptedData: detail.encryptedData
       })
+      if (!res1.data) {
+        let data1 = await wx.login()
+        await API.oauth.login.miniProgramLogin.request({
+          code: data1.code,
+          notAutoLogin: false
+        })
+        const { detail: detail1 } = e
+        if (detail1.errMsg !== 'getPhoneNumber:ok') {
+          // 跳转手机号码登录页
+          return
+        }
+        wx.showLoading({
+          title: '登录中',
+          mask: true
+        })
+        await API.oauth.login.miniProgramDecryptionLogin.request({
+          iv: detail1.iv,
+          encryptedData: detail1.encryptedData
+        })
+      }
       await API.partnersSBusiness.account.authorized.request({})
       this.next()
     } catch (e) {

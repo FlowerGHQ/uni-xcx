@@ -30,17 +30,16 @@
           <Empty v-if="!memberCard.description" text="暂无内容" />
         </div>
       </van-tab>
-      <!-- <van-tab title="校区介绍" name="school">
+      <van-tab title="校区介绍" name="school">
         <div class="tab-school">
           <van-cell-group>
-            <van-cell title="校区名称" value="大同舞蹈学校城北校区" />
-            <van-cell
-              title="校区位置"
-              value="浙江省/杭州市/西湖区 文三路华星时代广场A座10楼"
-            />
+            <van-cell title="校区名称" :value="name"></van-cell>
+            <van-cell title="所在地区" :value="valueArea"></van-cell>
+            <van-cell title="详细地址" :value="address"></van-cell>
           </van-cell-group>
+          <Introduce :attachments="attachments" />
         </div>
-      </van-tab> -->
+      </van-tab>
     </van-tabs>
     <div class="bottom-test">
       <img src="../../../assets/images/limited.png" class="icon-limited" />
@@ -94,6 +93,7 @@
 import Vue from 'vue'
 import Card from './components/card.vue'
 import SaveAlbum from './components/save-album.vue'
+import Introduce from './components/introduce.vue'
 import DiscountItem from './components/discount-item.vue'
 import { API } from '@/models/api'
 import Empty from '@/components/empty.vue'
@@ -101,7 +101,7 @@ import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { Card, DiscountItem, SaveAlbum, Empty },
+  components: { Card, DiscountItem, SaveAlbum, Empty, Introduce },
   data() {
     return {
       defaultSchool: '',
@@ -114,7 +114,11 @@ export default Vue.extend({
       src: '',
       disCountName: '',
       disCountDesc: '',
-      showDetail: false
+      showDetail: false,
+      valueArea: '',
+      name: '',
+      address: '',
+      attachments: []
     }
   },
   async onLoad(option) {
@@ -123,6 +127,12 @@ export default Vue.extend({
     const res1 = await API.partnersSBusiness.memberCard.detail.request({
       id: this.id
     })
+    const res3 = await API.partnersSBusiness.campus.detail.request({})
+    const { name, address, attachments, districts = [] } = res3.data
+    // this.valueArea = `${districts[0].name}-${districts[1].name}-${districts[2].name}`
+    this.name = name
+    this.address = address
+    this.attachments = attachments
     const date1 = dayjs()
     const date2 = dayjs(res1.data.applyEndTime)
     this.memberCard = res1.data
@@ -180,6 +190,7 @@ export default Vue.extend({
 .user-login {
   padding: 32rpx 0;
   font-size: 28rpx;
+  padding-bottom: calc(200rpx + var(--safe-area-inset-bottom));
 }
 .talk-card {
   margin: 32rpx;
