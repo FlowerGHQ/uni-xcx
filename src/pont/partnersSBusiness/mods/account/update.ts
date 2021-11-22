@@ -1,8 +1,8 @@
 /**
- * @desc 交易列表
+ * @desc 更新合作人用户信息
  */
 
-'/transaction/list'
+'/account/update'
 
 import * as defs from '../../baseClass'
 import http from '@/http'
@@ -12,5 +12,5 @@ export class Params {}
 export const init = new defs.partnersSBusiness.SimpleResponse()
 
 export async function request(params) {
-  return http.post('/partners-s-business/transaction/list', params)
+  return http.post('/partners-s-business/account/update', params)
 }

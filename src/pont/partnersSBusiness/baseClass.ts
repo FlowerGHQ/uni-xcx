@@ -14,6 +14,43 @@ class AccountDto {
   phone = ''
 }
 
+class CampusAttachmentDto {
+  /** 校区附件id */
+  attachmentId = undefined
+
+  /** 附件类型：1-图片，2-视频，3-文本 */
+  attachmentType = undefined
+
+  /** 附件排序号 */
+  orderNumber = undefined
+
+  /** oss地址或文本内容 */
+  text = ''
+}
+
+class CampusDetailDto {
+  /** 详细地址 */
+  address = ''
+
+  /** 校区附件列表 */
+  attachments = []
+
+  /** 校区id */
+  campusId = undefined
+
+  /** 区id */
+  districtId = undefined
+
+  /** 商户id */
+  merchantId = undefined
+
+  /** 校区名称 */
+  name = ''
+
+  /** 校区状态：0-冻结，1-正常 */
+  state = undefined
+}
+
 class CampusListBo {
   /** 校区id */
   campusId = undefined
@@ -104,6 +141,23 @@ class CustomerListDto {
 
   /** 总金额，单位元 */
   totalAmount = ''
+}
+
+class GetTransactionListVo {
+  /** 消费者id，查询客户详情交易列表时传入 */
+  customerId = undefined
+
+  /** offset */
+  offset = undefined
+
+  /** pageIndex */
+  pageIndex = undefined
+
+  /** pageSize */
+  pageSize = undefined
+
+  /** 搜索字段：消费者手机号或姓名 */
+  searchKey = ''
 }
 
 class MemberCardDetailDto {
@@ -322,6 +376,9 @@ class StoredAmountDetailListDto {
   /** 变更金额，单位元 */
   amount = ''
 
+  /** 是否撤销：true-是，false-否 */
+  cancel = false
+
   /** 变动时间 */
   createdAt = ''
 
@@ -433,13 +490,21 @@ class UpdateDefaultCampusVo {
   campusId = undefined
 }
 
+class UpdateShareholderVo {
+  /** 头像url */
+  avatar = ''
+}
+
 export const partnersSBusiness = {
   AccountAuthorizedDto,
   AccountDto,
+  CampusAttachmentDto,
+  CampusDetailDto,
   CampusListBo,
   ContractDetailDto,
   CouponDto,
   CustomerListDto,
+  GetTransactionListVo,
   MemberCardDetailDto,
   MemberCardDto,
   MemberCardShareDto,
@@ -454,5 +519,6 @@ export const partnersSBusiness = {
   TransactionDetailDto,
   TransactionListDto,
   TransactionUseCouponDto,
-  UpdateDefaultCampusVo
+  UpdateDefaultCampusVo,
+  UpdateShareholderVo
 }

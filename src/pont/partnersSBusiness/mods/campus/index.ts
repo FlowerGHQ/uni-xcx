@@ -1,7 +1,8 @@
 /**
  * @description Campus Controller
  */
+import * as detail from './detail'
 import * as list from './list'
 import * as updateDefault from './updateDefault'
 
-export { list, updateDefault }
+export { detail, list, updateDefault }

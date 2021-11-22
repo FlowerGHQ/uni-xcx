@@ -20,6 +20,43 @@ declare namespace defs {
       phone?: string
     }
 
+    export class CampusAttachmentDto {
+      /** 校区附件id */
+      attachmentId?: number
+
+      /** 附件类型：1-图片，2-视频，3-文本 */
+      attachmentType?: number
+
+      /** 附件排序号 */
+      orderNumber?: number
+
+      /** oss地址或文本内容 */
+      text?: string
+    }
+
+    export class CampusDetailDto {
+      /** 详细地址 */
+      address?: string
+
+      /** 校区附件列表 */
+      attachments?: Array<defs.partnersSBusiness.CampusAttachmentDto>
+
+      /** 校区id */
+      campusId?: number
+
+      /** 区id */
+      districtId?: number
+
+      /** 商户id */
+      merchantId?: number
+
+      /** 校区名称 */
+      name?: string
+
+      /** 校区状态：0-冻结，1-正常 */
+      state?: number
+    }
+
     export class CampusListBo {
       /** 校区id */
       campusId?: number
@@ -110,6 +147,23 @@ declare namespace defs {
 
       /** 总金额，单位元 */
       totalAmount?: string
+    }
+
+    export class GetTransactionListVo {
+      /** 消费者id，查询客户详情交易列表时传入 */
+      customerId?: number
+
+      /** offset */
+      offset?: number
+
+      /** pageIndex */
+      pageIndex?: number
+
+      /** pageSize */
+      pageSize?: number
+
+      /** 搜索字段：消费者手机号或姓名 */
+      searchKey?: string
     }
 
     export class MemberCardDetailDto {
@@ -328,6 +382,9 @@ declare namespace defs {
       /** 变更金额，单位元 */
       amount?: string
 
+      /** 是否撤销：true-是，false-否 */
+      cancel?: boolean
+
       /** 变动时间 */
       createdAt?: string
 
@@ -438,6 +495,11 @@ declare namespace defs {
       /** 校区id */
       campusId?: number
     }
+
+    export class UpdateShareholderVo {
+      /** 头像url */
+      avatar?: string
+    }
   }
 }
 
@@ -486,12 +548,46 @@ declare namespace API {
           >
         >
       }
+
+      /**
+       * 更新合作人用户信息
+       * /account/update
+       */
+      export namespace update {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<boolean>
+        export const init: Response
+        export function request(
+          bodyParams: defs.partnersSBusiness.UpdateShareholderVo
+        ): Promise<defs.partnersSBusiness.SimpleResponse<boolean>>
+      }
     }
 
     /**
      * Campus Controller
      */
     export namespace campus {
+      /**
+       * 获取校区详情
+       * /campus/detail
+       */
+      export namespace detail {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.CampusDetailDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.CampusDetailDto
+          >
+        >
+      }
+
       /**
        * 获取校区列表
        * /campus/list
@@ -913,23 +1009,14 @@ declare namespace API {
        * /transaction/list
        */
       export namespace list {
-        export class Params {
-          /** 消费者id，查询客户详情交易列表时传入 */
-          customerId?: number
-          /** pageIndex */
-          pageIndex?: number
-          /** pageSize */
-          pageSize?: number
-          /** 搜索字段：消费者手机号或姓名 */
-          searchKey?: string
-        }
+        export class Params {}
 
         export type Response = defs.partnersSBusiness.SimpleResponse<
           defs.partnersSBusiness.Page<defs.partnersSBusiness.TransactionListDto>
         >
         export const init: Response
         export function request(
-          params: Params
+          bodyParams: defs.partnersSBusiness.GetTransactionListVo
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.Page<
