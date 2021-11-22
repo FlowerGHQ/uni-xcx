@@ -128,8 +128,8 @@ export default Vue.extend({
       id: this.id
     })
     const res3 = await API.partnersSBusiness.campus.detail.request({})
-    const { name, address, attachments, districts = [] } = res3.data
-    // this.valueArea = `${districts[0].name}-${districts[1].name}-${districts[2].name}`
+    const { name, address, attachments, districts } = res3.data
+    this.valueArea = `${districts[0].name}-${districts[1].name}-${districts[2].name}`
     this.name = name
     this.address = address
     this.attachments = attachments
