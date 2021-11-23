@@ -120,6 +120,14 @@
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/business/set/index",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {

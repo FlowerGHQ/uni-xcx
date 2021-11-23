@@ -37,7 +37,7 @@
               <div>变动时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
           </div>
-          <div class="list-center" v-if="item.type === 3">
+          <div class="list-center" v-else>
             <div class="construct-number">
               <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
