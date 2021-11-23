@@ -36,11 +36,23 @@
             <div class="construct-number">
               <div>变动时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
+            <Tag
+              v-if="item.cancel"
+              color="#FFE6E6"
+              text-color="#FF3333"
+              text="已撤销"
+            />
           </div>
           <div class="list-center" v-else>
             <div class="construct-number">
               <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
+            <Tag
+              v-if="item.cancel"
+              color="#FFE6E6"
+              text-color="#FF3333"
+              text="已撤销"
+            />
           </div>
         </div>
       </div>
@@ -52,6 +64,7 @@
 import Vue from 'vue'
 import Empty from '@/components/empty.vue'
 import Field from '@/components/field.vue'
+import Tag from '@/components/tag.vue'
 import { API } from '@/models/api'
 
 const TYPE_NAME = {
@@ -62,7 +75,7 @@ const TYPE_NAME = {
 }
 export default Vue.extend({
   name: '',
-  components: { Empty, Field },
+  components: { Empty, Field, Tag },
   props: {},
   onLoad(option: any) {
     this.getRewardList()
@@ -169,10 +182,11 @@ export default Vue.extend({
   .list-center {
     font-size: 24rpx;
     font-weight: 400;
-    // padding-bottom: 16rpx;
     color: #666666;
     line-height: 32rpx;
     margin: 4rpx 0 0;
+    display: flex;
+    justify-content: space-between;
   }
 }
 .list-content {
