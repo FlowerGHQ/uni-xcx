@@ -18,6 +18,22 @@
       }
     },
     {
+      "path": "pages/login/code/code",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/code/index",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/login/user/terms",
       "style": {
         "navigationBarTitleText": "用户条款",
