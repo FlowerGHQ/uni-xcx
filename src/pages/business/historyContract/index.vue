@@ -11,7 +11,9 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        <div class="time">修改时间：{{ item.createdAt }}</div>
+        <div class="time">
+          修改时间：{{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}
+        </div>
         <div class="flex-column" v-for="(v, k) in formValue" :key="k">
           <div class="flex contract-list" v-if="item[k]">
             <div class="title">{{ v }}</div>
@@ -40,6 +42,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      dayjs,
       params: {
         pageIndex: 1,
         pageSize: 10
