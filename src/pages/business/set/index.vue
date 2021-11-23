@@ -74,9 +74,11 @@ export default Vue.extend({
         .confirm({
           title: '确定退出登录？',
           message: '退出登录后，您将不能第一时间查看最新的商户招生合作信息。',
-          confirmButtonText: '退出登录'
+          confirmButtonText: '取消',
+          cancelButtonText: '退出登录'
         })
-        .then(async () => {
+        .then(async () => {})
+        .catch(async () => {
           try {
             await API.oauth.login.postV1LoginOut.request({})
             uni.reLaunch({
@@ -85,9 +87,6 @@ export default Vue.extend({
           } catch (e) {
             this.$toast.fail(e.errorMessage)
           }
-        })
-        .catch(() => {
-          // on cancel
         })
       console.log(1)
     }
