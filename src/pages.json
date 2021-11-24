@@ -18,6 +18,22 @@
       }
     },
     {
+      "path": "pages/login/code/code",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/code/index",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/login/user/terms",
       "style": {
         "navigationBarTitleText": "用户条款",
@@ -117,6 +133,14 @@
       "path": "pages/business/trade/components/detailTransation/index",
       "style": {
         "navigationBarTitleText": "订单详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/set/index",
+      "style": {
+        "navigationBarTitleText": "设置",
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }

@@ -111,6 +111,7 @@ export default Vue.extend({
   },
   methods: {
     async init() {
+      await API.partnersSBusiness.account.authorized.request({})
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
         const res1 = await API.partnersSBusiness.contract.detail.request({})

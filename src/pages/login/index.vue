@@ -12,6 +12,9 @@
         <img src="../../assets/images/wx.png" class="wx-icon" />
         <span>微信快捷登录</span>
       </div>
+      <div class="middle-btn red plain btn-reward" @click.stop="sendCode">
+        验证码登录
+      </div>
     </auth-button>
   </div>
 </template>
@@ -29,7 +32,13 @@ export default Vue.extend({
   async onLoad() {
     wx.login()
   },
-  methods: {}
+  methods: {
+    sendCode() {
+      uni.navigateTo({
+        url: `/pages/login/code/index`
+      })
+    }
+  }
 })
 </script>
 <style lang="less" scoped>
@@ -66,5 +75,12 @@ export default Vue.extend({
 .wx-login-btn {
   justify-content: center;
   align-items: center;
+}
+.btn-reward {
+  background: #ffffff;
+  font-size: 28rpx;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 32rpx;
 }
 </style>

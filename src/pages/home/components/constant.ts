@@ -29,10 +29,10 @@ export const ButtonList = [
     imageStyle: 'contract',
     openUrl: '/pages/business/contract/index'
   },
-  // {
-  //   title: '设置',
-  //   type: 'campus',
-  //   imageStyle: 'set',
-  //   openUrl: '/pages/business/contract/index'
-  // }
+  {
+    title: '设置',
+    type: 'campus',
+    imageStyle: 'set',
+    openUrl: '/pages/business/set/index'
+  }
 ]
