@@ -45,7 +45,7 @@
           </div>
           <div class="list-center" v-else>
             <div class="construct-number">
-              <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
+              <div>变动时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
             </div>
             <Tag
               v-if="item.cancel"
