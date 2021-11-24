@@ -61,7 +61,16 @@
                   text="已撤销"
                 />
               </div>
-              <div>发放时间：{{ item.createdAt ? item.createdAt : '-' }}</div>
+              <div>
+                发放时间：{{
+                  item.createdAt
+                    ? dayjs(item.createdAt).format('YYYY-MM-DD HH:mm')
+                    : '-'
+                }}
+              </div>
+              <div class="mar-b-8" v-if="item.cancelWithdraw">
+                撤销时间：{{ dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm') }}
+              </div>
             </div>
           </div>
         </div>
@@ -79,6 +88,7 @@ import Empty from '@/components/empty.vue'
 import Field from '@/components/field.vue'
 import Tag from '@/components/tag.vue'
 import { API } from '@/models/api'
+import dayjs from 'dayjs'
 
 const TYPE_NAME = {
   1: '收入',
@@ -104,6 +114,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      dayjs,
       activeClick: '',
       showDialog: false,
       params: {
