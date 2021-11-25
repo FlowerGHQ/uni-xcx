@@ -135,6 +135,8 @@ export default Vue.extend({
 .user-login {
   padding: 103rpx 55rpx 0 55rpx;
   font-size: 28rpx;
+  background-color: #fff;
+  height: 100vh;
   .phone-module {
     .phone-input {
       height: 96rpx;
@@ -243,6 +245,7 @@ export default Vue.extend({
           top: 50%;
           transform: translate(-50%, -50%);
           font-size: 28rpx;
+          font-weight: 500;
         }
       }
       .vertify-code-input {

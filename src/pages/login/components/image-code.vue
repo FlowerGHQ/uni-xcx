@@ -14,8 +14,10 @@
         </div>
         <input
           class="captcha-input"
+          :class="{ 'error-input': errorInput }"
           :value="captcha"
           maxlength="4"
+          type="number"
           placeholder="请输入验证码"
           focus
           @change="changeCaptcha"
@@ -58,7 +60,6 @@ export default Vue.extend({
       if (newV) {
         this.getCaptchaImg()
       }
-      console.log(newV, oldV)
     }
   },
   onLoad() {},
@@ -78,28 +79,28 @@ export default Vue.extend({
       this.$emit('onCancel')
     },
     async handleConfirm() {
+      wx.showLoading({
+        title: '发送中',
+        mask: true
+      })
       try {
         const res = await API.oauth.sms.send.request({
           code: this.captcha,
           phone: this.phone
         })
-        console.log(res, 'res')
+        wx.hideLoading()
         if (res.data) {
-          console.log(111)
           this.$emit('onConfirm')
         } else {
-          console.log(222)
-          this.$toast('验证码错误')
+          this.$toast(res.errorMessage)
         }
       } catch (error) {
-        console.log(1111111)
-        this.$toast('验证码错误')
+        wx.hideLoading()
+        this.$toast(error.errorMessage)
       }
     },
     changeCaptcha(e) {
       this.captcha = e.detail.value
-      console.log(this.captcha)
-      console.log(e)
     }
   }
 })
@@ -161,7 +162,6 @@ export default Vue.extend({
     color: #222222;
     line-height: 40rpx;
     text-align: center;
-    margin-bottom: 40rpx;
   }
   .captcha {
     width: 200rpx;

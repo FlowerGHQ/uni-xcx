@@ -203,6 +203,9 @@ export default Vue.extend({
 })
 </script>
 <style lang="less" scoped>
+.tab-base {
+  margin-top: 16rpx;
+}
 .partner-list {
   background: #ffffff;
   border-bottom: 1rpx solid #ecedf4;

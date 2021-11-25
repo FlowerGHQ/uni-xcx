@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="history-content">
     <scroll-view
       class="content-history"
       :scroll-y="true"
