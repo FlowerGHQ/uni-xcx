@@ -104,6 +104,8 @@ export default Vue.extend({
   },
   async onShow() {
     wx.hideHomeButton()
+    ;(this.$refs.scrollMiddle as any).getCampuHistory()
+    ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
     uni.setNavigationBarTitle({
       title: '首页'
     })
@@ -115,8 +117,6 @@ export default Vue.extend({
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
         const res1 = await API.partnersSBusiness.contract.detail.request({})
-        ;(this.$refs.scrollMiddle as any).getCampuHistory()
-        ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
         this.defaultSchool = res.data.find(item => item.isDefault).name
         if (!res1.data) {
           this.hasError = true
