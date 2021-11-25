@@ -11,12 +11,15 @@
         <img :src="item.text" mode="widthFix" alt="" class="img" />
       </div>
     </div>
+    <Empty v-if="!curAttachments.length" text="暂无内容，快去添加内容" />
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import Empty from '@/components/empty.vue'
 export default Vue.extend({
   name: 'Introduce',
+  components: { Empty },
   props: {
     attachments: {
       type: Array,

@@ -111,6 +111,26 @@ export default Vue.extend({
     })
     this.init()
   },
+  //  onReady() {
+  //   const info = uni.createSelectorQuery().select('.middle-item')
+  //   console.log(info)
+  //   let swiperheight = 0
+  //   uni.getSystemInfo({
+  //     success: res => {
+  //       let height = res.windowHeight - uni.upx2px(100) //获取系统信息，可使用窗口的高度
+  //       swiperheight = height
+  //     }
+  //   })
+  //   console.log(swiperheight)
+  //   const that = this
+  //   info
+  //     .boundingClientRect(function (data) {
+  //       that.curHeight = `${(swiperheight - data.width + 64) * 2}rpx`
+  //       console.log(data, data.width) // 获取元素宽度
+  //     })
+  //     .exec()
+  //   console.log(this)
+  // },
   methods: {
     async init() {
       await API.partnersSBusiness.account.authorized.request({})

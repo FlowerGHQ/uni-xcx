@@ -44,6 +44,7 @@
                   item.createdAt ? item.createdAt : '-'
                 }}
               </div>
+             
             </div>
           </div>
           <div class="list-center" v-if="item.type === 3">
