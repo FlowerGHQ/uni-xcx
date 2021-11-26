@@ -32,6 +32,12 @@ export default Vue.extend({
   async onLoad() {
     wx.login()
   },
+  /**
+   * 暂时方案，记得删除TODO
+   */
+  async onShow() {
+    await API.oauth.login.postV1LoginOut.request({})
+  },
   methods: {
     sendCode() {
       uni.navigateTo({

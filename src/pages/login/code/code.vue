@@ -111,17 +111,31 @@ export default Vue.extend({
         return
       }
       this.isLogining = true
+      wx.showLoading({ title: '登录中' })
       try {
         await API.oauth.login.login.request({
           phone: this.formatPhone,
           code: this.vertifyCode
         })
-        this.$toast('登录成功')
-        uni.reLaunch({
-          url: '/pages/home/index'
-        })
-      } catch {
-        this.$toast('验证码错误')
+        wx.hideLoading()
+        try {
+          await API.partnersSBusiness.account.authorized.request({})
+
+          this.$toast('登录成功')
+          uni.reLaunch({
+            url: '/pages/home/index'
+          })
+        } catch (error) {
+          this.$toast(error.errorMessage)
+          setTimeout(async () => {
+            await API.oauth.login.postV1LoginOut.request({})
+            uni.reLaunch({
+              url: '/pages/login/index'
+            })
+          }, 1000)
+        }
+      } catch (error){
+        this.$toast(error.errorMessage)
         this.vertifyCodeError = true
       } finally {
         this.isLogining = false

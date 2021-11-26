@@ -203,6 +203,9 @@ export default Vue.extend({
 .user-login {
   // padding: 32rpx;
   font-size: 28rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .change-org {
   margin: 32rpx;
@@ -222,9 +225,10 @@ export default Vue.extend({
   height: 950rpx;
   background: #ffffff;
   border-radius: 64rpx 64rpx 0rpx 0rpx;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  flex: 1;
+  // position: absolute;
+  // bottom: 0;
+  // left: 0;
 }
 .common-func-height {
   height: 830rpx;
