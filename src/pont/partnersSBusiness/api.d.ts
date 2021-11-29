@@ -47,6 +47,9 @@ declare namespace defs {
       /** 区id */
       districtId?: number
 
+      /** 省市区列表 */
+      districts?: Array<defs.partnersSBusiness.SimpleBo>
+
       /** 商户id */
       merchantId?: number
 
@@ -83,6 +86,9 @@ declare namespace defs {
 
       /** 合约结束时间 */
       endTime?: string
+
+      /** 合约创建时间（第一次创建该合约的时间） */
+      firstCreatedAt?: string
 
       /** 备注 */
       remark?: string
@@ -215,6 +221,11 @@ declare namespace defs {
       value?: string
     }
 
+    export class MemberCardShareByWxDto {
+      /** 通过微信好友列表分享拓客卡需要带的参数字符串 */
+      shareParams?: string
+    }
+
     export class MemberCardShareDto {
       /** 分享二维码图片url */
       url?: string
@@ -312,8 +323,19 @@ declare namespace defs {
       /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
       type?: number
 
+      /** 奖励金撤销时间 */
+      updatedAt?: string
+
       /** 发放形式：1-微信，2-支付宝，3-银行转账，4-POS机，5-现金，99-其它方式 */
       withdrawType?: number
+    }
+
+    export class SimpleBo {
+      /** id */
+      id?: number
+
+      /** name */
+      name?: string
     }
 
     export class SimpleResponse<T0 = any> {
@@ -396,6 +418,9 @@ declare namespace defs {
       /** 课程名称 */
       courseName?: string
 
+      /** 课程类型，1-正式课，2-试听课 */
+      courseType?: number
+
       /** 消费者姓名 */
       customerName?: string
 
@@ -445,6 +470,9 @@ declare namespace defs {
     export class TransactionListDto {
       /** 课程名称 */
       courseName?: string
+
+      /** 课程类型，1-正式课，2-试听课 */
+      courseType?: number
 
       /** 消费者id */
       customerId?: number
@@ -807,7 +835,7 @@ declare namespace API {
       }
 
       /**
-       * 获取分享拓客卡信息
+       * 获取通过二维码分享拓客卡的返回信息
        * /memberCard/shareInfo
        */
       export namespace shareInfo {
@@ -825,6 +853,29 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.MemberCardShareDto
+          >
+        >
+      }
+
+      /**
+       * 获取通过微信好友列表分享拓客卡的返回信息
+       * /memberCard/shareInfoByWx
+       */
+      export namespace shareInfoByWx {
+        export class Params {
+          /** @Min: 1.0 - @Max: null (until #1244 gets fixed) */
+          id: number
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.MemberCardShareByWxDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.MemberCardShareByWxDto
           >
         >
       }

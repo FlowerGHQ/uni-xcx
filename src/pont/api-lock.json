@@ -4471,7 +4471,7 @@
             ]
           },
           {
-            "description": "获取分享拓客卡信息",
+            "description": "获取通过二维码分享拓客卡的返回信息",
             "name": "shareInfo",
             "method": "get",
             "path": "/memberCard/shareInfo",
@@ -4480,6 +4480,48 @@
                 {
                   "typeArgs": [],
                   "typeName": "MemberCardShareDto",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "SimpleResponse",
+              "isDefsType": true,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "parameters": [
+              {
+                "in": "query",
+                "description": "@Min: 1.0 - @Max: null (until #1244 gets fixed)",
+                "name": "id",
+                "required": true,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "number",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              }
+            ]
+          },
+          {
+            "description": "获取通过微信好友列表分享拓客卡的返回信息",
+            "name": "shareInfoByWx",
+            "method": "get",
+            "path": "/memberCard/shareInfoByWx",
+            "response": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "MemberCardShareByWxDto",
                   "isDefsType": true,
                   "templateIndex": -1,
                   "compileTemplateKeyword": "#/definitions/",
@@ -5119,6 +5161,30 @@
           },
           {
             "dataType": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "SimpleBo",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "Array",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "districts",
+            "description": "省市区列表",
+            "required": false
+          },
+          {
+            "dataType": {
               "typeArgs": [],
               "typeName": "number",
               "isDefsType": false,
@@ -5281,6 +5347,20 @@
             },
             "name": "endTime",
             "description": "合约结束时间",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "firstCreatedAt",
+            "description": "合约创建时间（第一次创建该合约的时间）",
             "required": false
           },
           {
@@ -5888,6 +5968,26 @@
         "templateArgs": []
       },
       {
+        "name": "MemberCardShareByWxDto",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "shareParams",
+            "description": "通过微信好友列表分享拓客卡需要带的参数字符串",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
         "name": "MemberCardShareDto",
         "properties": [
           {
@@ -6343,6 +6443,20 @@
           {
             "dataType": {
               "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "updatedAt",
+            "description": "奖励金撤销时间",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
               "typeName": "number",
               "isDefsType": false,
               "templateIndex": -1,
@@ -6352,6 +6466,38 @@
             },
             "name": "withdrawType",
             "description": "发放形式：1-微信，2-支付宝，3-银行转账，4-POS机，5-现金，99-其它方式",
+            "required": false
+          }
+        ],
+        "templateArgs": []
+      },
+      {
+        "name": "SimpleBo",
+        "properties": [
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "name",
             "required": false
           }
         ],
@@ -6721,6 +6867,20 @@
           {
             "dataType": {
               "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "courseType",
+            "description": "课程类型，1-正式课，2-试听课",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
               "typeName": "string",
               "isDefsType": false,
               "templateIndex": -1,
@@ -6956,6 +7116,20 @@
             },
             "name": "courseName",
             "description": "课程名称",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "number",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "courseType",
+            "description": "课程类型，1-正式课，2-试听课",
             "required": false
           },
           {

@@ -41,6 +41,9 @@ class CampusDetailDto {
   /** 区id */
   districtId = undefined
 
+  /** 省市区列表 */
+  districts = []
+
   /** 商户id */
   merchantId = undefined
 
@@ -77,6 +80,9 @@ class ContractDetailDto {
 
   /** 合约结束时间 */
   endTime = ''
+
+  /** 合约创建时间（第一次创建该合约的时间） */
+  firstCreatedAt = ''
 
   /** 备注 */
   remark = ''
@@ -209,6 +215,11 @@ class MemberCardDto {
   value = ''
 }
 
+class MemberCardShareByWxDto {
+  /** 通过微信好友列表分享拓客卡需要带的参数字符串 */
+  shareParams = ''
+}
+
 class MemberCardShareDto {
   /** 分享二维码图片url */
   url = ''
@@ -306,8 +317,19 @@ class ShareholderRewardDetailDto {
   /** 变更类型：1-交易新增，2-退款减少，3-奖励发放 */
   type = undefined
 
+  /** 奖励金撤销时间 */
+  updatedAt = ''
+
   /** 发放形式：1-微信，2-支付宝，3-银行转账，4-POS机，5-现金，99-其它方式 */
   withdrawType = undefined
+}
+
+class SimpleBo {
+  /** id */
+  id = undefined
+
+  /** name */
+  name = ''
 }
 
 class SimpleResponse {
@@ -390,6 +412,9 @@ class TransactionDetailDto {
   /** 课程名称 */
   courseName = ''
 
+  /** 课程类型，1-正式课，2-试听课 */
+  courseType = undefined
+
   /** 消费者姓名 */
   customerName = ''
 
@@ -439,6 +464,9 @@ class TransactionDetailDto {
 class TransactionListDto {
   /** 课程名称 */
   courseName = ''
+
+  /** 课程类型，1-正式课，2-试听课 */
+  courseType = undefined
 
   /** 消费者id */
   customerId = undefined
@@ -507,10 +535,12 @@ export const partnersSBusiness = {
   GetTransactionListVo,
   MemberCardDetailDto,
   MemberCardDto,
+  MemberCardShareByWxDto,
   MemberCardShareDto,
   Page,
   ShareholderDetailDto,
   ShareholderRewardDetailDto,
+  SimpleBo,
   SimpleResponse,
   StatisticShareHolderCustomerDto,
   StatisticShareHolderHistoryDto,
