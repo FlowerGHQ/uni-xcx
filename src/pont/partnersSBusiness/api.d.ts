@@ -257,6 +257,17 @@ declare namespace defs {
       totalPages?: number
     }
 
+    export class RewardRuleFreeCourseFixedDto {
+      /** 固定奖励金金额，单位元 */
+      fixedAmount?: string
+
+      /** 奖励金方案id */
+      id?: number
+
+      /** 状态：0-关闭，1-开启 */
+      state?: boolean
+    }
+
     export class ShareholderDetailDto {
       /** 合约结束时间，无合约时返回null */
       contractEndTime?: string
@@ -307,6 +318,9 @@ declare namespace defs {
 
       /** 奖励原因 */
       courseName?: string
+
+      /** 课程类型：1-正式课，2-试听课 */
+      courseType?: number
 
       /** 收入/退款/发放时间 */
       createdAt?: string
@@ -876,6 +890,31 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.MemberCardShareByWxDto
+          >
+        >
+      }
+    }
+
+    /**
+     * Reward Rule Controller
+     */
+    export namespace rewardRule {
+      /**
+       * 试听课固定奖励金方案详情
+       * /rewardRule/freeCourseFixedDetail
+       */
+      export namespace freeCourseFixedDetail {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.RewardRuleFreeCourseFixedDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.RewardRuleFreeCourseFixedDto
           >
         >
       }

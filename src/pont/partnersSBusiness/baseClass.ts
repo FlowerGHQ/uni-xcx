@@ -251,6 +251,17 @@ class Page {
   totalPages = undefined
 }
 
+class RewardRuleFreeCourseFixedDto {
+  /** 固定奖励金金额，单位元 */
+  fixedAmount = ''
+
+  /** 奖励金方案id */
+  id = undefined
+
+  /** 状态：0-关闭，1-开启 */
+  state = false
+}
+
 class ShareholderDetailDto {
   /** 合约结束时间，无合约时返回null */
   contractEndTime = ''
@@ -301,6 +312,9 @@ class ShareholderRewardDetailDto {
 
   /** 奖励原因 */
   courseName = ''
+
+  /** 课程类型：1-正式课，2-试听课 */
+  courseType = undefined
 
   /** 收入/退款/发放时间 */
   createdAt = ''
@@ -538,6 +552,7 @@ export const partnersSBusiness = {
   MemberCardShareByWxDto,
   MemberCardShareDto,
   Page,
+  RewardRuleFreeCourseFixedDto,
   ShareholderDetailDto,
   ShareholderRewardDetailDto,
   SimpleBo,
