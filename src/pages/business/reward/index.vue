@@ -34,17 +34,21 @@
           </div>
           <div class="list-center" v-if="item.type === 1 || item.type === 2">
             <div class="construct-number">
-              <div>奖励类型：{{ item.courseName ? item.courseName : '-' }}</div>
+              <div>
+                奖励类型：{{ item.courseName ? item.courseName : '-'
+                }}{{ item.courseType === 1 ? '' : '（试听课）' }}
+              </div>
               <div>
                 客户姓名：{{ item.customerName ? item.customerName : '-' }}
               </div>
-              <div>订单金额：{{ item.realAmount ? item.realAmount : '-' }}</div>
+              <div v-if="item.courseType === 1">
+                订单金额：{{ item.realAmount ? item.realAmount : '-' }}
+              </div>
               <div>
                 {{ item.typeName }}时间：{{
                   item.createdAt ? item.createdAt : '-'
                 }}
               </div>
-             
             </div>
           </div>
           <div class="list-center" v-if="item.type === 3">
@@ -120,7 +124,7 @@ export default Vue.extend({
       showDialog: false,
       params: {
         pageIndex: 1,
-        pageSize: 100,
+        pageSize: 1000,
         type: ''
       },
       loading: true,

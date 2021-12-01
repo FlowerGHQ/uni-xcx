@@ -87,7 +87,7 @@ export default Vue.extend({
       showDialog: false,
       params: {
         pageIndex: 1,
-        pageSize: 100,
+        pageSize: 1000,
         type: 1
       },
       loading: true,

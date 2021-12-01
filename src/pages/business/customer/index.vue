@@ -94,7 +94,7 @@ export default Vue.extend({
       showDialog: false,
       params: {
         pageIndex: 1,
-        pageSize: 100,
+        pageSize: 1000,
         hasTransactionType: 0
       },
       loading: true,

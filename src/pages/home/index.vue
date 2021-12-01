@@ -1,21 +1,5 @@
 <template>
   <div class="user-login">
-    <!-- <div class="change-org" @click="changeSchoolOrg">
-      <div class="flex">
-        <img
-          src="../../assets/images/place.png"
-          class="icon-place"
-          v-if="!hasError"
-        />
-        <img
-          src="../../assets/images/place-disabled.png"
-          class="icon-place"
-          v-else
-        />
-        <div class="school-title">{{ defaultSchool }}</div>
-      </div>
-      <img src="../../assets/images/right-arrow.png" class="icon-right" />
-    </div> -->
     <div class="top">
       <van-nav-bar
         title="首页"
@@ -46,6 +30,11 @@
     <div class="middle-item">
       <ScrollMiddle ref="scrollMiddle"></ScrollMiddle>
     </div>
+    <div class="notice-title" v-if="hasReward">
+      <img src="../../assets/images/message.png" alt="" class="icon-place" />
+      <div class="content">拓展【试听课】也能获得奖励金啦！</div>
+      <div class="check" @click="openDetail">去查看</div>
+    </div>
     <div class="common-func" :class="{ 'common-func-height': hasError }">
       <div class="common-func-title">常用功能</div>
       <div
@@ -73,7 +62,29 @@
         <CommonList :error="notClick" />
       </div>
     </div>
-
+    <van-popup
+      :show="showDetail"
+      position="bottom"
+      round
+      closeable
+      custom-style="height: 70%;"
+      @close="closeDetail"
+    >
+      <div class="detail-title">奖励金规则</div>
+      <div class="detail-item">
+        <div class="detail-left">
+          <img
+            src="../../assets/images/gold.png"
+            alt=""
+            class="detail-gold"
+          /><span class="detail-text">试听课奖励金</span>
+        </div>
+        <div class="detail-right">
+          <span class="detail-num">{{ rewardCount }}</span
+          ><span class="detail-text">元</span>
+        </div>
+      </div>
+    </van-popup>
     <van-dialog id="van-dialog" />
   </div>
 </template>
@@ -93,7 +104,10 @@ export default Vue.extend({
       errorMessage: '',
       hasError: false,
       errorTitle: '',
-      notClick: false
+      notClick: false,
+      showDetail: false,
+      hasReward: false,
+      rewardCount: '0.00'
     }
   },
   onLoad() {
@@ -111,26 +125,6 @@ export default Vue.extend({
     })
     this.init()
   },
-  //  onReady() {
-  //   const info = uni.createSelectorQuery().select('.middle-item')
-  //   console.log(info)
-  //   let swiperheight = 0
-  //   uni.getSystemInfo({
-  //     success: res => {
-  //       let height = res.windowHeight - uni.upx2px(100) //获取系统信息，可使用窗口的高度
-  //       swiperheight = height
-  //     }
-  //   })
-  //   console.log(swiperheight)
-  //   const that = this
-  //   info
-  //     .boundingClientRect(function (data) {
-  //       that.curHeight = `${(swiperheight - data.width + 64) * 2}rpx`
-  //       console.log(data, data.width) // 获取元素宽度
-  //     })
-  //     .exec()
-  //   console.log(this)
-  // },
   methods: {
     async init() {
       await API.partnersSBusiness.account.authorized.request({})
@@ -163,6 +157,13 @@ export default Vue.extend({
         }
         this.hasError = false
         this.errorMessage = ''
+        const res2 =
+          await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
+            {}
+          )
+        const { state = false } = res2?.data
+        this.hasReward = state
+        console.log(res2.data)
       } catch {
         //   wx.reLaunch({
         //     url: '/pages/login/index'
@@ -195,6 +196,19 @@ export default Vue.extend({
       uni.navigateTo({
         url: '/pages/business/schoolList/index'
       })
+    },
+    async openDetail() {
+      const res =
+        await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request({})
+      try {
+        const { fixedAmount = '0.00' } = res.data
+        this.rewardCount = fixedAmount
+      } catch (error) {}
+
+      this.showDetail = true
+    },
+    closeDetail() {
+      this.showDetail = false
     }
   }
 })
@@ -337,5 +351,61 @@ export default Vue.extend({
   z-index: -1;
   width: 750rpx;
   height: 1116rpx;
+}
+.notice-title {
+  align-self: center;
+  width: 686rpx;
+  // height: 40px;
+  background: #ffffff;
+  box-shadow: 0 20rpx 40rpx 0 rgba(157, 96, 87, 0.06);
+  border-radius: 16rpx;
+  padding: 16rpx 32rpx;
+  display: flex;
+  justify-content: space-between;
+  margin: 16rpx 0 32rpx;
+  .content {
+    font-size: 28rpx;
+    color: #222222;
+  }
+  .check {
+    font-size: 28rpx;
+    color: #f86744;
+  }
+}
+.detail-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #222222;
+  line-height: 48rpx;
+  text-align: center;
+  padding: 36rpx;
+}
+.detail-item {
+  width: 686rpx;
+  background: #fff9f3;
+  border-radius: 18rpx;
+  padding: 32rpx;
+  margin: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  .detail-left,
+  .detail-right {
+    display: flex;
+    align-items: center;
+  }
+  .detail-text {
+    font-size: 28rpx;
+    color: #222222;
+  }
+  .detail-num {
+    font-size: 32rpx;
+    color: #222222;
+    font-weight: 500;
+  }
+  .detail-gold {
+    height: 56rpx;
+    width: 56rpx;
+    margin-right: 16rpx;
+  }
 }
 </style>

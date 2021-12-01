@@ -90,6 +90,25 @@ export default Vue.extend({
       return s
     },
     async openShare(id) {
+      console.log(__wxConfig.envVersion)
+
+      const res1 = await API.partnersSBusiness.memberCard.shareInfoByWx.request(
+        {
+          id
+        }
+      )
+      // console.log(res1.data.shareParams)
+      // return
+      wx.navigateToMiniProgram({
+        appId: 'wxb94eeef233d3d51d', //小程序测试端
+        path: `/pages/jumpPage/index?url=${encodeURIComponent(res1.data.shareParams)}`, //path
+        envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
+        success(res) {
+          console.log('成功')
+          // 打开成功
+        }
+      })
+      return
       const res = await API.partnersSBusiness.memberCard.shareInfo.request({
         id
       })
@@ -116,7 +135,7 @@ export default Vue.extend({
   position: relative;
   top: 0;
   left: 0;
-  .member-card-cur{
+  .member-card-cur {
     display: flex;
     height: 100%;
     flex-direction: column;

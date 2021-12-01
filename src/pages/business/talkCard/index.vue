@@ -25,7 +25,7 @@ export default Vue.extend({
   async onLoad() {
     const data = await API.partnersSBusiness.memberCard.list.request({
       pageIndex: 1,
-      pageSize: 100,
+      pageSize: 1000,
       state: true
     })
     console.log(data)

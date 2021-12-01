@@ -53,7 +53,7 @@ img {
   width: 260rpx;
   height: 256rpx;
   background: linear-gradient(209deg, #ffb3a0 0%, #fc776c 100%);
-  box-shadow: 0px 20rpx 40rpx 0px rgba(254, 88, 49, 0.37);
+  // box-shadow: 0px 20rpx 40rpx 0px rgba(254, 88, 49, 0.37);
   border-radius: 16rpx;
   padding: 32rpx 0 32rpx 32rpx;
   box-sizing: border-box;
@@ -96,15 +96,15 @@ img {
 
 .blue {
   background: linear-gradient(209deg, #9397ff 0%, #6f6feb 100%);
-  box-shadow: 0px 20rpx 40rpx 0px rgba(129, 143, 255, 0.37);
+  // box-shadow: 0px 20rpx 40rpx 0px rgba(129, 143, 255, 0.37);
 }
 .black {
   background: linear-gradient(209deg, #51515d 0%, #333639 100%);
-  box-shadow: 0px 20rpx 40rpx 0px rgba(129, 143, 255, 0.37);
+  // box-shadow: 0px 20rpx 40rpx 0px rgba(129, 143, 255, 0.37);
   border-radius: 16rpx;
 }
 .white {
   background: #ffffff;
-  box-shadow: 0px 10px 20px 0px rgba(3, 3, 3, 0.06);
+  // box-shadow: 0px 10px 20px 0px rgba(3, 3, 3, 0.06);
 }
 </style>

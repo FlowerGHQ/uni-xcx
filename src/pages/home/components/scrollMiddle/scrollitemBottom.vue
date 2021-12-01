@@ -53,7 +53,7 @@ img {
 .list-view {
   width: 260rpx;
   background: #ffffff;
-  box-shadow: 0px 20rpx 40rpx 0px rgba(3, 3, 3, 0.06);
+  // box-shadow: 0px 20rpx 40rpx 0px rgba(3, 3, 3, 0.06);
   border-radius: 16rpx;
   padding: 32rpx 0 32rpx 32rpx;
   box-sizing: border-box;
