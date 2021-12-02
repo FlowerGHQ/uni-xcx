@@ -50,16 +50,16 @@
         @change="onChange"
         @finish="onFinish"
       >
-        <span class="count-down">{{ timeData.hours }}</span>
+        <span class="count-down">{{ timeData.hours || '00' }}</span>
         <span class="span-spacing">:</span>
-        <span class="count-down">{{ timeData.minutes }}</span>
+        <span class="count-down">{{ timeData.minutes || '00' }}</span>
         <span class="span-spacing">:</span>
-        <span class="count-down">{{ timeData.seconds }}</span>
+        <span class="count-down">{{ timeData.seconds || '00' }}</span>
       </van-count-down>
     </div>
     <div class="bottom-button">
       <button class="view" @click="openQRcode">生成二维码</button>
-      <!-- <button class="save-list">分享至微信</button> -->
+      <button class="save-list" @click="openShare">分享至微信</button>
     </div>
     <van-popup
       :show="showQRcode"
@@ -146,6 +146,24 @@ export default Vue.extend({
   methods: {
     onClickTab(e: any) {
       console.log(e.target.name)
+    },
+    async openShare() {
+      const res1 = await API.partnersSBusiness.memberCard.shareInfoByWx.request(
+        {
+          id: this.id
+        }
+      )
+      wx.navigateToMiniProgram({
+        appId: 'wxb94eeef233d3d51d', //小程序测试端
+        path: `/pages/jumpPage/index?url=${encodeURIComponent(
+          res1.data.shareParams
+        )}`, //path
+        envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
+        success(res) {
+          console.log('成功')
+        }
+      })
+      return
     },
     onChange(e) {
       const curH = 24 * e.detail.days + e.detail.hours

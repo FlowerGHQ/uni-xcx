@@ -84,6 +84,7 @@
           ><span class="detail-text">元</span>
         </div>
       </div>
+      <div class="wait-more">更多福利敬请期待</div>
     </van-popup>
     <van-dialog id="van-dialog" />
   </div>
@@ -407,5 +408,11 @@ export default Vue.extend({
     width: 56rpx;
     margin-right: 16rpx;
   }
+}
+.wait-more {
+  margin-top: 48rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #cccccc;
 }
 </style>
