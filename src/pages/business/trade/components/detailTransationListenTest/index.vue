@@ -1,26 +1,10 @@
 <template>
   <div>
-    <van-notice-bar v-if="refundTransactionTime" background="#FFE6E6">
-      <template>
-        <div class="refund-center">
-          {{ refundTransactionTime }} 此订单退款成功
-        </div>
-      </template>
-    </van-notice-bar>
     <div class="detail-page" :class="{ 'no-top-m': refundTransactionTime }">
       <div class="top-detail">
         <div class="round">
           <img :src="img" alt="" />
-          <div class="incom">
-            <span class="font-24">¥</span>
-            <span class="number">{{
-              orderFormListObj.realAmount ? orderFormListObj.realAmount : '-'
-            }}</span>
-          </div>
-          <div class="top-bottom" v-if="orderFormListObj.hasRefund">
-            退款成功
-          </div>
-          <div class="top-bottom" v-else>收款成功</div>
+          <div class="top-bottom">收款成功</div>
         </div>
       </div>
       <div
@@ -29,8 +13,8 @@
         :style="{
           'margin-bottom': [
             'customerPhone',
-            'extraDiscountAmount',
-            'transactionTime'
+            'transactionTime',
+            'courseName'
           ].includes(key)
             ? '32rpx'
             : '16rpx'
@@ -42,14 +26,13 @@
           orderFormListObj[key] ? orderFormListObj[key] : '-'
         }}</span>
       </div>
-
       <page-loading v-show="detailLoading"></page-loading>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-// src/pont/partnersSBusiness/mods/transaction/index.ts
+// src/pont/partnersBBusiness/mods/transaction/index.ts
 import { detail } from '@/pont/partnersSBusiness/mods/transaction'
 import PageLoading from '@/components/page-loading.vue'
 import Vue from 'vue'
@@ -70,12 +53,9 @@ export default Vue.extend({
       orderFormListObjKey: {
         customerName: '消费者姓名',
         customerPhone: '手机号',
-        courseType: '课程类型',
+        // 记得上一个也要加课程类型
+        courseTypeName: '课程类型',
         courseName: '课程名称',
-        originalAmount: '课程原价',
-        useCouponAmount: '满减券',
-        extraDiscountAmount: '额外优惠金额',
-        payMethodType: '支付方式',
         transactionNo: '订单编号',
         transactionTime: '交易时间',
         shareholderName: '关联合作人'
@@ -97,16 +77,9 @@ export default Vue.extend({
         this.orderFormListObj.useCouponAmount = `${this.orderFormListObj.useCouponAmount}元`
         this.orderFormListObj.originalAmount = `${res.data.originalAmount}元`
         this.orderFormListObj.extraDiscountAmount = `${res.data.extraDiscountAmount}元`
-        this.orderFormListObj.courseType =
+        this.orderFormListObj.courseTypeName =
           res.data.courseType === 1 ? '正式课' : '试听课'
       })
-    },
-    refundClick() {
-      this.showDialog = true
-    },
-    onConfirm() {
-      // this.showNotify = true
-      this.showDialog = false
     }
   }
 })

@@ -22,7 +22,10 @@
             <div class="list-top-left list-top-text">
               {{ item.customerName ? item.customerName : '-' }}
             </div>
-            <div class="list-top-number">
+            <div class="list-top-number" v-if="item.courseType === 2">
+              <Tag color="#E6F0FF" text-color="#0066FF" text="试听交易" />
+            </div>
+            <div class="list-top-number" v-else>
               <span v-if="Number(item.realAmount) > 0" class="small-add">+</span
               >{{ item.realAmount }}
             </div>
@@ -139,9 +142,15 @@ export default Vue.extend({
     },
     // 跳转订单详情
     clickTransation(item) {
-      uni.navigateTo({
-        url: `/pages/business/trade/components/detailTransation/index?id=${item.id}`
-      })
+      if (item.courseType === 1) {
+        uni.navigateTo({
+          url: `/pages/business/trade/components/detailTransation/index?id=${item.id}`
+        })
+      } else {
+        uni.navigateTo({
+          url: `/pages/business/trade/components/detailTransationListenTest/index?id=${item.id}`
+        })
+      }
     }
   }
 })

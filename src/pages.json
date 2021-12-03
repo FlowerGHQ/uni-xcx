@@ -138,6 +138,14 @@
       }
     },
     {
+      "path": "pages/business/trade/components/detailTransationListenTest/index",
+      "style": {
+        "navigationBarTitleText": "订单详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/business/set/index",
       "style": {
         "navigationBarTitleText": "设置",

@@ -133,6 +133,14 @@ export default Vue.extend({
         const res = await API.partnersSBusiness.campus.list.request({})
         const res1 = await API.partnersSBusiness.contract.detail.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
+
+        const res2 =
+          await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
+            {}
+          )
+
+        this.hasReward = res2.data ? res2.data.state : false
+        console.log(this.hasReward)
         if (!res1.data) {
           this.hasError = true
           this.notClick = true
@@ -158,12 +166,6 @@ export default Vue.extend({
         }
         this.hasError = false
         this.errorMessage = ''
-        const res2 =
-          await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
-            {}
-          )
-        const { state = false } = res2?.data
-        this.hasReward = state
         console.log(res2.data)
       } catch {
         //   wx.reLaunch({
@@ -237,16 +239,17 @@ export default Vue.extend({
 }
 .common-func {
   width: 750rpx;
-  height: 950rpx;
+  // height: 950rpx;
   background: #ffffff;
   border-radius: 64rpx 64rpx 0rpx 0rpx;
   flex: 1;
   // position: absolute;
   // bottom: 0;
   // left: 0;
+  padding-bottom: 100rpx;
 }
 .common-func-height {
-  height: 830rpx;
+  // height: 830rpx;
 }
 .common-func-title {
   padding: 48rpx 32rpx 48rpx;

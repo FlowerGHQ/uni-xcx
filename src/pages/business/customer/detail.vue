@@ -22,7 +22,7 @@
           }}
         </div>
       </div>
-      <div class="base-title">交易明细</div>
+      <div class="base-title customer-detail">交易明细</div>
     </van-sticky>
 
     <scroll-view
@@ -33,14 +33,17 @@
       <div class="list-detail" v-for="item in listTransation" :key="item.id">
         <div class="top flex">
           <div>消费</div>
-          <div>
+          <div class="list-top-number" v-if="item.courseType === 2">
+            <Tag color="#E6F0FF" text-color="#0066FF" text="试听交易" />
+          </div>
+          <div v-else>
             <span class="font-24">+</span>
             <span>{{ item.realAmount ? item.realAmount : '-' }}</span>
           </div>
         </div>
         <div class="bottom flex thin-list">
           <div class="course">
-            购买商品 ：{{ item.courseName ? item.courseName : '-' }}
+            课程名称 ：{{ item.courseName ? item.courseName : '-' }}
           </div>
           <div class="tag-product">
             <Tag
@@ -177,6 +180,15 @@ export default Vue.extend({
       font-weight: 500;
       color: #222222;
     }
+    &-number {
+      font-size: 32rpx;
+      font-weight: 500;
+      color: #222222;
+      line-height: 48rpx;
+      .small-add {
+        font-size: 24rpx;
+      }
+    }
   }
   .list-center {
     padding: 4rpx 0 16rpx 0;
@@ -217,5 +229,8 @@ export default Vue.extend({
       max-width: 560rpx;
     }
   }
+}
+.customer-detail{
+  background-color: #F6F7F8;
 }
 </style>
