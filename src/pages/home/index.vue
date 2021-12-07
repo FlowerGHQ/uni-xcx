@@ -151,6 +151,7 @@ export default Vue.extend({
         }
         if (dayjs(res1.data.startTime) > dayjs()) {
           this.hasError = true
+          this.notClick = false
           this.errorTitle = '合约暂未生效提醒'
           this.errorMessage = `合约生效时间：${dayjs(
             res1.data.startTime
@@ -159,12 +160,14 @@ export default Vue.extend({
         }
         if (dayjs(res1.data.endTime) < dayjs()) {
           this.hasError = true
+          this.notClick = false
           this.errorTitle = '合约到期提醒'
           this.errorMessage =
             '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
           return
         }
         this.hasError = false
+        this.notClick = false
         this.errorMessage = ''
         console.log(res2.data)
       } catch {
@@ -225,7 +228,7 @@ export default Vue.extend({
   height: 100vh;
 }
 .change-org {
-  margin: 32rpx;
+  margin: 32rpx 32rpx 0;
   width: 686rpx;
   height: 96rpx;
   background: #ffffff;
@@ -307,7 +310,7 @@ export default Vue.extend({
 }
 .normal-card {
   background: linear-gradient(209deg, #ffb3a0 0%, #fc776c 100%);
-  box-shadow: 0px 36rpx 80rpx -30rpx #fc776c;
+  box-shadow: 0 10px 20px 0 rgba(253, 120, 108, 0.3);
   .share-button {
     color: #f86744;
   }
@@ -366,7 +369,7 @@ export default Vue.extend({
   padding: 16rpx 32rpx;
   display: flex;
   justify-content: space-between;
-  margin: 16rpx 0 32rpx;
+  margin: 0 0 32rpx;
   .content {
     font-size: 28rpx;
     color: #222222;

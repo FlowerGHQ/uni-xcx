@@ -259,6 +259,8 @@ export default Vue.extend({
   font-weight: 400;
   color: #666666;
   line-height: 44rpx;
+  background-color: #fff;
+  min-height: 650rpx;
 }
 .bottom-test {
   width: 100%;

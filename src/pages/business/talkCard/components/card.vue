@@ -186,7 +186,7 @@ export default Vue.extend({
   }
   .button-right {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     .list-det {
       width: 120rpx;
       height: 48rpx;

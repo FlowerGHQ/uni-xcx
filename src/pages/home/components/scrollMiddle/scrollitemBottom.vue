@@ -58,7 +58,7 @@ img {
   padding: 32rpx 0 32rpx 32rpx;
   box-sizing: border-box;
   margin-right: 16rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 32rpx;
   .title {
     font-size: 24rpx;
     font-family: PingFangSC-Light, PingFang SC;
