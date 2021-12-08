@@ -22,11 +22,11 @@
           <div class="content">{{ commissionRate }}</div>
         </div>
         <div class="flex contract-list">
-          <div class="title">合同开始时间</div>
+          <div class="title">合约开始时间</div>
           <div class="content">{{ startTime }}</div>
         </div>
         <div class="flex contract-list">
-          <div class="title">合同结束时间</div>
+          <div class="title">合约结束时间</div>
           <div class="content">{{ endTime }}</div>
         </div>
         <div class="flex contract-list" v-if="remark">
@@ -38,7 +38,7 @@
       </div>
       <div class="button-list flex">
         <div class="middle-btn red plain btn-reward" @click="historyContract">
-          历史合同
+          历史合约
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ export default Vue.extend({
     console.log(data)
   },
   methods: {
-    // 历史合同
+    // 历史合约
     historyContract() {
       uni.navigateTo({
         url: `/pages/business/historyContract/index`

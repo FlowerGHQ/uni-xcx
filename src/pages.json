@@ -92,7 +92,7 @@
     {
       "path": "pages/business/historyContract/index",
       "style": {
-        "navigationBarTitleText": "历史合同",
+        "navigationBarTitleText": "历史合约",
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
