@@ -88,7 +88,7 @@
     </van-popup>
     <van-dialog id="van-dialog" />
     <!-- 如果推荐人生成合作人显示两秒升级成功 -->
-    <van-overlay :show="showOverlay">
+    <van-overlay :show="showOverlay" @click="clickCancel">
       <div class="content-overlay">
         <content-center></content-center>
       </div>
@@ -128,10 +128,10 @@ export default Vue.extend({
   },
   async onShow() {
     // 推荐官第一次升级为合作人
-    this.showOverlay = true
-    setTimeout(() => {
-      this.showOverlay = false
-    }, 2000)
+    // this.showOverlay = true
+    // setTimeout(() => {
+    //   this.showOverlay = false
+    // }, 2000)
     // 是否隐藏返回首页按钮
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
@@ -142,6 +142,10 @@ export default Vue.extend({
     this.init()
   },
   methods: {
+    // 点击遮罩层
+    clickCancel() {
+      this.showOverlay = false
+    },
     async init() {
       await API.partnersSBusiness.account.authorized.request({})
       try {

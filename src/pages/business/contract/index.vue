@@ -1,12 +1,17 @@
 <template>
   <div class="talk-card-list">
-    <div class="partner-card base-card">
-      <div class="partner-card-name">
-        <span>{{ name }}</span>
+    <div class="partner-card base-card flex-between">
+      <div class="left">
+        <div class="partner-card-name">
+          <span>{{ name }}</span>
+        </div>
+        <div class="partner-card-phone">手机号： {{ phone }}</div>
+        <div class="partner-card-phone">
+          <div>创建时间： {{ createdAt }}</div>
+        </div>
       </div>
-      <div class="partner-card-phone">手机号： {{ phone }}</div>
-      <div class="partner-card-phone">
-        <div>创建时间： {{ createdAt }}</div>
+      <div class="right">
+        <img :src="rightImg" alt="" class="star-right" />
       </div>
     </div>
 
@@ -61,7 +66,8 @@ export default Vue.extend({
       startTime: '',
       storedAmount: '',
       name: '',
-      phone: ''
+      phone: '',
+      rightImg: require('@/assets/images/star-partner-small.png')
     }
   },
   async onLoad() {
@@ -99,6 +105,10 @@ export default Vue.extend({
 </script>
 
 <style lang="less" scoped>
+.star-right {
+  width: 166rpx;
+  height: 160rpx;
+}
 .button-list {
   justify-content: flex-end;
 }
