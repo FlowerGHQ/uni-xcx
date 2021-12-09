@@ -94,7 +94,7 @@ export default Vue.extend({
   width: 480rpx;
 }
 .img {
-    justify-content: center;
-    margin-top: 100rpx;
+  justify-content: center;
+  margin-top: 100rpx;
 }
 </style>

@@ -1,0 +1,44 @@
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 622rpx;
+  height: 386rpx;
+  background: #ffffff;
+  border-radius: 4rpx;
+  border-radius: 32rpx;
+}
+.top {
+  height: calc(380.96rpx / 1.8);
+}
+.star-partner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -380.96rpx / 2;
+  margin-top: -380.96rpx / 2/1.2;
+  width: 380.96rpx;
+  height: 380.96rpx;
+}
+.center {
+  display: flex;
+  align-items: center;
+}
+.left-rect,
+.right-rect {
+  width: 60rpx;
+  height: 40rpx;
+}
+.bottom p {
+  font-family: PingFangSC-Regular;
+  font-weight: Regular;
+  font-size: 14px;
+  color: #888888;
+}
+.success-font {
+  font-family: PingFangSC-Semibold;
+  font-weight: Semibold;
+  font-size: 40rpx;
+  color: #222222;
+}

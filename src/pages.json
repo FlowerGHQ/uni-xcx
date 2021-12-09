@@ -130,6 +130,14 @@
       }
     },
     {
+      "path": "pages/business/talkCard/components/save-poster",
+      "style": {
+        "navigationBarTitleText": "拓客卡分享海报",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
       "path": "pages/business/trade/components/detailTransation/index",
       "style": {
         "navigationBarTitleText": "订单详情",

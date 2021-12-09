@@ -87,6 +87,12 @@
       <div class="wait-more">更多福利敬请期待</div>
     </van-popup>
     <van-dialog id="van-dialog" />
+    <!-- 如果推荐人生成合作人显示两秒升级成功 -->
+    <van-overlay :show="showOverlay">
+      <div class="content-overlay">
+        <content-center></content-center>
+      </div>
+    </van-overlay>
   </div>
 </template>
 <script lang="ts">
@@ -94,11 +100,12 @@ import CommonList from './components/common-button-list.vue'
 import ScrollMiddle from './components/scrollMiddle/scroll-middle.vue'
 import Vue from 'vue'
 import { API } from '@/models/api'
+import ContentCenter from '@/pages/home/components/center-content/index.vue'
 import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'HomeList',
-  components: { CommonList, ScrollMiddle },
+  components: { CommonList, ScrollMiddle, ContentCenter },
   data() {
     return {
       defaultSchool: '切换校区',
@@ -108,16 +115,24 @@ export default Vue.extend({
       notClick: false,
       showDetail: false,
       hasReward: false,
-      rewardCount: '0.00'
+      rewardCount: '0.00',
+      showOverlay: false
     }
   },
   onLoad() {
+    // 显示当前页面的转发按钮
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
   },
   async onShow() {
+    // 推荐官第一次升级为合作人
+    this.showOverlay = true
+    setTimeout(() => {
+      this.showOverlay = false
+    }, 2000)
+    // 是否隐藏返回首页按钮
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
     ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
@@ -134,13 +149,21 @@ export default Vue.extend({
         const res1 = await API.partnersSBusiness.contract.detail.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
 
-        const res2 =
-          await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
-            {}
-          )
+        const res2 = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
+          {}
+        )
 
         this.hasReward = res2.data ? res2.data.state : false
         console.log(this.hasReward)
+        // 如果是推荐官被禁用显示
+        if (false) {
+          this.hasError = true
+          this.notClick = true
+          this.errorTitle = '已被禁用'
+          this.errorMessage =
+            '您的推荐官身份已被禁用，无法再分享拓客卡和获得新的奖励金，如有疑问可联系校区负责人'
+          return
+        }
         if (!res1.data) {
           this.hasError = true
           this.notClick = true
@@ -190,7 +213,8 @@ export default Vue.extend({
         this.$dialog.alert({
           title: this.errorTitle,
           message: this.errorMessage,
-          confirmButtonText: '知道了'
+          confirmButtonText: '知道了',
+          className: 'confirmhahha'
         })
         return
       }
@@ -204,8 +228,9 @@ export default Vue.extend({
       })
     },
     async openDetail() {
-      const res =
-        await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request({})
+      const res = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
+        {}
+      )
       try {
         const { fixedAmount = '0.00' } = res.data
         this.rewardCount = fixedAmount
@@ -220,6 +245,9 @@ export default Vue.extend({
 })
 </script>
 <style lang="less" scoped>
+/deep/.van-dialog__button:last-child .van-button {
+  color: #0066ff !important;
+}
 .user-login {
   // padding: 32rpx;
   font-size: 28rpx;
@@ -250,6 +278,12 @@ export default Vue.extend({
   // bottom: 0;
   // left: 0;
   padding-bottom: 100rpx;
+}
+.content-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .common-func-height {
   // height: 830rpx;
@@ -335,7 +369,7 @@ export default Vue.extend({
 
 .error-login {
   width: 750rpx;
-  height: 132rpx;
+  // height: 132rpx;
   background: #888888;
   box-shadow: 0rpx 8rpx 32rpx 0rpx rgba(0, 0, 0, 0.08);
   font-size: 28rpx;
@@ -344,6 +378,8 @@ export default Vue.extend({
   line-height: 44rpx;
   padding: 22rpx 32rpx;
   text-align: center;
+  font-family: PingFangSC-Regular;
+  font-weight: Regular;
 }
 .icon-inmage {
   position: absolute;

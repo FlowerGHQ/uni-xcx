@@ -4,9 +4,11 @@
     :style="{
       'background-color': color,
       color: textColor,
-      'font-size': fontSize,
+      'font-size': `${fontSize}rpx`,
       'line-height': `${lineHeight}rpx`,
-      'border-radius': `${borderRadius}rpx`
+      'border-radius': `${borderRadius}rpx`,
+      border: `${border}`,
+      padding: `${padding}`
     }"
   >
     {{ text }}
@@ -18,9 +20,17 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'Tag',
   props: {
+    padding: {
+      type: String,
+      default: '4rpx 12rpx'
+    },
     text: {
       type: String,
       default: '标签'
+    },
+    border: {
+      type: String,
+      default: ''
     },
     color: {
       type: String,
@@ -32,7 +42,7 @@ export default Vue.extend({
     },
     fontSize: {
       type: Number,
-      default: 12
+      default: 24
     },
     lineHeight: {
       type: Number,

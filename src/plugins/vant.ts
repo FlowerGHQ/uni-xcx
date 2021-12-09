@@ -97,7 +97,7 @@ namespace dialog {
         title: options.title,
         content: options.message,
         showCancel: false,
-        confirmColor: '#1989fa',
+        confirmColor: options.confirmColor ? options.confirmColor : '#1989fa',
         cancelColor: '#323233',
         confirmText: options.confirmButtonText || '确认',
         success: () => resolve(true),

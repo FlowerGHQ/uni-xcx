@@ -17,7 +17,19 @@
           @click="openGetInfo"
         />
         <div class="info-content">
-          <div class="info-name">{{ name || '未获取昵称' }}</div>
+          <div class="info-name flex">
+            <span>{{ name || '未获取昵称' }}</span>
+            <span class="mar-l-10">
+              <Tag
+                :text="text"
+                :textColor="textColor"
+                fontSize="24"
+                color="#fff"
+                :border="border"
+                padding="4rpx 15rpx"
+              ></Tag>
+            </span>
+          </div>
           <div class="info-phone">{{ phone }}</div>
         </div>
       </div>
@@ -32,14 +44,24 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+// src/components/tag.vue
+import Tag from '@/components/tag.vue'
 import { API } from '@/models/api'
 export default Vue.extend({
   name: 'Introduce',
+  components: {
+    Tag
+  },
   data() {
     return {
       name: '',
       avatar: '',
-      phone: ''
+      phone: '',
+      // 标签样式
+      text: '',
+      textColor: '',
+      border: '',
+      padding: ''
     }
   },
   onLoad() {
@@ -53,9 +75,19 @@ export default Vue.extend({
         this.avatar = res.data.avatar
         this.phone = res.data.phone
       } catch (error) {}
+      // 根据合作人还是推荐官显示相关标签
+      const flag = false
+      if (flag) {
+        this.text = '推荐官'
+        this.textColor = '#55BD62'
+        this.border = '1px solid #55BD62;'
+      } else {
+        this.text = '合作人'
+        this.textColor = '#F86744'
+        this.border = '1px solid #F86744;'
+      }
     },
     async openGetInfo() {
-      console.log(1)
       wx.getUserProfile({
         desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: async res => {

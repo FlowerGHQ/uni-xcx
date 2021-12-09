@@ -58,7 +58,7 @@
       </van-count-down>
     </div>
     <div class="bottom-button">
-      <button class="view" @click="openQRcode">生成二维码</button>
+      <button class="view" @click="openSavePoster">生成分享海报</button>
       <button class="save-list" @click="openShare">分享至微信</button>
     </div>
     <van-popup
@@ -189,6 +189,12 @@ export default Vue.extend({
     },
     closeDetail() {
       this.showDetail = false
+    },
+    // 生成分享海报
+    openSavePoster() {
+      uni.navigateTo({
+        url: '/pages/business/talkCard/components/save-poster'
+      })
     },
     async openQRcode() {
       const res = await API.partnersSBusiness.memberCard.shareInfo.request({
