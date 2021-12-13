@@ -160,6 +160,14 @@
         "navigationBarBackgroundColor": "#FFF",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/jumpPage/index",
+      "style": {
+        "navigationBarTitleText": "诚邀推荐官",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {
