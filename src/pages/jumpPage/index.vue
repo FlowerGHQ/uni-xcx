@@ -20,7 +20,7 @@
     />
     <!-- </div> -->
     <div class="bottom-button flex">
-      <div class="invite-share" @click="openShare">分享至微信</div>
+      <div class="invite-share" @click="openShare">我要成为推荐官</div>
     </div>
   </div>
 </template>
