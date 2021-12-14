@@ -127,11 +127,6 @@ export default Vue.extend({
     })
   },
   async onShow() {
-    // 推荐官第一次升级为合作人
-    // this.showOverlay = true
-    // setTimeout(() => {
-    //   this.showOverlay = false
-    // }, 2000)
     // 是否隐藏返回首页按钮
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
@@ -148,6 +143,22 @@ export default Vue.extend({
     },
     async init() {
       await API.partnersSBusiness.account.authorized.request({})
+      const resRecommend = await API.partnersSBusiness.account.info.request({})
+      // 如果是推荐官被禁用显示
+      if (resRecommend.state) {
+        this.hasError = true
+        this.notClick = true
+        this.errorTitle = '已被禁用'
+        this.errorMessage = '已被禁用，无法再分享拓客和获得新的奖励金'
+        return
+      }
+      if (resRecommend.upgradeRemind) {
+        // 推荐官第一次升级为合作人
+        this.showOverlay = true
+        setTimeout(() => {
+          this.showOverlay = false
+        }, 2000)
+      }
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
         const res1 = await API.partnersSBusiness.contract.detail.request({})
@@ -159,15 +170,6 @@ export default Vue.extend({
 
         this.hasReward = res2.data ? res2.data.state : false
         console.log(this.hasReward)
-        // 如果是推荐官被禁用显示
-        if (false) {
-          this.hasError = true
-          this.notClick = true
-          this.errorTitle = '已被禁用'
-          this.errorMessage =
-            '您的推荐官身份已被禁用，无法再分享拓客卡和获得新的奖励金，如有疑问可联系校区负责人'
-          return
-        }
         if (!res1.data) {
           this.hasError = true
           this.notClick = true

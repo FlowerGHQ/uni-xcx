@@ -6,7 +6,7 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: _heigth * rpx * 1.45 + 'rpx'
+        height: 1200 + 'rpx'
       }"
     />
     <bottom-button
@@ -27,12 +27,18 @@ import { drawtextLinebreak, drawText, drawRoundedRect } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
 import { API } from '@/models/api'
 import { showLoading, hideLoading } from '@/utils/common'
+import dayjs from 'dayjs'
 export default Vue.extend({
   name: 'SavePoster',
   props: {},
   components: { bottomButton, EditArea },
   data() {
     return {
+      // shoolAddress: '',
+      // titileCard: '',
+      titleTime: '',
+      // amountMoney: '',
+      formObj: {} as any,
       showCanvas: true,
       // 修改推荐语
       showPopup: false,
@@ -40,6 +46,8 @@ export default Vue.extend({
       id: 59,
       _width: 0, //手机屏宽
       _heigth: 0, //手机屏高
+      // 海报分享起始位置
+      paddingSchool: 15,
       codeUrl:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/schoolpal/59-10-47-202112131314028.jpg', //二维码网络路径
       rpx: 0, // 百分比占比
@@ -48,8 +56,6 @@ export default Vue.extend({
       name: '张某某',
       avatar:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
-      // localImageUrl: '', //绘制的商品图片本地路径
-      // localCodeUrl: '' //绘制的二维码图片本地路径
     }
   },
   onLoad(option: any) {
@@ -58,9 +64,7 @@ export default Vue.extend({
     this.id = option.id
     this.getInfoSystem()
   },
-  mounted() {
-    // this.getInfoSystem()
-  },
+  mounted() {},
   methods: {
     // 将海报保存到系统相册
     picClick() {
@@ -98,10 +102,10 @@ export default Vue.extend({
           that._heigth = res.windowHeight
           that._width = res.screenWidth
           that.init()
-          // that.openQRcode()
+          // 将异步数据请求完成之后再渲染
           setTimeout(() => {
             that.drawImage(res.windowHeight, res.screenWidth)
-          }, 1000)
+          }, 700)
         }
       })
     },
@@ -111,9 +115,13 @@ export default Vue.extend({
       this.rpx = rpx
       //缩小比例
       let ctx = uni.createCanvasContext('mycanvas')
+      const grd = ctx.createLinearGradient(0, 0, screenWidth, 1200 * rpx)
+      grd.addColorStop(0, '#e9d9c2')
+      grd.addColorStop(1, '#d8bb94')
       // 绘制背景
-      ctx.setFillStyle('#ebddc8')
-      ctx.fillRect(0, 0, screenWidth, screenHeight)
+      ctx.setFillStyle(grd)
+      // 图片生成固定的大小
+      ctx.fillRect(0, 0, screenWidth, 1200 * rpx)
       // 绘制字体
       ctx.setFillStyle('#222222')
       ctx.setFontSize(16 * rpx) //字大小
@@ -121,8 +129,18 @@ export default Vue.extend({
         this.school.length > 14
           ? `${this.school.slice(0, 13)}...`
           : this.school,
-        38 * rpx,
+        (this.paddingSchool + 30) * rpx,
         30 * rpx
+      )
+      // 先绘制圆角矩形再绘制图片 避免遮盖
+      drawRoundedRect(
+        this.paddingSchool * rpx,
+        54 * rpx,
+        screenWidth - 32.5 * rpx,
+        520 * rpx,
+        20,
+        ctx,
+        rpx
       )
       //绘制图片
       wx.getImageInfo({
@@ -131,14 +149,19 @@ export default Vue.extend({
         //网络图片路径
         success: res => {
           let path = res.path //图片临时本地路径
-          ctx.drawImage(path, 10 * rpx, 10 * rpx, 24 * rpx, 24 * rpx)
+          ctx.drawImage(
+            path,
+            this.paddingSchool * rpx,
+            10 * rpx,
+            24 * rpx,
+            24 * rpx
+          )
         }
       })
       // 绘制右侧图像
       wx.getImageInfo({
         src: this.codeUrl,
         success: res => {
-          console.log('是否走这里', res.path)
           let path = res.path //图片临时本地路径
           // 图片高度和宽度
           ctx.drawImage(
@@ -160,14 +183,14 @@ export default Vue.extend({
           // 图片高度和宽度
           let picX = 342 * rpx
           let picY = 350 * rpx
-          ctx.drawImage(path, 10 * rpx, 54 * rpx, picX, picY)
+          ctx.drawImage(path, this.paddingSchool * rpx, 54 * rpx, picX, picY)
           drawText(
             ctx,
             '#E5C89C',
             20 * rpx,
             82 * rpx,
             100 * rpx,
-            '贵宾卡贵宾卡贵宾卡贵宾…'
+            this.formObj.name
           )
           drawText(
             ctx,
@@ -175,37 +198,34 @@ export default Vue.extend({
             12 * rpx,
             82 * rpx,
             120 * rpx,
-            '有效期：2021–12-01 ～ 2022-12-01'
+            this.titleTime
           )
           // ----背景图中间部分
           ctx.setFillStyle('#a09fa2')
           ctx.setFontSize(20 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.fillText('价值', (this._width / 2.5) * rpx, (400 / 2) * rpx)
-          ctx.setFontSize(32 * rpx) //字大小
-          ctx.setTextBaseline('middle')
-          ctx.setFillStyle('#E5C89C')
           // 居中文字坐标
           let centerTextX = (this._width / 2.5) * rpx
           let centerTextY = (400 / 2) * rpx
+          drawText(
+            ctx,
+            '#E5C89C',
+            20 * rpx,
+            centerTextX - 40 * rpx,
+            centerTextY + 35 * rpx,
+            '¥'
+          )
+          // ____
+          ctx.setFontSize(32 * rpx) //字大小
+          ctx.setTextBaseline('middle')
+          ctx.setFillStyle('#E5C89C')
           ctx.fillText(
-            '¥ 20000.00',
-            centerTextX - 76 * rpx,
+            `${this.formObj.value}`,
+            centerTextX - 30 * rpx,
             centerTextY + 32 * rpx
           )
           // ----底部
-          ctx.setFillStyle('#fff')
-          // ctx.setGlobalAlpha(0.2)
-          drawRoundedRect(
-            11,
-            picY + 54 * rpx,
-            screenWidth - 32.5 * rpx,
-            120 * rpx,
-            10,
-            ctx,
-            rpx
-          )
-          // ctx.rect(11, picY + 54 * rpx, screenWidth - 32.5 * rpx, 300 * rpx)
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
@@ -266,10 +286,14 @@ export default Vue.extend({
                 '长按识别二维码，领取福利'
               )
               // ctx.beginPath()
-              // ctx.moveTo(20, 20)
-              // ctx.lineTo(20, 100)
-              // ctx.lineTo(200, 20)
-              // ctx.setStrokeStyle('#AAAAAA')
+              // ctx.bezierCurveTo(0, 0.75, 0.22, 50, 100, 50)
+              // ctx.lineTo(50, 50)
+              // ctx.bezierCurveTo(200, 50, 250, 50, 250, 100)
+              // ctx.lineTo(250, 150)
+              // ctx.bezierCurveTo(250, 150, 250, 200, 200, 200)
+              // ctx.lineTo(100, 200)
+              // ctx.bezierCurveTo(100, 200, 50, 200, 50, 150)
+              // ctx.closePath()
               // ctx.stroke()
               ctx.draw(true)
               hideLoading()
@@ -285,16 +309,35 @@ export default Vue.extend({
         id: this.id
       })
       this.codeUrl = res.data.url
-      console.log(this.codeUrl, '获取二维码')
     },
     // 获取头像
     async init() {
       try {
         const res = await API.partnersSBusiness.account.info.request({})
-        console.log(res, '你好你要')
         this.name = res.data.name
-        // this.avatar = res.data.avatar
+        if (res.data.avatar) {
+          this.avatar = res.data.avatar
+        } else {
+          this.avatar =
+            'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
+        }
       } catch (error) {}
+      API.partnersSBusiness.memberCard.detail
+        .request({
+          id: this.id
+        })
+        .then(res => {
+          this.formObj = Object.assign({}, res.data)
+          this.titleTime = `${dayjs(res.data.applyStartTime).format(
+            'YYYY-MM-DD'
+          )}~ ${dayjs(res.data.applyEndTime).format('YYYY-MM-DD')}`
+          // console.log(res, 'jajja')
+        })
+      API.partnersSBusiness.campus.detail.request({}).then(res => {
+        this.school = res.data.name
+          ? res.data.name
+          : '满天星艺术培训学校文一路校区'
+      })
     },
     onClose() {
       this.showPopup = false
@@ -310,6 +353,8 @@ export default Vue.extend({
     },
     clickSave(val) {
       this.textContent = val
+        ? val
+        : '强力推荐这家机构！分享给你，好机构陪伴孩子一生！'
       this.showPopup = false
       this.showCanvas = true
       this.drawImage(this._heigth, this._width)
@@ -325,6 +370,6 @@ export default Vue.extend({
   width: 750rpx;
   height: 1500rpx;
   overflow: hidden;
-  background-color: #ebddc8;
+  background-image: linear-gradient(#e9d9c2, #d7c0a1);
 }
 </style>

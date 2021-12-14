@@ -74,18 +74,17 @@ export default Vue.extend({
         this.name = res.data.name
         this.avatar = res.data.avatar
         this.phone = res.data.phone
+        // 根据合作人还是推荐官显示相关标签
+        if (res.data.roleType === 2) {
+          this.text = '推荐官'
+          this.textColor = '#55BD62'
+          this.border = '1px solid #55BD62;'
+        } else if (res.data.roleType === 1) {
+          this.text = '合作人'
+          this.textColor = '#F86744'
+          this.border = '1px solid #F86744;'
+        }
       } catch (error) {}
-      // 根据合作人还是推荐官显示相关标签
-      const flag = false
-      if (flag) {
-        this.text = '推荐官'
-        this.textColor = '#55BD62'
-        this.border = '1px solid #55BD62;'
-      } else {
-        this.text = '合作人'
-        this.textColor = '#F86744'
-        this.border = '1px solid #F86744;'
-      }
     },
     async openGetInfo() {
       wx.getUserProfile({
@@ -116,7 +115,7 @@ export default Vue.extend({
             uni.reLaunch({
               url: '/pages/login/index'
             })
-          } catch (e) {
+          } catch (e: any) {
             this.$toast.fail(e.errorMessage)
           }
         })

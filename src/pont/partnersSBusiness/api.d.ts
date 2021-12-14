@@ -5,6 +5,9 @@ type ObjectMap<Key extends string | number | symbol = any, Value = any> = {
 declare namespace defs {
   export namespace partnersSBusiness {
     export class AccountAuthorizedDto {
+      /** 是否已存在合作人信息 */
+      hasAccount?: boolean
+
       /** 是否已登录 */
       login?: boolean
     }
@@ -16,8 +19,20 @@ declare namespace defs {
       /** 姓名 */
       name?: string
 
+      /** 当前用户的权限点集合 */
+      permissions?: Array<string>
+
       /** 手机号 */
       phone?: string
+
+      /** 合作人角色类型：1-合作人，2-推荐官 */
+      roleType?: number
+
+      /** 状态：0-禁用，1-正常 */
+      state?: number
+
+      /** 是否需要升级提醒 */
+      upgradeRemind?: boolean
     }
 
     export class CampusAttachmentDto {
@@ -66,6 +81,20 @@ declare namespace defs {
 
       /** 是否默认校区 */
       isDefault?: boolean
+
+      /** 商户id */
+      merchantId?: number
+
+      /** 校区名称 */
+      name?: string
+
+      /** 校区状态：0-冻结，1-正常 */
+      state?: number
+    }
+
+    export class CampusSimpleDto {
+      /** 校区id */
+      campusId?: number
 
       /** 商户id */
       merchantId?: number
@@ -231,6 +260,36 @@ declare namespace defs {
       url?: string
     }
 
+    export class MemberCardStatisticDto {
+      /** 已上架拓客卡的总数 */
+      count?: number
+
+      /** 已上架拓客卡的总价值，单位元 */
+      value?: string
+    }
+
+    export class OpenCampusInfoVo {
+      /** 校区id */
+      campusId?: number
+
+      /** 商户id */
+      merchantId?: number
+
+      /** 签名参数 */
+      sign?: string
+    }
+
+    export class OpenMemberCardStatisticVo {
+      /** 校区id */
+      campusId?: number
+
+      /** 商户id */
+      merchantId?: number
+
+      /** 签名参数 */
+      sign?: string
+    }
+
     export class Page<T0 = any> {
       /** empty */
       empty?: boolean
@@ -257,6 +316,11 @@ declare namespace defs {
       totalPages?: number
     }
 
+    export class PhoneDto {
+      /** 手机号 */
+      phone?: string
+    }
+
     export class RewardRuleFreeCourseFixedDto {
       /** 固定奖励金金额，单位元 */
       fixedAmount?: string
@@ -266,6 +330,14 @@ declare namespace defs {
 
       /** 状态：0-关闭，1-开启 */
       state?: boolean
+    }
+
+    export class SaveIntroducerVo {
+      /** 姓名 */
+      name?: string
+
+      /** 手机号 */
+      phone?: string
     }
 
     export class ShareholderDetailDto {
@@ -278,7 +350,7 @@ declare namespace defs {
       /** 合约起始时间，无合约时返回null */
       contractStartTime?: string
 
-      /** 合作人创建时间 */
+      /** 合作人/推荐官 创建时间 */
       createdAt?: string
 
       /** 是否有合约 */
@@ -287,25 +359,31 @@ declare namespace defs {
       /** 合作人剩余储值金额，单位元 */
       leftAmount?: string
 
-      /** 合作人待提现奖励金额，单位元 */
+      /** 合作人/推荐官 待提现奖励金额，单位元 */
       leftRewardAmount?: string
 
-      /** 合作人姓名 */
+      /** 合作人/推荐官 姓名 */
       name?: string
 
-      /** 合作人手机号 */
+      /** 合作人/推荐官 手机号 */
       phone?: string
 
-      /** 合作人总奖励金额，单位元 */
+      /** 合作人/推荐官 总奖励金额，单位元 */
       rewardAmount?: string
+
+      /** 推荐官状态 0-禁用，1-正常 */
+      state?: number
 
       /** 合作人总储值金额，单位元 */
       storedAmount?: string
 
+      /** 合作人身份类型 1-合作人，2-推荐官 */
+      type?: number
+
       /** 合作人已消费储值金额，单位元 */
       usedAmount?: string
 
-      /** 合作人已提现奖励金额，单位元 */
+      /** 合作人/推荐官 已提现奖励金额，单位元 */
       withdrawRewardAmount?: string
     }
 
@@ -588,6 +666,24 @@ declare namespace API {
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.AccountDto
           >
+        >
+      }
+
+      /**
+       * 获取登录手机号
+       * /account/phone
+       */
+      export namespace phone {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.PhoneDto
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<defs.partnersSBusiness.PhoneDto>
         >
       }
 
@@ -896,6 +992,51 @@ declare namespace API {
     }
 
     /**
+     * Open Controller
+     */
+    export namespace open {
+      /**
+       * 获取校区信息
+       * /open/campus/info
+       */
+      export namespace campusInfo {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.CampusSimpleDto
+        >
+        export const init: Response
+        export function request(
+          bodyParams: defs.partnersSBusiness.OpenCampusInfoVo
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.CampusSimpleDto
+          >
+        >
+      }
+
+      /**
+       * 获取拓客卡统计信息
+       * /open/memberCard/statistic
+       */
+      export namespace memberCardStatistic {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.MemberCardStatisticDto
+        >
+        export const init: Response
+        export function request(
+          bodyParams: defs.partnersSBusiness.OpenMemberCardStatisticVo
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.MemberCardStatisticDto
+          >
+        >
+      }
+    }
+
+    /**
      * Reward Rule Controller
      */
     export namespace rewardRule {
@@ -942,6 +1083,34 @@ declare namespace API {
             defs.partnersSBusiness.ShareholderDetailDto
           >
         >
+      }
+
+      /**
+       * 成为推荐官
+       * /shareholder/saveIntroducer
+       */
+      export namespace saveIntroducer {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<number>
+        export const init: Response
+        export function request(
+          bodyParams: defs.partnersSBusiness.SaveIntroducerVo
+        ): Promise<defs.partnersSBusiness.SimpleResponse<number>>
+      }
+
+      /**
+       * 更新升级合作人后，是否需要提醒的状态
+       * /shareholder/updateRemind
+       */
+      export namespace updateRemind {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<boolean>
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<defs.partnersSBusiness.SimpleResponse<boolean>>
       }
     }
 

@@ -1,4 +1,7 @@
 class AccountAuthorizedDto {
+  /** 是否已存在合作人信息 */
+  hasAccount = false
+
   /** 是否已登录 */
   login = false
 }
@@ -10,8 +13,20 @@ class AccountDto {
   /** 姓名 */
   name = ''
 
+  /** 当前用户的权限点集合 */
+  permissions = []
+
   /** 手机号 */
   phone = ''
+
+  /** 合作人角色类型：1-合作人，2-推荐官 */
+  roleType = undefined
+
+  /** 状态：0-禁用，1-正常 */
+  state = undefined
+
+  /** 是否需要升级提醒 */
+  upgradeRemind = false
 }
 
 class CampusAttachmentDto {
@@ -60,6 +75,20 @@ class CampusListBo {
 
   /** 是否默认校区 */
   isDefault = false
+
+  /** 商户id */
+  merchantId = undefined
+
+  /** 校区名称 */
+  name = ''
+
+  /** 校区状态：0-冻结，1-正常 */
+  state = undefined
+}
+
+class CampusSimpleDto {
+  /** 校区id */
+  campusId = undefined
 
   /** 商户id */
   merchantId = undefined
@@ -225,6 +254,36 @@ class MemberCardShareDto {
   url = ''
 }
 
+class MemberCardStatisticDto {
+  /** 已上架拓客卡的总数 */
+  count = undefined
+
+  /** 已上架拓客卡的总价值，单位元 */
+  value = ''
+}
+
+class OpenCampusInfoVo {
+  /** 校区id */
+  campusId = undefined
+
+  /** 商户id */
+  merchantId = undefined
+
+  /** 签名参数 */
+  sign = ''
+}
+
+class OpenMemberCardStatisticVo {
+  /** 校区id */
+  campusId = undefined
+
+  /** 商户id */
+  merchantId = undefined
+
+  /** 签名参数 */
+  sign = ''
+}
+
 class Page {
   /** empty */
   empty = false
@@ -251,6 +310,11 @@ class Page {
   totalPages = undefined
 }
 
+class PhoneDto {
+  /** 手机号 */
+  phone = ''
+}
+
 class RewardRuleFreeCourseFixedDto {
   /** 固定奖励金金额，单位元 */
   fixedAmount = ''
@@ -260,6 +324,14 @@ class RewardRuleFreeCourseFixedDto {
 
   /** 状态：0-关闭，1-开启 */
   state = false
+}
+
+class SaveIntroducerVo {
+  /** 姓名 */
+  name = ''
+
+  /** 手机号 */
+  phone = ''
 }
 
 class ShareholderDetailDto {
@@ -272,7 +344,7 @@ class ShareholderDetailDto {
   /** 合约起始时间，无合约时返回null */
   contractStartTime = ''
 
-  /** 合作人创建时间 */
+  /** 合作人/推荐官 创建时间 */
   createdAt = ''
 
   /** 是否有合约 */
@@ -281,25 +353,31 @@ class ShareholderDetailDto {
   /** 合作人剩余储值金额，单位元 */
   leftAmount = ''
 
-  /** 合作人待提现奖励金额，单位元 */
+  /** 合作人/推荐官 待提现奖励金额，单位元 */
   leftRewardAmount = ''
 
-  /** 合作人姓名 */
+  /** 合作人/推荐官 姓名 */
   name = ''
 
-  /** 合作人手机号 */
+  /** 合作人/推荐官 手机号 */
   phone = ''
 
-  /** 合作人总奖励金额，单位元 */
+  /** 合作人/推荐官 总奖励金额，单位元 */
   rewardAmount = ''
+
+  /** 推荐官状态 0-禁用，1-正常 */
+  state = undefined
 
   /** 合作人总储值金额，单位元 */
   storedAmount = ''
 
+  /** 合作人身份类型 1-合作人，2-推荐官 */
+  type = undefined
+
   /** 合作人已消费储值金额，单位元 */
   usedAmount = ''
 
-  /** 合作人已提现奖励金额，单位元 */
+  /** 合作人/推荐官 已提现奖励金额，单位元 */
   withdrawRewardAmount = ''
 }
 
@@ -543,6 +621,7 @@ export const partnersSBusiness = {
   CampusAttachmentDto,
   CampusDetailDto,
   CampusListBo,
+  CampusSimpleDto,
   ContractDetailDto,
   CouponDto,
   CustomerListDto,
@@ -551,8 +630,13 @@ export const partnersSBusiness = {
   MemberCardDto,
   MemberCardShareByWxDto,
   MemberCardShareDto,
+  MemberCardStatisticDto,
+  OpenCampusInfoVo,
+  OpenMemberCardStatisticVo,
   Page,
+  PhoneDto,
   RewardRuleFreeCourseFixedDto,
+  SaveIntroducerVo,
   ShareholderDetailDto,
   ShareholderRewardDetailDto,
   SimpleBo,
