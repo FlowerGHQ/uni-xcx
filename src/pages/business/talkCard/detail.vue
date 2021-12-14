@@ -193,7 +193,7 @@ export default Vue.extend({
     // 生成分享海报
     openSavePoster() {
       uni.navigateTo({
-        url: '/pages/business/talkCard/components/save-poster'
+        url: `/pages/business/talkCard/components/save-poster?id=${this.id}`
       })
     },
     async openQRcode() {

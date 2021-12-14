@@ -4,7 +4,6 @@ export default {
   onLaunch: function () {
     console.log('App Launch')
     this.update()
-    
   },
   onShow: async function () {
     try {

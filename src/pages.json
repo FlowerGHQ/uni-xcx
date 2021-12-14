@@ -188,7 +188,8 @@
       "van-action-sheet": "/static/vant/action-sheet/index",
       "van-checkbox-group": "/static/vant/checkbox-group/index",
       "van-checkbox": "/static/vant/checkbox/index",
-      "van-notice-bar": "/static/vant/notice-bar/index"
+      "van-notice-bar": "/static/vant/notice-bar/index",
+      "van-button": "/static/vant/button/index"
     }
   }
 }
