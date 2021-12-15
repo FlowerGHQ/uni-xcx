@@ -40,10 +40,7 @@ export default Vue.extend({
   components: { bottomButton, EditArea },
   data() {
     return {
-      // shoolAddress: '',
-      // titileCard: '',
       titleTime: '',
-      // amountMoney: '',
       formObj: {} as any,
       showCanvas: true,
       // 修改推荐语
@@ -67,7 +64,6 @@ export default Vue.extend({
   },
   onLoad(option: any) {
     if (!option.id) return
-    // console.log(option, 'option')
     this.id = option.id
     this.getInfoSystem()
   },
@@ -105,20 +101,8 @@ export default Vue.extend({
     },
     // 获取该手机屏幕宽高
     getInfoSystem() {
-      let that = this
       showLoading()
-      uni.getSystemInfo({
-        success(res) {
-          that._heigth = res.windowHeight
-          that._width = res.screenWidth
-          that.init()
-          that.textHeight = drawHeightText(that.textContent, that._width / 375)
-          // 将异步数据请求完成之后再渲染
-          setTimeout(() => {
-            that.drawImage(res.windowHeight, res.screenWidth)
-          }, 2000)
-        }
-      })
+      this.init()
     },
     // 绘制
     drawImage(screenHeight, screenWidth) {
@@ -229,7 +213,7 @@ export default Vue.extend({
             12 * rpx,
             82 * rpx,
             120 * rpx,
-            this.titleTime
+            '有效期：' + this.titleTime
           )
           // ----背景图中间部分
           ctx.setFillStyle('#a09fa2')
@@ -330,42 +314,50 @@ export default Vue.extend({
         }
       })
     },
-    // 获取二维码
-    async openQRcode() {
-      const res = await API.partnersSBusiness.memberCard.shareInfo.request({
-        id: this.id
-      })
-      this.codeUrl = res.data.url
-    },
     // 获取头像
     async init() {
-      // Promise.all()
-      try {
-        const res = await API.partnersSBusiness.account.info.request({})
-        this.name = res.data.name
-        if (res.data.avatar) {
-          this.avatar = res.data.avatar
+      // 等所有的异步加载完成之后再执行绘画代码
+      // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
+      const res1 = await API.partnersSBusiness.account.info.request({})
+      const res2 = await API.partnersSBusiness.memberCard.detail.request({
+        id: this.id
+      })
+      const res3 = await API.partnersSBusiness.campus.detail.request({})
+      const res4 = await API.partnersSBusiness.memberCard.shareInfo.request({
+        id: this.id
+      })
+      Promise.all([res1, res2, res3, res4]).then(values => {
+        // console.log(values, '哈哈哈嘻嘻')
+        this.name = values[0].data.name
+        if (values[0].data.avatar) {
+          this.avatar = values[0].data.avatar
         } else {
           this.avatar =
             'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
         }
-      } catch (error) {}
-      API.partnersSBusiness.memberCard.detail
-        .request({
-          id: this.id
-        })
-        .then(res => {
-          this.formObj = Object.assign({}, res.data)
-          this.formObj.value = res.data.value.toString()
-          this.titleTime = `${dayjs(res.data.applyStartTime).format(
-            'YYYY-MM-DD'
-          )}~ ${dayjs(res.data.applyEndTime).format('YYYY-MM-DD')}`
-          // console.log(res, 'jajja')
-        })
-      API.partnersSBusiness.campus.detail.request({}).then(res => {
-        this.school = res.data.name
-          ? res.data.name
+        this.formObj = Object.assign({}, values[1].data)
+        console.log(values[1].data.value, 'values[1].data.value')
+        this.formObj.value = values[1].data.value.toString()
+        this.titleTime = `${dayjs(values[1].data.applyStartTime).format(
+          'YYYY-MM-DD'
+        )}~ ${dayjs(values[1].data.applyEndTime).format('YYYY-MM-DD')}`
+        this.school = values[2].data.name
+          ? values[2].data.name
           : '满天星艺术培训学校文一路校区'
+        this.codeUrl = values[3].data.url
+        const that = this
+        uni.getSystemInfo({
+          success(res) {
+            that._heigth = res.windowHeight
+            that._width = res.screenWidth
+            that.textHeight = drawHeightText(
+              that.textContent,
+              that._width / 375
+            )
+            // 将异步数据请求完成之后再渲染
+            that.drawImage(res.windowHeight, res.screenWidth)
+          }
+        })
       })
     },
     onClose() {
@@ -374,10 +366,8 @@ export default Vue.extend({
     editClick() {
       this.showCanvas = false
       this.showPopup = true
-      // console.log('修改推荐语')
     },
     clickCancel() {
-      // console.log('clickCancel')
       this.showPopup = false
       this.drawTwo()
     },
