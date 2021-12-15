@@ -93,6 +93,40 @@
         <content-center></content-center>
       </div>
     </van-overlay>
+    <!-- 成为推荐官 -->
+    <van-overlay :show="showBeIntroduce">
+      <div class="content-overlay-introduce">
+        <div class="content">
+          <div class="top">
+            <img
+              src="../../assets/images/star-partner.png"
+              alt=""
+              class="star-partner"
+            />
+          </div>
+          <div class="center">
+            <span class="mar-r-16">
+              <img
+                src="../../assets/images/left-rect.png"
+                alt=""
+                class="left-rect"
+              />
+            </span>
+            <span class="bold success-font">恭喜成为推荐官</span>
+            <span class="mar-l-16">
+              <img
+                src="../../assets/images/right-rect.png"
+                alt=""
+                class="right-rect"
+              />
+            </span>
+          </div>
+          <div class="bottom mar-t-15">
+            <p>合作人可领取试听课奖励和正课奖励</p>
+          </div>
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 <script lang="ts">
@@ -116,15 +150,22 @@ export default Vue.extend({
       showDetail: false,
       hasReward: false,
       rewardCount: '0.00',
-      showOverlay: false
+      showOverlay: false,
+      showBeIntroduce: false
     }
   },
-  onLoad() {
+  onLoad(option: any) {
     // 显示当前页面的转发按钮
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
+    if (option.isAAAA === 'show') {
+      this.showBeIntroduce = true
+      setTimeout(() => {
+        this.showBeIntroduce = false
+      }, 2000)
+    }
   },
   async onShow() {
     // 是否隐藏返回首页按钮
@@ -164,9 +205,10 @@ export default Vue.extend({
         const res1 = await API.partnersSBusiness.contract.detail.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
 
-        const res2 = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
-          {}
-        )
+        const res2 =
+          await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
+            {}
+          )
 
         this.hasReward = res2.data ? res2.data.state : false
         console.log(this.hasReward)
@@ -234,9 +276,8 @@ export default Vue.extend({
       })
     },
     async openDetail() {
-      const res = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
-        {}
-      )
+      const res =
+        await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request({})
       try {
         const { fixedAmount = '0.00' } = res.data
         this.rewardCount = fixedAmount
@@ -462,5 +503,59 @@ export default Vue.extend({
   text-align: center;
   font-size: 24rpx;
   color: #cccccc;
+}
+.content-overlay-introduce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  @picWidth: 380.96rpx;
+  .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    //   justify-content: center;
+    align-items: center;
+    width: 622rpx;
+    height: 386rpx;
+    background: #ffffff;
+    border-radius: 4rpx;
+    border-radius: 32rpx;
+  }
+  .top {
+    height: calc(@picWidth / 1.8);
+  }
+  .star-partner {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -@picWidth / 2;
+    margin-top: -@picWidth / 2/1.2;
+    width: @picWidth;
+    height: @picWidth;
+  }
+  .center {
+    display: flex;
+    align-items: center;
+  }
+  .left-rect,
+  .right-rect {
+    width: 60rpx;
+    height: 40rpx;
+  }
+  .bottom {
+    p {
+      font-family: PingFangSC-Regular;
+      font-weight: Regular;
+      font-size: 14px;
+      color: #888888;
+    }
+  }
+  .success-font {
+    font-family: PingFangSC-Semibold;
+    font-weight: Semibold;
+    font-size: 40rpx;
+    color: #222222;
+  }
 }
 </style>

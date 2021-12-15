@@ -80,20 +80,17 @@ methods.forEach(method => {
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
+                const res = await wx.login()
+                const res1 = await API.oauth.login.miniProgramLogin.request({
+                  code: res.code,
+                  notAutoLogin: false
+                })
                 try {
-                  const res = await wx.login()
-                  const res1 = await API.oauth.login.miniProgramLogin.request({
-                    code: res.code,
-                    notAutoLogin: false
-                  })
                   await API.partnersSBusiness.account.authorized.request({})
-                  var pages = getCurrentPages()
-                  var currentPage = pages[pages.length - 1] // 当前页面
-                  if (currentPage) {
-                    uni.reLaunch({ url: currentPage.$page.fullPath })
-                  }
                 } catch {
-                 
+                  wx.reLaunch({
+                    url: '/pages/login/index'
+                  })
                 }
 
                 // uni.reLaunch({

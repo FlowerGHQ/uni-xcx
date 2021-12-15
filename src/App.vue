@@ -6,18 +6,20 @@ export default {
     this.update()
   },
   onShow: async function () {
-    try {
-      const res = await wx.login()
-      const res1 = await API.oauth.login.miniProgramLogin.request({
-        code: res.code,
-        notAutoLogin: false
-      })
-      await API.partnersSBusiness.account.authorized.request({})
-    } catch {
-      wx.reLaunch({
-        url: '/pages/login/index'
-      })
-    }
+    var pages = getCurrentPages()
+    console.log(pages, 'pages')
+    // try {
+    //   const res = await wx.login()
+    //   const res1 = await API.oauth.login.miniProgramLogin.request({
+    //     code: res.code,
+    //     notAutoLogin: false
+    //   })
+    //   await API.partnersSBusiness.account.authorized.request({})
+    // } catch {
+    //   wx.reLaunch({
+    //     url: '/pages/login/index'
+    //   })
+    // }
   },
   methods: {
     update: function () {
