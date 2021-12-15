@@ -191,9 +191,9 @@ export default Vue.extend({
       const resRecommend = await API.partnersSBusiness.account.info.request({})
       this.dataType = resRecommend.data.roleType
       if (resRecommend.data.roleType === 2) {
-        console.log(resRecommend.data.state, 'resRecommend.data.state')
+        // console.log(resRecommend.data.state, 'resRecommend.data.state')
         // 如果是推荐官被禁用显示
-        if (!resRecommend.data.state) {
+        if (resRecommend.data.state === 1) {
           this.hasError = true
           this.notClick = true
           this.errorTitle = '已被禁用'
@@ -201,10 +201,10 @@ export default Vue.extend({
           return
         }
       }
-      console.log(
-        resRecommend.data.upgradeRemind,
-        'resRecommend.upgradeRemind推荐官第一次升级为合作人'
-      )
+      // console.log(
+      //   resRecommend.data.upgradeRemind,
+      //   'resRecommend.upgradeRemind推荐官第一次升级为合作人'
+      // )
       if (resRecommend.data.upgradeRemind) {
         // 推荐官第一次升级为合作人
         this.showOverlay = true

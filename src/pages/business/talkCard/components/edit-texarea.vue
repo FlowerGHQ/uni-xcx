@@ -13,11 +13,12 @@
       <van-field
         type="textarea"
         maxlength="50"
+        autosize
         :value="textContent"
         show-word-limit
         placeholder="请输入新的推荐语"
         placeholder-style="color:#CCCCCC"
-        :border="false"
+        :border="true"
         @change="changeTextArea"
       >
       </van-field>

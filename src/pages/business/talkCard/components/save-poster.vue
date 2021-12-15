@@ -116,7 +116,7 @@ export default Vue.extend({
           // 将异步数据请求完成之后再渲染
           setTimeout(() => {
             that.drawImage(res.windowHeight, res.screenWidth)
-          }, 700)
+          }, 2000)
         }
       })
     },
@@ -174,21 +174,36 @@ export default Vue.extend({
           )
         }
       })
+      // 二维码图片位置
+      let codeX = 34 * rpx + 230 * rpx
+      let codeY = 350 * rpx + 130 * rpx + this.textHeight
+      // 绘制二维码边框
+      wx.getImageInfo({
+        src:
+          'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads163953268500054556f.png',
+        success: res => {
+          let path = res.path //图片临时本地路径
+          console.log(path, '是否生成本地路径')
+          // 图片高度和宽度
+          ctx.drawImage(
+            path,
+            codeX - 10 * rpx,
+            codeY - 10 * rpx,
+            90 * rpx,
+            90 * rpx
+          )
+        }
+      })
       // 绘制右侧二维码
       wx.getImageInfo({
         src: this.codeUrl,
         success: res => {
           let path = res.path //图片临时本地路径
           // 图片高度和宽度
-          ctx.drawImage(
-            path,
-            34 * rpx + 230 * rpx,
-            350 * rpx + 130 * rpx + this.textHeight,
-            70 * rpx,
-            70 * rpx
-          )
+          ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
         }
       })
+
       // 绘制中间背景
       wx.getImageInfo({
         src:
@@ -301,13 +316,13 @@ export default Vue.extend({
                 avatarY + 35 * rpx,
                 '长按识别二维码，领取福利'
               )
-              drawBorderRect(
-                34 * rpx + 225 * rpx,
-                350 * rpx + 125 * rpx + this.textHeight,
-                80 * rpx,
-                80 * rpx,
-                ctx
-              )
+              // drawBorderRect(
+              //   34 * rpx + 225 * rpx,
+              //   350 * rpx + 125 * rpx + this.textHeight,
+              //   80 * rpx,
+              //   80 * rpx,
+              //   ctx
+              // )
               ctx.draw(true)
               hideLoading()
             }

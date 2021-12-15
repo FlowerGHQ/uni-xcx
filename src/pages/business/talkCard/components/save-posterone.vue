@@ -166,19 +166,9 @@ export default Vue.extend({
     },
     editClick() {
       this.showPopup = true
-      console.log('修改推荐语')
     },
     picClick() {
       this.showPoster = true
-      // this.$refs.picPoster.showPic()
-      console.log('下载至相册', this.id)
-      // uni.navigateTo({
-      //   // `/pages/business/talkCard/detail?id=${id}`
-      //   url: `/pages/business/talkCard/components/pic-poster?id=${this.id}`
-      // })
-      // uni.redirectTo({
-      //   url: `/pages/business/talkCard/components/pic-poster?id=${this.id}`
-      // })
     },
     onClosePoster() {
       this.showPoster = false
