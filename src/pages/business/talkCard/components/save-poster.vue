@@ -6,14 +6,14 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: 1300 + 'rpx'
+        height: 1400 + 'rpx'
       }"
     />
-    <image
+    <!-- <image
       :src="imageUrl"
       show-menu-by-longpress
-      :style="{ width: 750 + 'rpx', height: 1300 + 'rpx' }"
-    ></image>
+      :style="{ width: 750 + 'rpx', height: 1400 + 'rpx' }"
+    ></image> -->
     <bottom-button
       view="修改推荐语"
       save="下载至相册"
@@ -33,6 +33,7 @@ import {
   drawText,
   drawRoundedRect,
   drawBorderRect,
+  textValueChange,
   drawHeightText
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
@@ -82,7 +83,7 @@ export default Vue.extend({
         //把当前画布指定区域的内容导出生成指定大小的图片
         canvasId: 'mycanvas',
         success(res) {
-          console.log(res.tempFilePath, '保存相册收钱')
+          // console.log(res.tempFilePath, '保存相册收钱')
           wx.authorize({
             //向用户发起授权请求
             scope: 'scope.writePhotosAlbum', //保存相册授权
@@ -125,19 +126,19 @@ export default Vue.extend({
         1200 * rpx + this.textHeight
       )
       grd.addColorStop(0, '#e9d9c2')
-      grd.addColorStop(1, '#d8bb94')
+      grd.addColorStop(1, '#d0b796')
       // 绘制背景
       ctx.setFillStyle(grd)
       // 图片生成固定的大小
-      ctx.fillRect(0, 0, screenWidth, 1200 * rpx)
+      ctx.fillRect(0, 0, screenWidth, 1400 * rpx)
       // 绘制字体
-      ctx.setFillStyle('#222222')
+      ctx.setFillStyle('#000')
       ctx.setFontSize(16 * rpx) //字大小
       ctx.fillText(
         this.school.length > 14
           ? `${this.school.slice(0, 13)}...`
           : this.school,
-        (this.paddingSchool + 30) * rpx,
+        (this.paddingSchool + 28) * rpx,
         30 * rpx
       )
       // 先绘制圆角矩形再绘制图片 避免遮盖
@@ -145,7 +146,7 @@ export default Vue.extend({
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.5 * rpx,
-        520 * rpx + this.textHeight,
+        540 * rpx + this.textHeight,
         20,
         ctx,
         rpx
@@ -160,7 +161,7 @@ export default Vue.extend({
           ctx.drawImage(
             path,
             this.paddingSchool * rpx,
-            10 * rpx,
+            12 * rpx,
             24 * rpx,
             24 * rpx
           )
@@ -175,7 +176,6 @@ export default Vue.extend({
           'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads163953268500054556f.png',
         success: res => {
           let path = res.path //图片临时本地路径
-          console.log(path, '是否生成本地路径')
           // 图片高度和宽度
           ctx.drawImage(
             path,
@@ -204,22 +204,20 @@ export default Vue.extend({
         success: res => {
           let path = res.path //图片临时本地路径
           // 图片高度和宽度
-          let picX = 342 * rpx
-          let picY = 350 * rpx
+          let picX = 343 * rpx
+          let picY = 370 * rpx
           ctx.drawImage(path, this.paddingSchool * rpx, 54 * rpx, picX, picY)
-          drawText(
-            ctx,
-            '#E5C89C',
-            20 * rpx,
-            82 * rpx,
-            100 * rpx,
-            this.formObj.name
-          )
+          // 将name截图省略号
+          let nameCustom =
+            this.formObj.name.length > 13
+              ? `${this.formObj.name.slice(0, 12)}...`
+              : this.formObj.name
+          drawText(ctx, '#E5C89C', 20 * rpx, 90 * rpx, 100 * rpx, nameCustom)
           drawText(
             ctx,
             '#a09fa2',
             12 * rpx,
-            82 * rpx,
+            90 * rpx,
             120 * rpx,
             '有效期：' + this.titleTime
           )
@@ -243,6 +241,8 @@ export default Vue.extend({
           ctx.setFontSize(32 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#E5C89C')
+          // ${this.formObj.value}
+          let valueLength = textValueChange(`${this.formObj.value}`)
           ctx.fillText(
             `${this.formObj.value}`,
             centerTextX - 30 * rpx,
@@ -252,6 +252,7 @@ export default Vue.extend({
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
+          console.log(textValueChange('0.00'), 'this.textContenthha')
           // 返回文字的高度
           drawtextLinebreak(
             ctx,
@@ -296,7 +297,7 @@ export default Vue.extend({
                 ctx,
                 '#000000',
                 16 * rpx,
-                avatarX + 70 * rpx,
+                avatarX + 57 * rpx,
                 avatarY + 15 * rpx,
                 `${this.name} 推荐`
               )
@@ -304,7 +305,7 @@ export default Vue.extend({
                 ctx,
                 '#888',
                 12 * rpx,
-                avatarX + 70 * rpx,
+                avatarX + 57 * rpx,
                 avatarY + 35 * rpx,
                 '长按识别二维码，领取福利'
               )
@@ -322,7 +323,6 @@ export default Vue.extend({
                   //把当前画布指定区域的内容导出生成指定大小的图片
                   canvasId: 'mycanvas',
                   success(res) {
-                    console.log(res.tempFilePath, '哈哈哈和黑恶')
                     that.imageUrl = res.tempFilePath
                   }
                 })
@@ -407,12 +407,12 @@ export default Vue.extend({
 })
 </script>
 <style lang="less" scoped>
-.canvas {
-  z-index: 1;
-  position: absolute;
-  top: -1999998rpx;
-  left: 0;
-}
+//  {
+//   z-index: 1;
+//   position: absolute;
+//   top: -1999998rpx;
+//   left: 0;
+// }
 .all-content {
   width: 750rpx;
   height: 1500rpx;

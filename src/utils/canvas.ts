@@ -131,48 +131,11 @@ export const drawBorderRect = (x, y, w, h, ctx) => {
   ctx.lineTo(x + w, y + h * (2 / 3))
   ctx.stroke()
 }
-
-/**
- * 画有圆角的扫码框
- * x 矩形x坐标
- * y 矩形y坐标
- * w 矩形w宽
- * h 矩形h高
- * r 矩形r圆角度数
- */
-export const drawBorderRound = (x, y, w, h, ctx) => {
-  // 开始绘制
-  ctx.beginPath()
-  ctx.strokeStyle = '#e8c89f'
-  ctx.lineWidth = 2
-  // border-top
-  // 竖着左边的上短线
-  ctx.moveTo(x, y)
-  ctx.lineTo(x, y + h / 3)
-
-  // 竖着右边的上短线
-  ctx.moveTo(x + w, y)
-  ctx.lineTo(x + w, y + h / 3)
-  // 横着上面右侧的线
-  ctx.moveTo(x + w, y)
-  ctx.lineTo(x + w * (2 / 3), y)
-  // 横着上面左侧的短线
-  ctx.moveTo(x, y)
-  ctx.lineTo(x + w * (1 / 3), y)
-  // 竖着底部左侧短线
-  ctx.moveTo(x, y + h)
-  ctx.lineTo(x, y + h * (2 / 3))
-  // 竖着右侧底部短线
-  ctx.moveTo(x, y + h)
-  ctx.lineTo(x, y + h * (2 / 3))
-  // 横着底部左侧的线
-  ctx.moveTo(x, y + h)
-  ctx.lineTo(x + w / 3, y + h)
-  // 横着底部右侧的线
-  ctx.moveTo(x + w, y + h)
-  ctx.lineTo(x + w * (2 / 3), y + h)
-  // 竖着底部右侧的线
-  ctx.moveTo(x + w, y + h)
-  ctx.lineTo(x + w, y + h * (2 / 3))
-  ctx.stroke()
+// 价值字体位置调整
+export const textValueChange = text => {
+  let textLength = 0
+  for (let i = 0; i < text.length; i++) {
+    textLength += 8
+  }
+  return textLength
 }
