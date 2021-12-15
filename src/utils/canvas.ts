@@ -25,7 +25,7 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
 // 文字的y轴的高度 根据文字的行数决定文字宽度
 export const drawHeightText = (textLength, rpx) => {
   // 绘制文字宽度
-  console.log(textLength.length, '哈哈哈')
+  // console.log(textLength.length, '哈哈哈')
   let yLength = 0
   let textLengthOne = textLength.length / 19
   if (0 < textLengthOne && textLengthOne <= 1) {

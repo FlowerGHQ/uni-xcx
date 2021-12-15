@@ -9,11 +9,11 @@
         height: 1400 + 'rpx'
       }"
     />
-    <!-- <image
+    <image
       :src="imageUrl"
       show-menu-by-longpress
       :style="{ width: 750 + 'rpx', height: 1400 + 'rpx' }"
-    ></image> -->
+    ></image>
     <bottom-button
       view="修改推荐语"
       save="下载至相册"
@@ -62,7 +62,7 @@ export default Vue.extend({
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/schoolpal/59-10-47-202112131314028.jpg', //二维码网络路径
       rpx: 0, // 百分比占比
       school: '满天星艺术培训学校文一路校区',
-      textContent: '强力推荐这家机构！分享给你，好机构陪伴孩子一生！',
+      textContent: '收下这张会员卡，只有我的朋友可以获得哦',
       name: '张某某',
       avatar:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
@@ -146,7 +146,7 @@ export default Vue.extend({
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.5 * rpx,
-        540 * rpx + this.textHeight,
+        550 * rpx + this.textHeight,
         20,
         ctx,
         rpx
@@ -169,7 +169,7 @@ export default Vue.extend({
       })
       // 二维码图片位置
       let codeX = 34 * rpx + 230 * rpx
-      let codeY = 350 * rpx + 130 * rpx + this.textHeight
+      let codeY = 350 * rpx + 150 * rpx + this.textHeight
       // 绘制二维码边框
       wx.getImageInfo({
         src:
@@ -258,7 +258,7 @@ export default Vue.extend({
             ctx,
             this.textContent,
             34 * rpx,
-            picY + 60 * rpx,
+            picY + 45 * rpx,
             screenWidth - 70 * rpx,
             rpx
           )
@@ -269,7 +269,7 @@ export default Vue.extend({
             success: res => {
               // 绘制的头像坐标
               let avatarX = 34 * rpx
-              let avatarY = picY + 130 * rpx + this.textHeight
+              let avatarY = picY + 140 * rpx + this.textHeight
               let avatarurl_width = 48 * rpx //绘制的头像宽度
               let avatarurl_heigth = 48 * rpx //绘制的头像高度
               ctx.save()
@@ -391,9 +391,7 @@ export default Vue.extend({
       this.drawTwo()
     },
     clickSave(val) {
-      this.textContent = val
-        ? val
-        : '强力推荐这家机构！分享给你，好机构陪伴孩子一生！'
+      this.textContent = val ? val : '收下这张会员卡，只有我的朋友可以获得哦'
       this.drawTwo()
     },
     // 再次绘制
@@ -407,12 +405,12 @@ export default Vue.extend({
 })
 </script>
 <style lang="less" scoped>
-//  {
-//   z-index: 1;
-//   position: absolute;
-//   top: -1999998rpx;
-//   left: 0;
-// }
+.canvas {
+  z-index: 1;
+  position: absolute;
+  top: -1999998rpx;
+  left: 0;
+}
 .all-content {
   width: 750rpx;
   height: 1500rpx;
