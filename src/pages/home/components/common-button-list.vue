@@ -58,14 +58,24 @@ export default Vue.extend({
             }
           })
         })
-        this.buttonList = [...list]
-      } finally {
-        this.buttonList.push({
-          title: '设置',
-          type: 'campus',
-          imageStyle: 'set',
-          openUrl: '/pages/business/set/index'
-        })
+        this.buttonList = [
+          ...list,
+          {
+            title: '设置',
+            type: 'campus',
+            imageStyle: 'set',
+            openUrl: '/pages/business/set/index'
+          }
+        ]
+      } catch {
+        this.buttonList = [
+          {
+            title: '设置',
+            type: 'campus',
+            imageStyle: 'set',
+            openUrl: '/pages/business/set/index'
+          }
+        ]
       }
 
       // console.log(list, 'oneList')
