@@ -9,6 +9,11 @@
         height: 1300 + 'rpx'
       }"
     />
+    <image
+      :src="imageUrl"
+      show-menu-by-longpress
+      :style="{ width: 750 + 'rpx', height: 1300 + 'rpx' }"
+    ></image>
     <bottom-button
       view="修改推荐语"
       save="下载至相册"
@@ -42,6 +47,7 @@ export default Vue.extend({
     return {
       titleTime: '',
       formObj: {} as any,
+      // showImage: false,
       showCanvas: true,
       // 修改推荐语
       showPopup: false,
@@ -59,7 +65,8 @@ export default Vue.extend({
       name: '张某某',
       avatar:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
-      textHeight: 0 // 中间文字高度
+      textHeight: 0, // 中间文字高度
+      imageUrl: ''
     }
   },
   onLoad(option: any) {
@@ -75,6 +82,7 @@ export default Vue.extend({
         //把当前画布指定区域的内容导出生成指定大小的图片
         canvasId: 'mycanvas',
         success(res) {
+          console.log(res.tempFilePath, '保存相册收钱')
           wx.authorize({
             //向用户发起授权请求
             scope: 'scope.writePhotosAlbum', //保存相册授权
@@ -307,7 +315,18 @@ export default Vue.extend({
               //   80 * rpx,
               //   ctx
               // )
-              ctx.draw(true)
+              //绘制图片
+              const that = this
+              ctx.draw(false, () => {
+                wx.canvasToTempFilePath({
+                  //把当前画布指定区域的内容导出生成指定大小的图片
+                  canvasId: 'mycanvas',
+                  success(res) {
+                    console.log(res.tempFilePath, '哈哈哈和黑恶')
+                    that.imageUrl = res.tempFilePath
+                  }
+                })
+              })
               hideLoading()
             }
           })
@@ -388,9 +407,12 @@ export default Vue.extend({
 })
 </script>
 <style lang="less" scoped>
-// .canvas {
-//   z-index: 1;
-// }
+.canvas {
+  z-index: 1;
+  position: absolute;
+  top: -1999998rpx;
+  left: 0;
+}
 .all-content {
   width: 750rpx;
   height: 1500rpx;
