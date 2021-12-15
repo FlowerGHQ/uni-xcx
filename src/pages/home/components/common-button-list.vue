@@ -43,27 +43,41 @@ export default Vue.extend({
   },
   methods: {
     async getListAll() {
-      const resRecommend = await API.partnersSBusiness.account.info.request({})
-      // console.log(resRecommend, 'resRecommend')
-      this.permissionList = resRecommend.data.permissions
-      // console.log(this.permissionList, 'getListAll')
-      let list = [] as any
-      resRecommend.data.permissions.forEach(id => {
-        ButtonList.forEach(item => {
-          if (item.id === id) {
-            list.push(item)
-          }
+      try {
+        const resRecommend = await API.partnersSBusiness.account.info.request(
+          {}
+        )
+        // console.log(resRecommend, 'resRecommend')
+        this.permissionList = resRecommend.data.permissions
+        // console.log(this.permissionList, 'getListAll')
+        let list = [] as any
+        resRecommend.data.permissions.forEach(id => {
+          ButtonList.forEach(item => {
+            if (item.id === id) {
+              list.push(item)
+            }
+          })
         })
-      })
-      this.buttonList = [
-        ...list,
-        {
-          title: '设置',
-          type: 'campus',
-          imageStyle: 'set',
-          openUrl: '/pages/business/set/index'
-        }
-      ]
+        this.buttonList = [
+          ...list,
+          {
+            title: '设置',
+            type: 'campus',
+            imageStyle: 'set',
+            openUrl: '/pages/business/set/index'
+          }
+        ]
+      } catch {
+        this.buttonList = [
+          {
+            title: '设置',
+            type: 'campus',
+            imageStyle: 'set',
+            openUrl: '/pages/business/set/index'
+          }
+        ]
+      }
+
       // console.log(list, 'oneList')
     }
   }

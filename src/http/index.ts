@@ -75,8 +75,15 @@ methods.forEach(method => {
             resolve(responseBody)
           } else {
             if (!responseBody.status) {
+              // TODO 暂时，如果没有账号那么回退首页
+              if ([11001].indexOf(responseBody.errorCode) !== -1) {
+                wx.reLaunch({
+                  url: '/pages/login/index'
+                })
+                return
+              }
               if (
-                [-9999, 401].indexOf(responseBody.errorCode) !== -1 &&
+                [-9999, 401, 11001].indexOf(responseBody.errorCode) !== -1 &&
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
@@ -87,7 +94,9 @@ methods.forEach(method => {
                 })
                 try {
                   await API.partnersSBusiness.account.authorized.request({})
+                  console.log(222)
                 } catch {
+                  console.log(111)
                   wx.reLaunch({
                     url: '/pages/login/index'
                   })

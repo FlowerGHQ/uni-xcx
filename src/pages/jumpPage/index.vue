@@ -91,22 +91,31 @@ export default Vue.extend({
     this.state = decodeURIComponent(option.scene)
     const parmaState = this.state.split('&')
     const parma = {
-      campusId: parmaState[0],
-      merchantId: parmaState[1],
-      sign: parmaState[2]
+      campusId: 1,
+      merchantId: 1,
+      sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
     }
+    // const parma = {
+    //   campusId: parmaState[0],
+    //   merchantId: parmaState[1],
+    //   sign: parmaState[2]
+    // }
     const res = await API.partnersSBusiness.open.campusInfo.request(parma)
     this.schoolName = res.data.name
     console.log(option, this.schoolName)
   },
   async onShow() {
     const parmaState = this.state.split('&')
-
     const parma = {
-      campusId: parmaState[0],
-      merchantId: parmaState[1],
-      sign: parmaState[2]
+      campusId: 1,
+      merchantId: 1,
+      sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
     }
+    // const parma = {
+    //   campusId: parmaState[0],
+    //   merchantId: parmaState[1],
+    //   sign: parmaState[2]
+    // }
     let res = await API.partnersSBusiness.open.memberCardStatistic.request(
       parma
     )
@@ -114,6 +123,9 @@ export default Vue.extend({
     this.value = res.data.value
   },
   methods: {
+    closePopup() {
+      this.showMessage = false
+    },
     async onAuth(e) {
       try {
         await API.partnersSBusiness.account.authorized.request({})
@@ -164,6 +176,7 @@ export default Vue.extend({
               encryptedData: detail1.encryptedData
             })
           }
+          this.next()
         } catch (e) {
           console.log('false', 0)
           const { errorMessage = '' } = e as any
@@ -185,10 +198,15 @@ export default Vue.extend({
       }
       const parmaState = this.state.split('&')
       const parma = {
-        campusId: parmaState[0],
-        merchantId: parmaState[1],
-        sign: parmaState[2]
+        campusId: 1,
+        merchantId: 1,
+        sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
       }
+      //   const parma = {
+      //     campusId: parmaState[0],
+      //     merchantId: parmaState[1],
+      //     sign: parmaState[2]
+      //   }
       try {
         const res =
           await API.partnersSBusiness.shareholder.saveIntroducer.request({

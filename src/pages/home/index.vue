@@ -122,7 +122,11 @@
             </span>
           </div>
           <div class="bottom mar-t-15">
-            <p>合作人可领取试听课奖励和正课奖励</p>
+            <p>推荐官可领取试听课奖励</p>
+          </div>
+          <div class="card-bottom">
+            <div class="close" @click="onClose">取消</div>
+            <button class="share" @click="shareCard">立即分享拓客卡</button>
           </div>
         </div>
       </div>
@@ -265,7 +269,11 @@ export default Vue.extend({
         })
       }
     },
+    onClose() {
+      this.showBeIntroduce = false
+    },
     shareCard() {
+      this.showBeIntroduce = false
       if (this.hasError) {
         this.$dialog.alert({
           title: this.errorTitle,
@@ -527,7 +535,7 @@ export default Vue.extend({
     //   justify-content: center;
     align-items: center;
     width: 622rpx;
-    height: 386rpx;
+    // height: 386rpx;
     background: #ffffff;
     border-radius: 4rpx;
     border-radius: 32rpx;
@@ -566,6 +574,35 @@ export default Vue.extend({
     font-weight: Semibold;
     font-size: 40rpx;
     color: #222222;
+  }
+}
+
+.card-bottom {
+  display: flex;
+  margin: 48rpx 0;
+  align-items: center;
+  .close {
+    width: 160rpx;
+    height: 80rpx;
+    background: #ffffff;
+    border-radius: 44rpx;
+    border: 1rpx solid #f86744;
+    color: #222222;
+    font-size: 32rpx;
+    text-align: center;
+    line-height: 78rpx;
+    margin-right: 32rpx;
+  }
+  .share {
+    width: 366rpx;
+    height: 80rpx;
+    background-image: linear-gradient(90deg, #ff8360 0%, #f86744 100%);
+    border-radius: 44rpx;
+    font-size: 32rpx;
+    color: #ffffff;
+    text-align: center;
+    line-height: 78rpx;
+    margin: 0;
   }
 }
 </style>
