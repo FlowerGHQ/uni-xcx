@@ -413,8 +413,9 @@ export default Vue.extend({
 }
 .all-content {
   width: 750rpx;
-  height: 1500rpx;
-  overflow: hidden;
+  // height: 1500rpx;
+  padding-bottom: 200rpx;
+  overflow: auto;
   background-image: linear-gradient(#e9d9c2, #d7c0a1);
 }
 </style>
