@@ -114,6 +114,9 @@ export default Vue.extend({
     this.value = res.data.value
   },
   methods: {
+    closePopup() {
+      this.showMessage = false
+    },
     async onAuth(e) {
       try {
         await API.partnersSBusiness.account.authorized.request({})
