@@ -284,6 +284,17 @@ class OpenMemberCardStatisticVo {
   sign = ''
 }
 
+class OpenSaveIntroducerVo {
+  /** 校区id */
+  campusId = undefined
+
+  /** 商户id */
+  merchantId = undefined
+
+  /** 签名参数 */
+  sign = ''
+}
+
 class Page {
   /** empty */
   empty = false
@@ -329,6 +340,9 @@ class RewardRuleFreeCourseFixedDto {
 class SaveIntroducerVo {
   /** 姓名 */
   name = ''
+
+  /** 机构校区等信息 */
+  open = new OpenSaveIntroducerVo()
 
   /** 手机号 */
   phone = ''
@@ -633,6 +647,7 @@ export const partnersSBusiness = {
   MemberCardStatisticDto,
   OpenCampusInfoVo,
   OpenMemberCardStatisticVo,
+  OpenSaveIntroducerVo,
   Page,
   PhoneDto,
   RewardRuleFreeCourseFixedDto,

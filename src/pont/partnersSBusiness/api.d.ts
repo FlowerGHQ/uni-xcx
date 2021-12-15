@@ -290,6 +290,17 @@ declare namespace defs {
       sign?: string
     }
 
+    export class OpenSaveIntroducerVo {
+      /** 校区id */
+      campusId?: number
+
+      /** 商户id */
+      merchantId?: number
+
+      /** 签名参数 */
+      sign?: string
+    }
+
     export class Page<T0 = any> {
       /** empty */
       empty?: boolean
@@ -335,6 +346,9 @@ declare namespace defs {
     export class SaveIntroducerVo {
       /** 姓名 */
       name?: string
+
+      /** 机构校区等信息 */
+      open?: defs.partnersSBusiness.OpenSaveIntroducerVo
 
       /** 手机号 */
       phone?: string
