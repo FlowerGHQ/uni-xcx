@@ -2,7 +2,7 @@
   <div class="func-button-list">
     <CommonButton
       :error="error"
-      v-for="(item, index) in ButtonList"
+      v-for="(item, index) in buttonList"
       :key="item.type"
       :text="item.title"
       :class="(index + 1) % 4 === 0 ? 'mr0' : 'mr50'"
@@ -13,6 +13,8 @@
 </template>
 <script lang="ts">
 import CommonButton from './common-button.vue'
+// import mixin from '@/pages/home/components/mixin/mixin'
+import { API } from '@/models/api'
 import { ButtonList } from './constant'
 import Vue from 'vue'
 
@@ -23,14 +25,40 @@ export default Vue.extend({
       type: Boolean,
       default: false
     }
+    // permissionList: {
+    //   type: Array,
+    //   default: () => []
+    // }
   },
   components: { CommonButton },
+  // mixins: [mixin],
   data() {
     return {
-      ButtonList
+      buttonList: [],
+      permissionList: []
     }
   },
-  methods: {}
+  mounted() {
+    this.getListAll()
+  },
+  methods: {
+    async getListAll() {
+      const resRecommend = await API.partnersSBusiness.account.info.request({})
+      console.log(resRecommend, 'resRecommend')
+      this.permissionList = resRecommend.data.permissions
+      console.log(this.permissionList, 'getListAll')
+      let list = [] as any
+      resRecommend.data.permissions.forEach(id => {
+        ButtonList.forEach(item => {
+          if (item.id === id) {
+            list.push(item)
+          }
+        })
+      })
+      this.buttonList = list
+      // console.log(list, 'oneList')
+    }
+  }
 })
 </script>
 

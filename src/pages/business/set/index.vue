@@ -115,7 +115,7 @@ export default Vue.extend({
             uni.reLaunch({
               url: '/pages/login/index'
             })
-          } catch (e: any) {
+          } catch (e) {
             this.$toast.fail(e.errorMessage)
           }
         })

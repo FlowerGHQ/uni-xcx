@@ -6,7 +6,7 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: 1200 + 'rpx'
+        height: 1300 + 'rpx'
       }"
     />
     <bottom-button
@@ -23,7 +23,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
-import { drawtextLinebreak, drawText, drawRoundedRect } from '@/utils/canvas'
+import {
+  drawtextLinebreak,
+  drawText,
+  drawRoundedRect,
+  drawBorderRect,
+  drawHeightText
+} from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
 import { API } from '@/models/api'
 import { showLoading, hideLoading } from '@/utils/common'
@@ -43,7 +49,7 @@ export default Vue.extend({
       // 修改推荐语
       showPopup: false,
       // canvas
-      id: 59,
+      id: -1,
       _width: 0, //手机屏宽
       _heigth: 0, //手机屏高
       // 海报分享起始位置
@@ -55,7 +61,8 @@ export default Vue.extend({
       textContent: '强力推荐这家机构！分享给你，好机构陪伴孩子一生！',
       name: '张某某',
       avatar:
-        'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
+        'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
+      textHeight: 0 // 中间文字高度
     }
   },
   onLoad(option: any) {
@@ -76,6 +83,9 @@ export default Vue.extend({
             //向用户发起授权请求
             scope: 'scope.writePhotosAlbum', //保存相册授权
             success: () => {
+              // wx.previewImage({
+              //   urls: [res.tempFilePath]
+              // })
               wx.saveImageToPhotosAlbum({
                 //保存图片到系统相册
                 filePath: res.tempFilePath,
@@ -102,6 +112,7 @@ export default Vue.extend({
           that._heigth = res.windowHeight
           that._width = res.screenWidth
           that.init()
+          that.textHeight = drawHeightText(that.textContent, that._width / 375)
           // 将异步数据请求完成之后再渲染
           setTimeout(() => {
             that.drawImage(res.windowHeight, res.screenWidth)
@@ -115,7 +126,12 @@ export default Vue.extend({
       this.rpx = rpx
       //缩小比例
       let ctx = uni.createCanvasContext('mycanvas')
-      const grd = ctx.createLinearGradient(0, 0, screenWidth, 1200 * rpx)
+      const grd = ctx.createLinearGradient(
+        0,
+        0,
+        screenWidth,
+        1200 * rpx + this.textHeight
+      )
       grd.addColorStop(0, '#e9d9c2')
       grd.addColorStop(1, '#d8bb94')
       // 绘制背景
@@ -137,7 +153,7 @@ export default Vue.extend({
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.5 * rpx,
-        520 * rpx,
+        520 * rpx + this.textHeight,
         20,
         ctx,
         rpx
@@ -158,7 +174,7 @@ export default Vue.extend({
           )
         }
       })
-      // 绘制右侧图像
+      // 绘制右侧二维码
       wx.getImageInfo({
         src: this.codeUrl,
         success: res => {
@@ -167,7 +183,7 @@ export default Vue.extend({
           ctx.drawImage(
             path,
             34 * rpx + 230 * rpx,
-            350 * rpx + 130 * rpx,
+            350 * rpx + 130 * rpx + this.textHeight,
             70 * rpx,
             70 * rpx
           )
@@ -229,14 +245,15 @@ export default Vue.extend({
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
+          // 返回文字的高度
           drawtextLinebreak(
             ctx,
             this.textContent,
             34 * rpx,
             picY + 60 * rpx,
-            screenWidth - 70 * rpx
+            screenWidth - 70 * rpx,
+            rpx
           )
-          // ctx.clearRect(246, picY + 54 * rpx, 150, 175)
           // 绘制头像
           wx.getImageInfo({
             src: this.avatar,
@@ -244,7 +261,7 @@ export default Vue.extend({
             success: res => {
               // 绘制的头像坐标
               let avatarX = 34 * rpx
-              let avatarY = picY + 130 * rpx
+              let avatarY = picY + 130 * rpx + this.textHeight
               let avatarurl_width = 48 * rpx //绘制的头像宽度
               let avatarurl_heigth = 48 * rpx //绘制的头像高度
               ctx.save()
@@ -267,7 +284,6 @@ export default Vue.extend({
                 avatarurl_heigth
               ) // 推进去图片，必须是https图片
               ctx.restore() //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 还可以继续绘制
-              // ctx.drawImage(path, avatarX, avatarY, 48 * rpx, 48 * rpx)
               // 右侧文字
               drawText(
                 ctx,
@@ -285,19 +301,15 @@ export default Vue.extend({
                 avatarY + 35 * rpx,
                 '长按识别二维码，领取福利'
               )
-              // ctx.beginPath()
-              // ctx.bezierCurveTo(0, 0.75, 0.22, 50, 100, 50)
-              // ctx.lineTo(50, 50)
-              // ctx.bezierCurveTo(200, 50, 250, 50, 250, 100)
-              // ctx.lineTo(250, 150)
-              // ctx.bezierCurveTo(250, 150, 250, 200, 200, 200)
-              // ctx.lineTo(100, 200)
-              // ctx.bezierCurveTo(100, 200, 50, 200, 50, 150)
-              // ctx.closePath()
-              // ctx.stroke()
+              drawBorderRect(
+                34 * rpx + 225 * rpx,
+                350 * rpx + 125 * rpx + this.textHeight,
+                80 * rpx,
+                80 * rpx,
+                ctx
+              )
               ctx.draw(true)
               hideLoading()
-              // this.picClick()
             }
           })
         }
@@ -312,6 +324,7 @@ export default Vue.extend({
     },
     // 获取头像
     async init() {
+      // Promise.all()
       try {
         const res = await API.partnersSBusiness.account.info.request({})
         this.name = res.data.name
@@ -328,6 +341,7 @@ export default Vue.extend({
         })
         .then(res => {
           this.formObj = Object.assign({}, res.data)
+          this.formObj.value = res.data.value.toString()
           this.titleTime = `${dayjs(res.data.applyStartTime).format(
             'YYYY-MM-DD'
           )}~ ${dayjs(res.data.applyEndTime).format('YYYY-MM-DD')}`
@@ -345,16 +359,22 @@ export default Vue.extend({
     editClick() {
       this.showCanvas = false
       this.showPopup = true
-      console.log('修改推荐语')
+      // console.log('修改推荐语')
     },
     clickCancel() {
       // console.log('clickCancel')
       this.showPopup = false
+      this.drawTwo()
     },
     clickSave(val) {
       this.textContent = val
         ? val
         : '强力推荐这家机构！分享给你，好机构陪伴孩子一生！'
+      this.drawTwo()
+    },
+    // 再次绘制
+    drawTwo() {
+      this.textHeight = drawHeightText(this.textContent, this._width / 375)
       this.showPopup = false
       this.showCanvas = true
       this.drawImage(this._heigth, this._width)

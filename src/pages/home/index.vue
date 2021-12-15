@@ -59,7 +59,7 @@
         <div class="share-button">立即分享</div>
       </div>
       <div class="common-func-list" @click="notClick ? handleDetail() : null">
-        <CommonList :error="notClick" />
+        <CommonList :error="notClick" :permissionList="permissionList" />
       </div>
     </div>
     <van-popup
@@ -116,7 +116,9 @@ export default Vue.extend({
       showDetail: false,
       hasReward: false,
       rewardCount: '0.00',
-      showOverlay: false
+      showOverlay: false,
+      // 获取权限点
+      permissionList: []
     }
   },
   onLoad() {
@@ -144,6 +146,8 @@ export default Vue.extend({
     async init() {
       await API.partnersSBusiness.account.authorized.request({})
       const resRecommend = await API.partnersSBusiness.account.info.request({})
+      console.log(resRecommend, 'resRecommend')
+      this.permissionList = resRecommend.permissions
       // 如果是推荐官被禁用显示
       if (resRecommend.state) {
         this.hasError = true
@@ -291,9 +295,9 @@ export default Vue.extend({
   justify-content: center;
   height: 100%;
 }
-.common-func-height {
-  // height: 830rpx;
-}
+// .common-func-height {
+//   // height: 830rpx;
+// }
 .common-func-title {
   padding: 48rpx 32rpx 48rpx;
   font-size: 32rpx;
