@@ -35,7 +35,6 @@ export default Vue.extend({
 
   methods: {
     openList() {
-      console.log(11, this.openUrl)
       uni.navigateTo({
         url: this.openUrl
       })

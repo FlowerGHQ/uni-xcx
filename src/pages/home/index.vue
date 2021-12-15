@@ -59,7 +59,7 @@
         <div class="share-button">立即分享</div>
       </div>
       <div class="common-func-list" @click="notClick ? handleDetail() : null">
-        <CommonList :error="notClick" :permissionList="permissionList" />
+        <CommonList :error="notClick" ref="commonList" />
       </div>
     </div>
     <van-popup
@@ -150,10 +150,11 @@ export default Vue.extend({
       showDetail: false,
       hasReward: false,
       rewardCount: '0.00',
+      // 推荐官第一次升级为合作人
       showOverlay: false,
-      // 获取权限点
-      permissionList: [],
-      showBeIntroduce: false
+      showBeIntroduce: false,
+      // 合作人还是推荐官 推荐官是2合作人是1
+      dataType: 0
     }
   },
   onLoad(option: any) {
@@ -174,6 +175,7 @@ export default Vue.extend({
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
     ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
+    ;(this.$refs.commonList as any).getListAll()
     uni.setNavigationBarTitle({
       title: '首页'
     })
@@ -187,26 +189,32 @@ export default Vue.extend({
     async init() {
       await API.partnersSBusiness.account.authorized.request({})
       const resRecommend = await API.partnersSBusiness.account.info.request({})
-      console.log(resRecommend, 'resRecommend')
-      this.permissionList = resRecommend.permissions
-      // 如果是推荐官被禁用显示
-      if (resRecommend.state) {
-        this.hasError = true
-        this.notClick = true
-        this.errorTitle = '已被禁用'
-        this.errorMessage = '已被禁用，无法再分享拓客和获得新的奖励金'
-        return
+      this.dataType = resRecommend.data.roleType
+      if (resRecommend.data.roleType === 2) {
+        console.log(resRecommend.data.state, 'resRecommend.data.state')
+        // 如果是推荐官被禁用显示
+        if (!resRecommend.data.state) {
+          this.hasError = true
+          this.notClick = true
+          this.errorTitle = '已被禁用'
+          this.errorMessage = '已被禁用，无法再分享拓客和获得新的奖励金'
+          return
+        }
       }
-      if (resRecommend.upgradeRemind) {
+      console.log(
+        resRecommend.data.upgradeRemind,
+        'resRecommend.upgradeRemind推荐官第一次升级为合作人'
+      )
+      if (resRecommend.data.upgradeRemind) {
         // 推荐官第一次升级为合作人
         this.showOverlay = true
-        setTimeout(() => {
+        setTimeout(async () => {
           this.showOverlay = false
+          await API.partnersSBusiness.shareholder.updateRemind.request({})
         }, 2000)
       }
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
-        const res1 = await API.partnersSBusiness.contract.detail.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
 
         const res2 = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
@@ -214,36 +222,38 @@ export default Vue.extend({
         )
 
         this.hasReward = res2.data ? res2.data.state : false
-        console.log(this.hasReward)
-        if (!res1.data) {
-          this.hasError = true
-          this.notClick = true
-          this.errorTitle = '暂无合约提醒'
-          this.errorMessage =
-            '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
-          return
-        }
-        if (dayjs(res1.data.startTime) > dayjs()) {
-          this.hasError = true
-          this.notClick = false
-          this.errorTitle = '合约暂未生效提醒'
-          this.errorMessage = `合约生效时间：${dayjs(
-            res1.data.startTime
-          ).format('YYYY-MM-DD')}，合约生效前您的拓客卡分享功能不能使用`
-          return
-        }
-        if (dayjs(res1.data.endTime) < dayjs()) {
-          this.hasError = true
-          this.notClick = false
-          this.errorTitle = '合约到期提醒'
-          this.errorMessage =
-            '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
-          return
+        // console.log(this.hasReward)
+        if (this.dataType === 1) {
+          const res1 = await API.partnersSBusiness.contract.detail.request({})
+          if (!res1.data) {
+            this.hasError = true
+            this.notClick = true
+            this.errorTitle = '暂无合约提醒'
+            this.errorMessage =
+              '暂未签订合约，请立即联系校区负责人去录入合约，才能正常使用以下功能去拓展客户'
+            return
+          }
+          if (dayjs(res1.data.startTime) > dayjs()) {
+            this.hasError = true
+            this.notClick = false
+            this.errorTitle = '合约暂未生效提醒'
+            this.errorMessage = `合约生效时间：${dayjs(
+              res1.data.startTime
+            ).format('YYYY-MM-DD')}，合约生效前您的拓客卡分享功能不能使用`
+            return
+          }
+          if (dayjs(res1.data.endTime) < dayjs()) {
+            this.hasError = true
+            this.notClick = false
+            this.errorTitle = '合约到期提醒'
+            this.errorMessage =
+              '合约已到期，您的拓客卡分享功能无法使用，请立即联系校区负责人进行续约'
+            return
+          }
         }
         this.hasError = false
         this.notClick = false
         this.errorMessage = ''
-        console.log(res2.data)
       } catch {
         //   wx.reLaunch({
         //     url: '/pages/login/index'

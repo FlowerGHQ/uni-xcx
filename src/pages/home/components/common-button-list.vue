@@ -34,7 +34,7 @@ export default Vue.extend({
   // mixins: [mixin],
   data() {
     return {
-      buttonList: [],
+      buttonList: [] as any,
       permissionList: []
     }
   },
@@ -44,9 +44,9 @@ export default Vue.extend({
   methods: {
     async getListAll() {
       const resRecommend = await API.partnersSBusiness.account.info.request({})
-      console.log(resRecommend, 'resRecommend')
+      // console.log(resRecommend, 'resRecommend')
       this.permissionList = resRecommend.data.permissions
-      console.log(this.permissionList, 'getListAll')
+      // console.log(this.permissionList, 'getListAll')
       let list = [] as any
       resRecommend.data.permissions.forEach(id => {
         ButtonList.forEach(item => {
@@ -55,7 +55,15 @@ export default Vue.extend({
           }
         })
       })
-      this.buttonList = list
+      this.buttonList = [
+        ...list,
+        {
+          title: '设置',
+          type: 'campus',
+          imageStyle: 'set',
+          openUrl: '/pages/business/set/index'
+        }
+      ]
       // console.log(list, 'oneList')
     }
   }
