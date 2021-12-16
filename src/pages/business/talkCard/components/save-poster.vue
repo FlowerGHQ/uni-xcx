@@ -11,7 +11,6 @@
     />
     <image
       :src="imageUrl"
-      show-menu-by-longpress
       :style="{ width: 750 + 'rpx', height: 1400 + 'rpx' }"
     ></image>
     <bottom-button
@@ -28,6 +27,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
+import { authWriteToAlbum, saveToAlbumPromise } from '@/utils/poster'
 import {
   drawtextLinebreak,
   drawText,
@@ -79,41 +79,57 @@ export default Vue.extend({
   methods: {
     // 将海报保存到系统相册
     picClick() {
+      const that = this
       uni.canvasToTempFilePath({
         //把当前画布指定区域的内容导出生成指定大小的图片
         canvasId: 'mycanvas',
         success(res) {
-          wx.authorize({
-            //向用户发起授权请求
-            scope: 'scope.writePhotosAlbum', //保存相册授权
-            success: () => {
-              // wx.previewImage({
-              //   urls: [res.tempFilePath]
-              // })
-              wx.saveImageToPhotosAlbum({
-                //保存图片到系统相册
-                filePath: res.tempFilePath,
-                success: () => {
-                  wx.showToast({
-                    title: '图片保存成功'
-                  })
-                }
+          authWriteToAlbum()
+            .then(resOne => {
+              saveToAlbumPromise(res.tempFilePath)
+              wx.showToast({
+                title: '图片保存成功'
               })
-            }
-          })
+            })
+            .catch(error => {
+              console.log('获取失败')
+              that.openConfirm() //如果拒绝，在这里进行再次获取授权的操作
+            })
         },
-        fail() {
+        fail: () => {
           console.log('调用失败')
+        }
+      })
+    },
+    //当用户第一次拒绝后再次请求授权
+    openConfirm: function () {
+      wx.showModal({
+        title: '当前操作需要访问你的相册',
+        content: '请前往系统设置中开启相机权限',
+        confirmText: '前往设置',
+        cancelText: '取消',
+        success: function (res) {
+          //点击“确认”时打开设置页面
+          if (res.confirm) {
+            wx.openSetting({
+              success: res => {
+                console.log(res, 'openSetting')
+              }
+            })
+          } else {
+          }
         }
       })
     },
     // 获取该手机屏幕宽高
     getInfoSystem() {
       showLoading()
+      console.log('打开loading')
       this.init()
     },
     // 绘制
     drawImage(screenHeight, screenWidth) {
+      console.log('是否绘制')
       let rpx = screenWidth / 375
       this.rpx = rpx
       //缩小比例
@@ -331,6 +347,7 @@ export default Vue.extend({
                 })
               })
               hideLoading()
+              console.log('能否走到这里')
             }
           })
         }

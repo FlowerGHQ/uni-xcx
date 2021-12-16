@@ -192,12 +192,12 @@ export default Vue.extend({
     },
     async init() {
       try {
-        await API.partnersSBusiness.account.authorized.request({})
+        const res1 = await API.partnersSBusiness.account.authorized.request({})
+        console.log(res1.data, '合作人端登录试一下')
       } catch (error) {}
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
-        console.log(res, '默认校区选择嘻嘻嘻')
 
         const res2 = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
           {}
