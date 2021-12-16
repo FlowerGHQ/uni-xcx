@@ -132,10 +132,10 @@ export const drawBorderRect = (x, y, w, h, ctx) => {
   ctx.stroke()
 }
 // 价值字体位置调整
-export const textValueChange = text => {
+export const textValueChange = (text, rpx) => {
   let textLength = 0
   for (let i = 0; i < text.length; i++) {
-    textLength += 8
+    textLength += 10 * rpx
   }
   return textLength
 }

@@ -4,6 +4,7 @@ const fs = require('fs')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var webpack = require('webpack')
 const vantComponents = [
+  'divider',
   'button',
   'cell',
   'cell-group',

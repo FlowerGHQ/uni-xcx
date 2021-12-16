@@ -10,11 +10,13 @@
           @click="clickCancel"
         />
       </div>
+      <!-- <van-divider /> -->
       <van-field
+        custom-style="border-top:1px solid #F8F8F8;border-bottom:1px solid #F8F8F8;"
         type="textarea"
         maxlength="50"
-        autosize
         :value="textContent"
+        :autosize="{ minHeight: 104 }"
         show-word-limit
         placeholder="请输入新的推荐语"
         placeholder-style="color:#CCCCCC"
@@ -22,6 +24,7 @@
         @change="changeTextArea"
       >
       </van-field>
+      <!-- <van-divider /> -->
       <div class="bottom-btn-wrap">
         <van-button
           block
@@ -65,8 +68,11 @@ export default Vue.extend({
   width: 750rpx;
   height: 900rpx;
   background: #ffffff;
-  padding: 32rpx;
+  padding: 32rpx 0;
   position: relative;
+}
+.top {
+  margin-bottom: 64rpx;
 }
 .title {
   font-family: PingFangSC-Medium;
@@ -92,4 +98,7 @@ export default Vue.extend({
   padding: 40rpx 40rpx 80rpx 40rpx;
   box-shadow: 0px 1rpx 0px 0px #dddddd;
 }
+// .van-cell {
+//   height: 300rpx;
+// }
 </style>

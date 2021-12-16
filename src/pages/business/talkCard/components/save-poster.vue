@@ -83,7 +83,6 @@ export default Vue.extend({
         //把当前画布指定区域的内容导出生成指定大小的图片
         canvasId: 'mycanvas',
         success(res) {
-          // console.log(res.tempFilePath, '保存相册收钱')
           wx.authorize({
             //向用户发起授权请求
             scope: 'scope.writePhotosAlbum', //保存相册授权
@@ -195,7 +194,6 @@ export default Vue.extend({
           ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
         }
       })
-
       // 绘制中间背景
       wx.getImageInfo({
         src:
@@ -227,14 +225,17 @@ export default Vue.extend({
           ctx.setTextBaseline('middle')
           ctx.fillText('价值', (this._width / 2.5) * rpx, (400 / 2) * rpx)
           // 居中文字坐标
-          let centerTextX = (this._width / 2.5) * rpx
-          let centerTextY = (400 / 2) * rpx
+          // 数字长度
+          // `${this.formObj.value}`
+          let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
+          let centerTextX = (picX / 2 - numberLength) * rpx
+          let centerTextY = (picY / 2 + 32) * rpx
           drawText(
             ctx,
             '#E5C89C',
             20 * rpx,
-            centerTextX - 40 * rpx,
-            centerTextY + 35 * rpx,
+            centerTextX,
+            centerTextY + 5 * rpx,
             '¥'
           )
           // ____
@@ -242,17 +243,17 @@ export default Vue.extend({
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#E5C89C')
           // ${this.formObj.value}
-          let valueLength = textValueChange(`${this.formObj.value}`)
+          // let valueLength = textValueChange(`0.00`, )
           ctx.fillText(
             `${this.formObj.value}`,
-            centerTextX - 30 * rpx,
-            centerTextY + 32 * rpx
+            centerTextX + 15 * rpx,
+            centerTextY
           )
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
-          console.log(textValueChange('0.00'), 'this.textContenthha')
+          // console.log(textValueChange('0.00'), 'this.textContenthha')
           // 返回文字的高度
           drawtextLinebreak(
             ctx,
@@ -293,13 +294,15 @@ export default Vue.extend({
               ) // 推进去图片，必须是https图片
               ctx.restore() //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 还可以继续绘制
               // 右侧文字
+              let name =
+                this.name.length > 6 ? `${this.name.slice(0, 6)}...` : this.name
               drawText(
                 ctx,
                 '#000000',
                 16 * rpx,
                 avatarX + 57 * rpx,
                 avatarY + 15 * rpx,
-                `${this.name} 推荐`
+                `${name} 推荐`
               )
               drawText(
                 ctx,
