@@ -83,7 +83,7 @@ methods.forEach(method => {
                 return
               }
               if (
-                [-9999, 401, 11001].indexOf(responseBody.errorCode) !== -1 &&
+                [-9999, 401].indexOf(responseBody.errorCode) !== -1 &&
                 !url.includes('authorized') &&
                 !url.includes('autoLogin')
               ) {
@@ -94,6 +94,11 @@ methods.forEach(method => {
                 })
                 try {
                   await API.partnersSBusiness.account.authorized.request({})
+                  var pages = getCurrentPages()
+                  var currentPage = pages[pages.length - 1] // 当前页面
+                  if (currentPage) {
+                    uni.reLaunch({ url: currentPage.$page.fullPath })
+                  }
                   console.log(222)
                 } catch {
                   console.log(111)
