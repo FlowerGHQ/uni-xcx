@@ -45,7 +45,7 @@ export default Vue.extend({
   data() {
     return {
       imageCancel: require('@/assets/images/cancel-x.png'),
-      textContent: ''
+      textContent: null
     }
   },
   methods: {
@@ -54,11 +54,11 @@ export default Vue.extend({
     },
     clickSave() {
       this.$emit('clickSave', this.textContent)
-      this.textContent = ''
+      this.textContent = null
     },
     changeTextArea(val) {
-      // console.log(val, '改变值')
       this.textContent = val.detail
+      // console.log(val.detail.trim(), '去除前后空格哈哈')
     }
   }
 })
