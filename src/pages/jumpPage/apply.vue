@@ -94,7 +94,8 @@ export default Vue.extend({
 <style lang="less" scoped>
 .card-bottom {
   //   margin-top: 42rpx;
-  //   display: flex;
+  display: flex;
+  padding: 0 32rpx;
   //   justify-content: space-evenly;
   position: relative;
   top: -22rpx;
@@ -109,16 +110,18 @@ export default Vue.extend({
     color: #222222;
     font-size: 32rpx;
     text-align: center;
-    line-height: 78rpx;
-    position: absolute;
-    top: 0;
-    left: 32rpx;
+    line-height: 78rpx; 
+    margin-right: 32rpx;
+    // position: absolute;
+    // top: 0;
+    // left: 32rpx;
   }
   .share {
-    position: absolute;
-    top: 0;
-    right: 32rpx;
-    width: 366rpx;
+    // position: absolute;
+    // top: 0;
+    // right: 32rpx;
+    // width: 366rpx;
+    flex: 1;
     height: 80rpx;
     background-image: linear-gradient(90deg, #ff8360 0%, #f86744 100%);
     border-radius: 44rpx;

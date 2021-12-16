@@ -160,7 +160,7 @@ export default Vue.extend({
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
           res1.data.shareParams
         )}`, //path
-        envVersion: 'release', //开发版develop 开发版 trial   体验版 release 正式版
+        envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
         success(res) {
           console.log('成功')
         }

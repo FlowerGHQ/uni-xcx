@@ -167,11 +167,8 @@ export default Vue.extend({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
-    if (option.isAAAA === 'show') {
+    if (option.isIntroduce === 'show') {
       this.showBeIntroduce = true
-      setTimeout(() => {
-        this.showBeIntroduce = false
-      }, 2000)
     }
   },
   async onShow() {

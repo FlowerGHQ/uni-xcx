@@ -215,7 +215,7 @@ export default Vue.extend({
             open: parma
           })
         uni.reLaunch({
-          url: '/pages/home/index?isAAAA=show'
+          url: '/pages/home/index?isIntroduce=show'
         })
       } catch (error) {
         const { errorMessage = '' } = error as any
