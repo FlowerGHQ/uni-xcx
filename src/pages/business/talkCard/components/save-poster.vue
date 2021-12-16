@@ -273,13 +273,13 @@ export default Vue.extend({
           // `${this.formObj.value}`
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
-          let centerTextY = (picY / 2 + 32) * rpx
+          let centerTextY = (400 / 2) * rpx
           drawText(
             ctx,
             '#E5C89C',
             20 * rpx,
             centerTextX,
-            centerTextY + 5 * rpx,
+            centerTextY + 35 * rpx,
             '¥'
           )
           // ____
@@ -291,7 +291,7 @@ export default Vue.extend({
           ctx.fillText(
             `${this.formObj.value}`,
             centerTextX + 15 * rpx,
-            centerTextY
+            centerTextY + 32 * rpx
           )
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小

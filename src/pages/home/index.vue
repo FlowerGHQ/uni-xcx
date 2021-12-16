@@ -180,7 +180,6 @@ export default Vue.extend({
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
     ;(this.$refs.scrollMiddle as any).onUpAndDown(1)
-    ;(this.$refs.commonList as any).getListAll()
     uni.setNavigationBarTitle({
       title: '首页'
     })
@@ -193,7 +192,8 @@ export default Vue.extend({
     async init() {
       try {
         const res1 = await API.partnersSBusiness.account.authorized.request({})
-        console.log(res1.data, '合作人端登录试一下')
+        // console.log(res1.data, '合作人端登录试一下')
+        ;(this.$refs.commonList as any).getListAll()
       } catch (error) {}
       try {
         const res = await API.partnersSBusiness.campus.list.request({})
