@@ -42,12 +42,12 @@ export default Vue.extend({
     async init() {
       const res = await API.partnersSBusiness.campus.list.request({})
       this.partnerList = res.data
-      console.log(res)
+      // console.log(res)
     },
     async changeSchool(campusId: number) {
-      const res = await API.partnersSBusiness.campus.list.request({})
+      await API.partnersSBusiness.campus.list.request({})
       try {
-        const res = await API.partnersSBusiness.campus.updateDefault.request({
+        await API.partnersSBusiness.campus.updateDefault.request({
           campusId
         })
         this.init()

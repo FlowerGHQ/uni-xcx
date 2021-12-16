@@ -348,39 +348,43 @@ export default Vue.extend({
       const res4 = await API.partnersSBusiness.memberCard.shareInfo.request({
         id: this.id
       })
-      Promise.all([res1, res2, res3, res4]).then(values => {
-        // console.log(values, '哈哈哈嘻嘻')
-        this.name = values[0].data.name
-        if (values[0].data.avatar) {
-          this.avatar = values[0].data.avatar
-        } else {
-          this.avatar =
-            'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
-        }
-        this.formObj = Object.assign({}, values[1].data)
-        console.log(values[1].data.value, 'values[1].data.value')
-        this.formObj.value = values[1].data.value.toString()
-        this.titleTime = `${dayjs(values[1].data.applyStartTime).format(
-          'YYYY-MM-DD'
-        )}~ ${dayjs(values[1].data.applyEndTime).format('YYYY-MM-DD')}`
-        this.school = values[2].data.name
-          ? values[2].data.name
-          : '满天星艺术培训学校文一路校区'
-        this.codeUrl = values[3].data.url
-        const that = this
-        uni.getSystemInfo({
-          success(res) {
-            that._heigth = res.windowHeight
-            that._width = res.screenWidth
-            that.textHeight = drawHeightText(
-              that.textContent,
-              that._width / 375
-            )
-            // 将异步数据请求完成之后再渲染
-            that.drawImage(res.windowHeight, res.screenWidth)
+      Promise.all([res1, res2, res3, res4])
+        .then(values => {
+          // console.log(values, '哈哈哈嘻嘻')
+          this.name = values[0].data.name
+          if (values[0].data.avatar) {
+            this.avatar = values[0].data.avatar
+          } else {
+            this.avatar =
+              'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
           }
+          this.formObj = Object.assign({}, values[1].data)
+          console.log(values[1].data.value, 'values[1].data.value')
+          this.formObj.value = values[1].data.value.toString()
+          this.titleTime = `${dayjs(values[1].data.applyStartTime).format(
+            'YYYY-MM-DD'
+          )}~ ${dayjs(values[1].data.applyEndTime).format('YYYY-MM-DD')}`
+          this.school = values[2].data.name
+            ? values[2].data.name
+            : '满天星艺术培训学校文一路校区'
+          this.codeUrl = values[3].data.url
+          const that = this
+          uni.getSystemInfo({
+            success(res) {
+              that._heigth = res.windowHeight
+              that._width = res.screenWidth
+              that.textHeight = drawHeightText(
+                that.textContent,
+                that._width / 375
+              )
+              // 将异步数据请求完成之后再渲染
+              that.drawImage(res.windowHeight, res.screenWidth)
+            }
+          })
         })
-      })
+        .catch(error => {
+          console.log(error)
+        })
     },
     onClose() {
       this.showPopup = false

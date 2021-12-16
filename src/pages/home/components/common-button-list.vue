@@ -39,7 +39,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.getListAll()
+    // this.getListAll()
   },
   methods: {
     async getListAll() {

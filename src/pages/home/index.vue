@@ -175,6 +175,7 @@ export default Vue.extend({
     }
   },
   async onShow() {
+    this.init()
     // 是否隐藏返回首页按钮
     wx.hideHomeButton()
     ;(this.$refs.scrollMiddle as any).getCampuHistory()
@@ -183,7 +184,6 @@ export default Vue.extend({
     uni.setNavigationBarTitle({
       title: '首页'
     })
-    this.init()
   },
   methods: {
     // 点击遮罩层
@@ -191,31 +191,13 @@ export default Vue.extend({
       this.showOverlay = false
     },
     async init() {
-      await API.partnersSBusiness.account.authorized.request({})
-      const resRecommend = await API.partnersSBusiness.account.info.request({})
-      this.dataType = resRecommend.data.roleType
-      if (resRecommend.data.roleType === 2) {
-        // 如果是推荐官被禁用显示
-        if (resRecommend.data.state === 1) {
-          this.hasError = true
-          this.notClick = true
-          this.errorTitle = '已被禁用'
-          this.errorMessage =
-            '已被禁用，无法再分享拓客和获得新的奖励金，如有疑问可联系校区负责人'
-          return
-        }
-      }
-      if (resRecommend.data.upgradeRemind) {
-        // 推荐官第一次升级为合作人
-        this.showOverlay = true
-        setTimeout(async () => {
-          this.showOverlay = false
-          await API.partnersSBusiness.shareholder.updateRemind.request({})
-        }, 2000)
-      }
+      // console.log('走不到哈哈哈')
+      // console.log('走不到哈哈哈2')
       try {
+        debugger
         const res = await API.partnersSBusiness.campus.list.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
+        console.log(res, '默认校区选择嘻嘻嘻')
 
         const res2 = await API.partnersSBusiness.rewardRule.freeCourseFixedDetail.request(
           {}
@@ -259,6 +241,34 @@ export default Vue.extend({
         //     url: '/pages/login/index'
         //   })
       }
+      try {
+        await API.partnersSBusiness.account.authorized.request({})
+      } catch (error) {}
+      try {
+        const resRecommend = await API.partnersSBusiness.account.info.request(
+          {}
+        )
+        this.dataType = resRecommend.data.roleType
+        if (resRecommend.data.roleType === 2) {
+          // 如果是推荐官被禁用显示
+          if (resRecommend.data.state === 0) {
+            this.hasError = true
+            this.notClick = true
+            this.errorTitle = '已被禁用'
+            this.errorMessage =
+              '已被禁用，无法再分享拓客和获得新的奖励金，如有疑问可联系校区负责人'
+            return
+          }
+        }
+        if (resRecommend.data.upgradeRemind) {
+          // 推荐官第一次升级为合作人
+          this.showOverlay = true
+          setTimeout(async () => {
+            this.showOverlay = false
+            await API.partnersSBusiness.shareholder.updateRemind.request({})
+          }, 2000)
+        }
+      } catch (error) {}
     },
     handleDetail() {
       if (this.notClick) {
