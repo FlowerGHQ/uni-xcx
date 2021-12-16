@@ -250,7 +250,7 @@ export default Vue.extend({
           // 如果是推荐官被禁用显示
           if (resRecommend.data.state === 0) {
             this.hasError = true
-            this.notClick = true
+            this.notClick = false
             this.errorTitle = '已被禁用'
             this.errorMessage =
               '已被禁用，无法再分享拓客和获得新的奖励金，如有疑问可联系校区负责人'

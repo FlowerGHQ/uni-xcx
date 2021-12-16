@@ -2,6 +2,7 @@
 export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
   //参数说明
   //ctx：canvas的 2d 对象，t：绘制的文字，x,y:文字坐标，w：文字最大宽度
+  console.log(t, '绘制文字')
   let chr = t.split('')
   let temp = ''
   let row = [] as any
@@ -18,9 +19,13 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
     }
   }
   row.push(temp)
+  console.log(row, '嘻嘻啊哈哈')
+  // let a = 0
   for (let b = 0; b < row.length; b++) {
-    ctx.fillText(row[b], x, y + (b + 1) * 30 * rpx) //每行字体y坐标间隔30
+    ctx.fillText(row[b], x, y + (b + 1) * 40 * rpx) //每行字体y坐标间隔40
+    // a = y + (b + 1) * 50 * rpx
   }
+  // return a
 }
 // 文字的y轴的高度 根据文字的行数决定文字宽度
 export const drawHeightText = (textLength, rpx) => {
@@ -39,6 +44,7 @@ export const drawHeightText = (textLength, rpx) => {
   }
   return yLength
 }
+// 根据文本决定高度
 // 绘制文本
 //参数说明
 //ctx：canvas的 2d 对象，color:文字颜色 f：文字大小 t：绘制的文字，x,y:文字坐标，w：文字最大宽度

@@ -443,6 +443,7 @@ export default Vue.extend({
       this.drawTwo()
     },
     clickSave(val) {
+      // console.log(val == null, '是否存在')
       this.textContent = val ? val : '收下这张会员卡，只有我的朋友可以获得哦'
       this.drawTwo()
     },

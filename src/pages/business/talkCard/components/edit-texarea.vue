@@ -57,7 +57,7 @@ export default Vue.extend({
       this.textContent = null
     },
     changeTextArea(val) {
-      this.textContent = val.detail
+      this.textContent = val.detail.trim()
       // console.log(val.detail.trim(), '去除前后空格哈哈')
     }
   }
