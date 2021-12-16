@@ -22,12 +22,24 @@
     <van-popup :show="showPopup" @close="onClose" position="bottom" round>
       <edit-area @clickCancel="clickCancel" @clickSave="clickSave"></edit-area>
     </van-popup>
+    <!-- 相机权限弹窗 -->
+    <dialog-show
+      :show="noPhoto"
+      @onClose="onCloseNoShelf"
+      @onConfirm="onConfirmNoShelf"
+      :title="titleNoShelf"
+      :content="contentNoShelf"
+      :confirmButtonText="confirmButtonNoShelf"
+      confirmButtonColor="#0066FF"
+      cancelButtonColor="#666666"
+    ></dialog-show>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
 import { authWriteToAlbum, saveToAlbumPromise } from '@/utils/poster'
+import dialogShow from '@/components/dialog-show.vue'
 import {
   drawtextLinebreak,
   drawText,
@@ -43,9 +55,13 @@ import dayjs from 'dayjs'
 export default Vue.extend({
   name: 'SavePoster',
   props: {},
-  components: { bottomButton, EditArea },
+  components: { bottomButton, EditArea, dialogShow },
   data() {
     return {
+      noPhoto: false,
+      titleNoShelf: '当前操作需要访问你的相册',
+      contentNoShelf: '请前往系统设置中开启相机权限',
+      confirmButtonNoShelf: '前往设置',
       titleTime: '',
       formObj: {} as any,
       // showImage: false,
@@ -93,7 +109,7 @@ export default Vue.extend({
             })
             .catch(error => {
               console.log('获取失败')
-              that.openConfirm() //如果拒绝，在这里进行再次获取授权的操作
+              that.onConfirmNoShelf() //如果拒绝，在这里进行再次获取授权的操作
             })
         },
         fail: () => {
@@ -101,35 +117,47 @@ export default Vue.extend({
         }
       })
     },
-    //当用户第一次拒绝后再次请求授权
-    openConfirm: function () {
-      wx.showModal({
-        title: '当前操作需要访问你的相册',
-        content: '请前往系统设置中开启相机权限',
-        confirmText: '前往设置',
-        cancelText: '取消',
-        success: function (res) {
-          //点击“确认”时打开设置页面
-          if (res.confirm) {
-            wx.openSetting({
-              success: res => {
-                console.log(res, 'openSetting')
-              }
-            })
-          } else {
-          }
+    onCloseNoShelf() {
+      this.noPhoto = false
+    },
+    onConfirmNoShelf() {
+      this.noPhoto = true
+      // 打开相册设置
+      wx.openSetting({
+        success: res => {
+          console.log(res, 'openSetting')
         }
       })
     },
+    //当用户第一次拒绝后再次请求授权
+    // openConfirm: function () {
+    //   wx.showModal({
+    //     title: '当前操作需要访问你的相册',
+    //     content: '请前往系统设置中开启相机权限',
+    //     confirmText: '前往设置',
+    //     cancelText: '取消',
+    //     success: function (res) {
+    //       //点击“确认”时打开设置页面
+    //       if (res.confirm) {
+    //         wx.openSetting({
+    //           success: res => {
+    //             console.log(res, 'openSetting')
+    //           }
+    //         })
+    //       } else {
+    //       }
+    //     }
+    //   })
+    // },
     // 获取该手机屏幕宽高
     getInfoSystem() {
       showLoading()
-      console.log('打开loading')
+      // console.log('打开loading')
       this.init()
     },
     // 绘制
     drawImage(screenHeight, screenWidth) {
-      console.log('是否绘制')
+      // console.log('是否绘制')
       let rpx = screenWidth / 375
       this.rpx = rpx
       //缩小比例
@@ -441,5 +469,20 @@ export default Vue.extend({
   padding-bottom: 200rpx;
   overflow: auto;
   background-image: linear-gradient(#e9d9c2, #d7c0a1);
+}
+/deep/.van-dialog__button {
+  &:first-child {
+    .van-button {
+      color: #666666 !important;
+    }
+  }
+  &:last-child {
+    .van-button {
+      color: #0066ff !important;
+    }
+  }
+}
+/deep/ .text-box {
+  text-align: center;
 }
 </style>
