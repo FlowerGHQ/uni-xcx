@@ -191,10 +191,10 @@ export default Vue.extend({
       this.showOverlay = false
     },
     async init() {
-      // console.log('走不到哈哈哈')
-      // console.log('走不到哈哈哈2')
       try {
-        debugger
+        await API.partnersSBusiness.account.authorized.request({})
+      } catch (error) {}
+      try {
         const res = await API.partnersSBusiness.campus.list.request({})
         this.defaultSchool = res.data.find(item => item.isDefault).name
         console.log(res, '默认校区选择嘻嘻嘻')
@@ -241,9 +241,6 @@ export default Vue.extend({
         //     url: '/pages/login/index'
         //   })
       }
-      try {
-        await API.partnersSBusiness.account.authorized.request({})
-      } catch (error) {}
       try {
         const resRecommend = await API.partnersSBusiness.account.info.request(
           {}
