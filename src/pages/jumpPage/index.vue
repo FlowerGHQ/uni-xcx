@@ -90,32 +90,32 @@ export default Vue.extend({
   async onLoad(option: any) {
     this.state = decodeURIComponent(option.scene)
     const parmaState = this.state.split('&')
-    const parma = {
-      campusId: 1,
-      merchantId: 1,
-      sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-    }
     // const parma = {
-    //   campusId: parmaState[0],
-    //   merchantId: parmaState[1],
-    //   sign: parmaState[2]
+    //   campusId: 1,
+    //   merchantId: 1,
+    //   sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
     // }
+    const parma = {
+      campusId: parmaState[0],
+      merchantId: parmaState[1],
+      sign: parmaState[2]
+    }
     const res = await API.partnersSBusiness.open.campusInfo.request(parma)
     this.schoolName = res.data.name
     console.log(option, this.schoolName)
   },
   async onShow() {
     const parmaState = this.state.split('&')
-    const parma = {
-      campusId: 1,
-      merchantId: 1,
-      sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-    }
     // const parma = {
-    //   campusId: parmaState[0],
-    //   merchantId: parmaState[1],
-    //   sign: parmaState[2]
+    //   campusId: 1,
+    //   merchantId: 1,
+    //   sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
     // }
+    const parma = {
+      campusId: parmaState[0],
+      merchantId: parmaState[1],
+      sign: parmaState[2]
+    }
     let res = await API.partnersSBusiness.open.memberCardStatistic.request(
       parma
     )
@@ -197,16 +197,16 @@ export default Vue.extend({
         return
       }
       const parmaState = this.state.split('&')
-      const parma = {
-        campusId: 1,
-        merchantId: 1,
-        sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-      }
       //   const parma = {
-      //     campusId: parmaState[0],
-      //     merchantId: parmaState[1],
-      //     sign: parmaState[2]
+      //     campusId: 1,
+      //     merchantId: 1,
+      //     sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
       //   }
+      const parma = {
+        campusId: parmaState[0],
+        merchantId: parmaState[1],
+        sign: parmaState[2]
+      }
       try {
         const res =
           await API.partnersSBusiness.shareholder.saveIntroducer.request({
