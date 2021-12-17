@@ -6,12 +6,15 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: 1400 + textHeight * rpx + 'rpx'
+        height: 1300 + textHeight * rpx + 'rpx'
       }"
     />
     <image
       :src="imageUrl"
-      :style="{ width: 750 + 'rpx', height: 1400 + textHeight * rpx + 'rpx' }"
+      :style="{
+        width: 750 + 'rpx',
+        height: 1300 + textHeight * rpx + 'rpx'
+      }"
     ></image>
     <div id="text-content" v-if="showCanvas">
       {{ textContent }}
@@ -80,13 +83,16 @@ export default Vue.extend({
       codeUrl:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/schoolpal/59-10-47-202112131314028.jpg', //二维码网络路径
       rpx: 0, // 百分比占比
+      dpr: 0,
       school: '满天星艺术培训学校文一路校区',
       textContent: '收下这张会员卡，只有我的朋友可以获得哦',
       name: '张某某',
       avatar:
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
       textHeight: 0, // 中间文字高度
-      imageUrl: ''
+      imageUrl: '',
+      // 底部小程序码距离上面的距离
+      bottomCodeBegin: -50
     }
   },
   onLoad(option: any) {
@@ -179,12 +185,13 @@ export default Vue.extend({
         0,
         0,
         screenWidth,
-        1200 * rpx + this.textHeight
+        1400 * rpx + this.textHeight
       )
       grd.addColorStop(0, '#e9d9c2')
       grd.addColorStop(1, '#d0b796')
       // 绘制背景
       ctx.setFillStyle(grd)
+      // ctx.scale(0.9, 0.9)
       // 图片生成固定的大小
       ctx.fillRect(0, 0, screenWidth, 1400 * rpx)
       // 绘制字体
@@ -202,7 +209,7 @@ export default Vue.extend({
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.5 * rpx,
-        550 * rpx + this.textHeight,
+        530 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
         20,
         ctx,
         rpx
@@ -225,7 +232,8 @@ export default Vue.extend({
       })
       // 二维码图片位置
       let codeX = 34 * rpx + 230 * rpx
-      let codeY = 350 * rpx + 150 * rpx + this.textHeight
+      let codeY =
+        330 * rpx + 150 * rpx + this.textHeight + this.bottomCodeBegin * rpx
       // 绘制二维码边框
       wx.getImageInfo({
         src:
@@ -327,7 +335,8 @@ export default Vue.extend({
             success: res => {
               // 绘制的头像坐标
               let avatarX = 34 * rpx
-              let avatarY = picY + 140 * rpx + this.textHeight
+              let avatarY =
+                picY + 120 * rpx + this.textHeight + this.bottomCodeBegin * rpx
               let avatarurl_width = 48 * rpx //绘制的头像宽度
               let avatarurl_heigth = 48 * rpx //绘制的头像高度
               ctx.save()
@@ -429,9 +438,11 @@ export default Vue.extend({
           const that = this
           uni.getSystemInfo({
             success(res) {
+              const dpr = wx.getSystemInfoSync().pixelRatio
               that._heigth = res.windowHeight
               that._width = res.screenWidth
-              that.rpx = res.screenWidth / 375
+              that.dpr = dpr
+              that.rpx = (res.screenWidth / 375) * dpr
               // that.textHeight = drawHeightText(
               //   that.textContent,
               //   that._width / 375
@@ -500,7 +511,8 @@ export default Vue.extend({
 }
 #text-content {
   position: absolute;
-  top: -1999998rpx;
+  top: -999rpx;
+  line-height: 60rpx;
   width: 686rpx;
   margin-left: 30rpx;
   font-family: PingFangSC-Regular;

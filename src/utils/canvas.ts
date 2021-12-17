@@ -35,7 +35,7 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
     }
   })
   for (let b = 0; b < row.length; b++) {
-    ctx.fillText(list[b], x, y + (b + 1) * 40 * rpx) //每行字体y坐标间隔40
+    ctx.fillText(list[b], x, y + (b + 1) * 30 * rpx) //每行字体y坐标间隔40
   }
 }
 // 文字的y轴的高度 根据文字的行数决定文字宽度

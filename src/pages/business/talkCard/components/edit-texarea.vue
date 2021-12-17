@@ -11,19 +11,21 @@
         />
       </div>
       <!-- <van-divider /> -->
-      <van-field
-        custom-style="border-top:1px solid #F8F8F8;border-bottom:1px solid #F8F8F8;"
-        type="textarea"
-        maxlength="50"
-        :value="textContent"
-        :autosize="{ minHeight: 104 }"
-        show-word-limit
-        placeholder="请输入新的推荐语"
-        placeholder-style="color:#CCCCCC"
-        :border="true"
-        @change="changeTextArea"
-      >
-      </van-field>
+      <div class="textarea-height">
+        <van-field
+          custom-style="border-top:1px solid #F8F8F8;border-bottom:1px solid #F8F8F8;overflow:auto;"
+          type="textarea"
+          maxlength="50"
+          :value="textContent"
+          :autosize="{ minHeight: 104 }"
+          show-word-limit
+          placeholder="请输入新的推荐语"
+          placeholder-style="color:#CCCCCC"
+          :border="true"
+          @change="changeTextArea"
+        >
+        </van-field>
+      </div>
       <!-- <van-divider /> -->
       <div class="bottom-btn-wrap">
         <van-button
@@ -69,7 +71,13 @@ export default Vue.extend({
   height: 900rpx;
   background: #ffffff;
   padding: 32rpx 0;
+  padding-bottom: 300rpx;
+  overflow-y: auto;
   position: relative;
+}
+.textarea-height {
+  height: 300rpx;
+  overflow-y: auto;
 }
 .top {
   margin-bottom: 64rpx;
