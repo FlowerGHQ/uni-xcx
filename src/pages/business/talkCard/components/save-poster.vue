@@ -6,13 +6,16 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: 1400 + 'rpx'
+        height: 1400 + textHeight * rpx + 'rpx'
       }"
     />
     <image
       :src="imageUrl"
-      :style="{ width: 750 + 'rpx', height: 1400 + 'rpx' }"
+      :style="{ width: 750 + 'rpx', height: 1400 + textHeight * rpx + 'rpx' }"
     ></image>
+    <div id="text-content" v-if="showCanvas">
+      {{ textContent }}
+    </div>
     <bottom-button
       view="修改推荐语"
       save="下载至相册"
@@ -91,8 +94,38 @@ export default Vue.extend({
     this.id = option.id
     this.getInfoSystem()
   },
-  mounted() {},
+  mounted() {
+    // 获取盒子高度
+    this.$nextTick(() => {
+      // const query = wx.createSelectorQuery()
+      const that = this
+      // this.getTextHeight()
+    })
+  },
   methods: {
+    // 获取文字动态高度
+    getTextHeight() {
+      const that = this
+      // 为了保证获取可靠高度
+      setTimeout(() => {
+        wx.createSelectorQuery()
+          .select('#text-content')
+          .fields(
+            {
+              size: true,
+              scrollOffset: true,
+              properties: ['scrollX', 'scrollY'],
+              computedStyle: ['margin', 'backgroundColor'],
+              context: true
+            },
+            function (res) {
+              that.textHeight = res.height // 节点的高度
+              that.drawTwo()
+            }
+          )
+          .exec()
+      }, 20)
+    },
     // 将海报保存到系统相册
     picClick() {
       const that = this
@@ -129,26 +162,6 @@ export default Vue.extend({
         }
       })
     },
-    //当用户第一次拒绝后再次请求授权
-    // openConfirm: function () {
-    //   wx.showModal({
-    //     title: '当前操作需要访问你的相册',
-    //     content: '请前往系统设置中开启相机权限',
-    //     confirmText: '前往设置',
-    //     cancelText: '取消',
-    //     success: function (res) {
-    //       //点击“确认”时打开设置页面
-    //       if (res.confirm) {
-    //         wx.openSetting({
-    //           success: res => {
-    //             console.log(res, 'openSetting')
-    //           }
-    //         })
-    //       } else {
-    //       }
-    //     }
-    //   })
-    // },
     // 获取该手机屏幕宽高
     getInfoSystem() {
       showLoading()
@@ -418,12 +431,14 @@ export default Vue.extend({
             success(res) {
               that._heigth = res.windowHeight
               that._width = res.screenWidth
-              that.textHeight = drawHeightText(
-                that.textContent,
-                that._width / 375
-              )
+              that.rpx = res.screenWidth / 375
+              // that.textHeight = drawHeightText(
+              //   that.textContent,
+              //   that._width / 375
+              // )
               // 将异步数据请求完成之后再渲染
-              that.drawImage(res.windowHeight, res.screenWidth)
+              that.getTextHeight()
+              // that.drawImage(res.windowHeight, res.screenWidth)
             }
           })
         })
@@ -445,13 +460,13 @@ export default Vue.extend({
     clickSave(val) {
       // console.log(val == null, '是否存在')
       this.textContent = val ? val : '收下这张会员卡，只有我的朋友可以获得哦'
-      this.drawTwo()
+      this.showCanvas = true
+      this.showPopup = false
+      this.getTextHeight()
     },
     // 再次绘制
     drawTwo() {
-      this.textHeight = drawHeightText(this.textContent, this._width / 375)
-      this.showPopup = false
-      this.showCanvas = true
+      // this.textHeight = drawHeightText(this.textContent, this._width / 375)
       this.drawImage(this._heigth, this._width)
     }
   }
@@ -482,6 +497,16 @@ export default Vue.extend({
       color: #0066ff !important;
     }
   }
+}
+#text-content {
+  width: 686rpx;
+  margin-left: 30rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: Regular;
+  font-size: 32rpx;
+  padding: 40rpx 34rpx;
+  white-space: pre-line;
+  background-color: #fff;
 }
 /deep/ .text-box {
   text-align: center;

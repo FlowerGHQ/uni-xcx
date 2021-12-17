@@ -2,30 +2,41 @@
 export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
   //参数说明
   //ctx：canvas的 2d 对象，t：绘制的文字，x,y:文字坐标，w：文字最大宽度
-  console.log(t, '绘制文字')
-  let chr = t.split('')
+  // console.log(t, '绘制文字')
+  const string = t.replace(/\n/g, '<br/>')
+  let chr = string.split('')
   let temp = ''
   let row = [] as any
 
   for (let a = 0; a < chr.length; a++) {
-    if (
-      ctx.measureText(temp).width < w &&
-      ctx.measureText(temp + chr[a]).width <= w
-    ) {
-      temp += chr[a]
-    } else {
+    if (chr[a] === '<') {
       row.push(temp)
       temp = chr[a]
+    } else {
+      if (
+        ctx.measureText(temp).width < w &&
+        ctx.measureText(temp + chr[a]).width <= w
+      ) {
+        temp += chr[a]
+      } else {
+        row.push(temp)
+        temp = chr[a]
+      }
     }
   }
   row.push(temp)
-  console.log(row, '嘻嘻啊哈哈')
-  // let a = 0
+  let list = [] as any
+  row.forEach(item => {
+    if (item.indexOf('<br/>') !== -1) {
+      const itemNew = item.slice(5, item.length)
+      list.push(itemNew)
+    } else {
+      list.push(item)
+    }
+  })
   for (let b = 0; b < row.length; b++) {
-    ctx.fillText(row[b], x, y + (b + 1) * 40 * rpx) //每行字体y坐标间隔40
-    // a = y + (b + 1) * 50 * rpx
+    ctx.fillText(list[b], x, y + (b + 1) * 40 * rpx) //每行字体y坐标间隔40
   }
-  // return a
 }
 // 文字的y轴的高度 根据文字的行数决定文字宽度
 export const drawHeightText = (textLength, rpx) => {
