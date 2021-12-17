@@ -34,10 +34,14 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
       list.push(item)
     }
   })
+  // 当数组的长度超过10 重新处理
   for (let b = 0; b < row.length; b++) {
     ctx.fillText(list[b], x, y + (b + 1) * 30 * rpx) //每行字体y坐标间隔40
   }
 }
+// // 判断数组的长度是否超过10
+// const listLength = () => {
+// }
 // 文字的y轴的高度 根据文字的行数决定文字宽度
 export const drawHeightText = (textLength, rpx) => {
   // 绘制文字宽度
