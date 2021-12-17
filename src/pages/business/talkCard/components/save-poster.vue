@@ -499,6 +499,8 @@ export default Vue.extend({
   }
 }
 #text-content {
+  position: absolute;
+  top: -1999998rpx;
   width: 686rpx;
   margin-left: 30rpx;
   font-family: PingFangSC-Regular;
