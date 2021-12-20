@@ -3,9 +3,9 @@
     <div class="set-title">
       <div class="flex set-info">
         <div class="icon-picture" v-if="avatar">
-          <img :src="avatar" alt="" @click="openGetInfo" />
+          <img class="icon-picture" :src="avatar" alt="" @click="openGetInfo" />
         </div>
-        <div v-else>
+        <div v-else class="icon-picture">
           <img
             src="../../../assets/images/default.png"
             alt=""

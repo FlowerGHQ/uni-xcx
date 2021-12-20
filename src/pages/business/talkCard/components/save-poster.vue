@@ -1,5 +1,5 @@
 <template>
-  <div class="all-content">
+  <div class="all-content" capture-catch:touchmove="preventdefault">
     <canvas
       v-if="showCanvas"
       class="canvas"
