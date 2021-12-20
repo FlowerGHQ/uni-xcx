@@ -25,7 +25,13 @@
       @viewClick="editClick"
       @saveClick="picClick"
     ></bottom-button>
-    <van-popup :show="showPopup" @close="onClose" position="bottom" round>
+    <van-popup
+      :show="showPopup"
+      @close="onClose"
+      position="bottom"
+      round
+      :close-on-click-overlay="false"
+    >
       <edit-area @clickCancel="clickCancel" @clickSave="clickSave"></edit-area>
     </van-popup>
     <!-- 相机权限弹窗 -->

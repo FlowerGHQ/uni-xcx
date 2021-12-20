@@ -80,7 +80,12 @@ export default Vue.extend({
       this.disabled = false
     },
     clickSave() {
-      console.log(this.textContent, 'this.textContent')
+      if (this.lineCount > 3) {
+        this.$toast('只支持换行输入三行,请重新编辑')
+        this.textContent = null
+        this.disabled = false
+        return
+      }
       this.$emit('clickSave', this.textContent)
       this.textContent = null
       this.disabled = false
@@ -93,7 +98,9 @@ export default Vue.extend({
       // console.log(val, '换几行')
       this.lineCount = val.detail.lineCount
       if (val.detail.lineCount > 3) {
+        // console.log('是否设置了禁止')
         this.disabled = true
+        console.log(this.disabled, 'this.disabled')
       } else {
         this.disabled = false
       }
