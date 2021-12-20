@@ -2,20 +2,17 @@
   <div class="set">
     <div class="set-title">
       <div class="flex set-info">
-        <img
-          :src="avatar"
-          alt=""
-          class="icon-picture"
-          v-if="avatar"
-          @click="openGetInfo"
-        />
-        <img
-          src="../../../assets/images/default.png"
-          alt=""
-          class="icon-picture"
-          v-else
-          @click="openGetInfo"
-        />
+        <div class="icon-picture" v-if="avatar">
+          <img :src="avatar" alt="" @click="openGetInfo" />
+        </div>
+        <div v-else>
+          <img
+            src="../../../assets/images/default.png"
+            alt=""
+            class="icon-picture"
+            @click="openGetInfo"
+          />
+        </div>
         <div class="info-content">
           <div class="info-name flex">
             <span>{{ name || '未获取昵称' }}</span>
@@ -24,6 +21,7 @@
                 :text="text"
                 :textColor="textColor"
                 fontSize="24"
+                width="14vw"
                 color="#fff"
                 :border="border"
                 padding="4rpx 15rpx"
@@ -128,7 +126,7 @@ export default Vue.extend({
 .set {
   margin-top: 16rpx;
   .set-info {
-    align-items: center;
+    // align-items: center;
     .info-content {
       .info-name {
         font-size: 32rpx;
@@ -145,6 +143,12 @@ export default Vue.extend({
         margin-top: 4rpx;
       }
     }
+    .icon-picture {
+      width: 10vw;
+      height: 10vw;
+      margin-right: 16rpx;
+      border-radius: 50%;
+    }
   }
   .set-title {
     font-size: 32rpx;
@@ -154,12 +158,6 @@ export default Vue.extend({
     margin-bottom: 32rpx;
     background: #fff;
     padding: 20rpx 32rpx;
-  }
-  .icon-picture {
-    width: 64rpx;
-    height: 64rpx;
-    margin-right: 16rpx;
-    border-radius: 50%;
   }
 }
 .log-out {

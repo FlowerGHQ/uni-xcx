@@ -8,7 +8,8 @@
       'line-height': `${lineHeight}rpx`,
       'border-radius': `${borderRadius}rpx`,
       border: `${border}`,
-      padding: `${padding}`
+      padding: `${padding}`,
+      width: `${width}`
     }"
   >
     {{ text }}
@@ -51,6 +52,10 @@ export default Vue.extend({
     borderRadius: {
       type: Number,
       default: 20
+    },
+    width: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -61,6 +66,7 @@ export default Vue.extend({
 </script>
 <style lang="less" scoped>
 .base-tag {
+  width: 100%;
   font-size: 24rpx;
   font-weight: 400;
   color: #888888;
