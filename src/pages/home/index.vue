@@ -99,7 +99,7 @@
         <div class="content">
           <div class="top">
             <img
-              src="../../assets/images/star-partner.png"
+              src="../../assets/images/introducer.png"
               alt=""
               class="star-partner"
             />
