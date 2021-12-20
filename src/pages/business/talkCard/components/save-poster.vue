@@ -100,14 +100,6 @@ export default Vue.extend({
     this.id = option.id
     this.getInfoSystem()
   },
-  mounted() {
-    // 获取盒子高度
-    this.$nextTick(() => {
-      // const query = wx.createSelectorQuery()
-      const that = this
-      // this.getTextHeight()
-    })
-  },
   methods: {
     // 获取文字动态高度
     getTextHeight() {
@@ -134,6 +126,7 @@ export default Vue.extend({
     },
     // 将海报保存到系统相册
     picClick() {
+      console.log('是否下载到相册')
       const that = this
       uni.canvasToTempFilePath({
         //把当前画布指定区域的内容导出生成指定大小的图片
@@ -152,7 +145,15 @@ export default Vue.extend({
             })
         },
         fail: () => {
-          console.log('调用失败')
+          authWriteToAlbum()
+            .then(resOne => {
+              wx.showToast({
+                title: '图片保存成功'
+              })
+            })
+            .catch(error => {
+              that.onConfirmNoShelf() //如果拒绝，在这里进行再次获取授权的操作
+            })
         }
       })
     },
