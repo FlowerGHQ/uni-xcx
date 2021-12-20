@@ -6,14 +6,14 @@
       canvas-id="mycanvas"
       :style="{
         width: 750 + 'rpx',
-        height: 1300 + textHeight * rpx + 'rpx'
+        height: 1400 + 'rpx'
       }"
     />
     <image
       :src="imageUrl"
       :style="{
         width: 750 + 'rpx',
-        height: 1300 + textHeight * rpx + 'rpx'
+        height: 1400 + 'rpx'
       }"
     ></image>
     <div id="text-content" v-if="showCanvas">
