@@ -1,5 +1,5 @@
 <template>
-  <div class="all-content" capture-catch:touchmove="preventdefault">
+  <div class="all-content" :capture-catch:touchmove="preventdefault">
     <canvas
       v-if="showCanvas"
       class="canvas"
@@ -70,6 +70,8 @@ export default Vue.extend({
   components: { bottomButton, EditArea, dialogShow },
   data() {
     return {
+      // 控制遮罩层后面是否可以滚动
+      preventdefault: '',
       noPhoto: false,
       titleNoShelf: '当前操作需要访问你的相册',
       contentNoShelf: '请前往系统设置中开启相机权限',
@@ -466,13 +468,16 @@ export default Vue.extend({
     },
     onClose() {
       this.showPopup = false
+      this.preventdefault = ''
     },
     editClick() {
       this.showCanvas = false
       this.showPopup = true
+      this.preventdefault = 'preventdefault'
     },
     clickCancel() {
       this.showPopup = false
+      this.preventdefault = ''
       this.drawTwo()
     },
     clickSave(val) {
@@ -480,6 +485,7 @@ export default Vue.extend({
       this.textContent = val ? val : '收下这张会员卡，只有我的朋友可以获得哦'
       this.showCanvas = true
       this.showPopup = false
+      this.preventdefault = ''
       this.getTextHeight()
     },
     // 再次绘制
