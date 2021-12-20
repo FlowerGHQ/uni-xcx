@@ -86,6 +86,19 @@ export default Vue.extend({
       error: false
     }
   },
+  onShareAppMessage: function (res): any {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: this.schoolName,
+      path: `/pages/jumpPage/index?scene=${encodeURIComponent(
+        this.$data.state
+      )}`,
+      imageUrl:
+        'https://production-sam.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads1639385533000e1a573.png'
+    }
+  },
   //   eccfc2cca1c852f8b5dc6ef9ee366e64
   async onLoad(option: any) {
     this.state = decodeURIComponent(option.scene)
@@ -102,7 +115,6 @@ export default Vue.extend({
     }
     const res = await API.partnersSBusiness.open.campusInfo.request(parma)
     this.schoolName = res.data.name
-    console.log(option, this.schoolName)
   },
   async onShow() {
     const parmaState = this.state.split('&')
@@ -127,64 +139,66 @@ export default Vue.extend({
       this.showMessage = false
     },
     async onAuth(e) {
+      const { detail } = e
+      if (detail.errMsg !== 'getPhoneNumber:ok') {
+        // 跳转手机号码登录页
+        return
+      }
       try {
-        await API.partnersSBusiness.account.authorized.request({})
-        this.next()
-      } catch (error) {
-        // await API.oauth.login.postV1LoginOut.request({})
-        try {
-          let data = await wx.login()
+        await API.oauth.login.postV1LoginOut.request({})
+      } catch (error) {}
+      //   try {
+      //     await API.partnersSBusiness.account.authorized.request({})
+      //     this.next()
+      //   } catch (error) {
+      // await API.oauth.login.postV1LoginOut.request({})
+      try {
+        let data = await wx.login()
+        await API.oauth.login.miniProgramLogin.request({
+          code: data.code,
+          notAutoLogin: false
+        })
+        const { detail } = e
+        if (detail.errMsg !== 'getPhoneNumber:ok') {
+          // 跳转手机号码登录页
+          return
+        }
+        wx.showLoading({
+          title: '登录中',
+          mask: true
+        })
+        const res1 = await API.oauth.login.miniProgramDecryptionLogin.request({
+          iv: detail.iv,
+          encryptedData: detail.encryptedData
+        })
+        if (!res1.data) {
+          let data1 = await wx.login()
           await API.oauth.login.miniProgramLogin.request({
-            code: data.code,
+            code: data1.code,
             notAutoLogin: false
           })
-          const { detail } = e
-          console.log('false', 1, e)
-          if (detail.errMsg !== 'getPhoneNumber:ok') {
+          const { detail: detail1 } = e
+          if (detail1.errMsg !== 'getPhoneNumber:ok') {
             // 跳转手机号码登录页
             return
           }
-          console.log('false', 2)
           wx.showLoading({
             title: '登录中',
             mask: true
           })
-          const res1 = await API.oauth.login.miniProgramDecryptionLogin.request(
-            {
-              iv: detail.iv,
-              encryptedData: detail.encryptedData
-            }
-          )
-          console.log('false', 3)
-          if (!res1.data) {
-            let data1 = await wx.login()
-            await API.oauth.login.miniProgramLogin.request({
-              code: data1.code,
-              notAutoLogin: false
-            })
-            const { detail: detail1 } = e
-            if (detail1.errMsg !== 'getPhoneNumber:ok') {
-              // 跳转手机号码登录页
-              return
-            }
-            wx.showLoading({
-              title: '登录中',
-              mask: true
-            })
-            await API.oauth.login.miniProgramDecryptionLogin.request({
-              iv: detail1.iv,
-              encryptedData: detail1.encryptedData
-            })
-          }
-          this.next()
-        } catch (e) {
-          console.log('false', 0)
-          const { errorMessage = '' } = e as any
-          this.$toast(errorMessage)
-        } finally {
-          wx.hideLoading()
+          await API.oauth.login.miniProgramDecryptionLogin.request({
+            iv: detail1.iv,
+            encryptedData: detail1.encryptedData
+          })
         }
+        this.next()
+      } catch (e) {
+        const { errorMessage = '' } = e as any
+        this.$toast(errorMessage)
+      } finally {
+        wx.hideLoading()
       }
+      //   }
     },
     async next() {
       const res = await API.partnersSBusiness.account.phone.request({})
