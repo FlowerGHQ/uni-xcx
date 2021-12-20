@@ -1,6 +1,6 @@
 <template>
   <web-view
-    src="https://test-partners-s.schoolpal.cn/privacy-policy.html"
+    src="https://partners-s.schoolpal.cn/privacy-policy.html"
   />
 </template>
 <script lang="ts">
