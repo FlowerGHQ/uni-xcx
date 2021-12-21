@@ -45,3 +45,9 @@
 .flex1 {
   flex: 1;
 }
+.now-wrap {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

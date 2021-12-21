@@ -242,6 +242,7 @@ export default Vue.extend({
         const resRecommend = await API.partnersSBusiness.account.info.request(
           {}
         )
+        // console.log(resRecommend, 'resRecommend好好说话')
         this.dataType = resRecommend.data.roleType
         if (resRecommend.data.roleType === 2) {
           // 如果是推荐官被禁用显示

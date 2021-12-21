@@ -2,8 +2,11 @@
   <div class="talk-card-list">
     <div class="partner-card base-card flex-between">
       <div class="left">
-        <div class="partner-card-name">
-          <span>{{ name }}</span>
+        <div class="partner-card-name now-wrap">
+          <!-- <span class="now-wrap">{{ name }}</span> -->
+          <span class="now-wrap"
+            >哈哈哈哈啊哈哈啊哈哈啊哈哈啊哈哈哈哈哈哈哈啊哈哈嗷嗷喊</span
+          >
         </div>
         <div class="partner-card-phone">手机号： {{ phone }}</div>
         <div class="partner-card-phone">
@@ -136,6 +139,10 @@ export default Vue.extend({
     margin-bottom: 16rpx;
     justify-content: space-between;
     display: flex;
+    width: 450rpx;
+    span {
+      width: 100%;
+    }
   }
   &-phone {
     display: flex;

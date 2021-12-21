@@ -28,7 +28,7 @@ export default Vue.extend({
       pageSize: 1000,
       state: true
     })
-    console.log(data)
+    // console.log(data)
     this.curList = data.data.list
   }
 })

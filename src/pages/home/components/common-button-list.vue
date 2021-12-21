@@ -47,7 +47,6 @@ export default Vue.extend({
         const resRecommend = await API.partnersSBusiness.account.info.request(
           {}
         )
-        // console.log(resRecommend, 'resRecommend')
         this.permissionList = resRecommend.data.permissions
         // console.log(this.permissionList, 'getListAll')
         let list = [] as any
