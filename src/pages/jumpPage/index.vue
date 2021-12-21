@@ -22,6 +22,7 @@
     <div class="bottom-button flex">
       <button
         class="invite-share animate__heartBeat"
+        @touchstart="onMouseTouch"
         @getphonenumber="onAuth"
         open-type="getPhoneNumber"
       >
@@ -83,7 +84,8 @@ export default Vue.extend({
       phone: '',
       showMessage: false,
       defaultVVVV: '',
-      error: false
+      error: false,
+      data: null as any
     }
   },
   onShareAppMessage: function (res): any {
@@ -138,24 +140,33 @@ export default Vue.extend({
     closePopup() {
       this.showMessage = false
     },
+    async onMouseTouch() {
+      try {
+        await API.oauth.login.postV1LoginOut.request({})
+      } catch (error) {
+        console.log(1, error)
+      }
+
+      let data = await wx.login()
+      console.log(data)
+      this.data = data
+    },
     async onAuth(e) {
       const { detail } = e
       if (detail.errMsg !== 'getPhoneNumber:ok') {
         // 跳转手机号码登录页
         return
       }
-      try {
-        await API.oauth.login.postV1LoginOut.request({})
-      } catch (error) {}
+      console.log(detail)
+      console.log(this.data)
       //   try {
       //     await API.partnersSBusiness.account.authorized.request({})
       //     this.next()
       //   } catch (error) {
       // await API.oauth.login.postV1LoginOut.request({})
       try {
-        let data = await wx.login()
         await API.oauth.login.miniProgramLogin.request({
-          code: data.code,
+          code: this.data.code,
           notAutoLogin: false
         })
         const { detail } = e
@@ -172,9 +183,9 @@ export default Vue.extend({
           encryptedData: detail.encryptedData
         })
         if (!res1.data) {
-          let data1 = await wx.login()
+          // let data1 = await wx.login()
           await API.oauth.login.miniProgramLogin.request({
-            code: data1.code,
+            code: this.data.code,
             notAutoLogin: false
           })
           const { detail: detail1 } = e
@@ -211,11 +222,11 @@ export default Vue.extend({
         return
       }
       const parmaState = this.state.split('&')
-      //   const parma = {
-      //     campusId: 1,
-      //     merchantId: 1,
-      //     sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-      //   }
+      // const parma = {
+      //   campusId: 1,
+      //   merchantId: 1,
+      //   sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
+      // }
       const parma = {
         campusId: parmaState[0],
         merchantId: parmaState[1],
