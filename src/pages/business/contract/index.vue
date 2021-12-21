@@ -3,10 +3,7 @@
     <div class="partner-card base-card flex-between">
       <div class="left">
         <div class="partner-card-name now-wrap">
-          <!-- <span class="now-wrap">{{ name }}</span> -->
-          <span class="now-wrap"
-            >哈哈哈哈啊哈哈啊哈哈啊哈哈啊哈哈哈哈哈哈哈啊哈哈嗷嗷喊</span
-          >
+          <span class="now-wrap">{{ name }}</span>
         </div>
         <div class="partner-card-phone">手机号： {{ phone }}</div>
         <div class="partner-card-phone">
