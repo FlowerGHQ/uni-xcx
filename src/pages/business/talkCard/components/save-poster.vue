@@ -152,10 +152,12 @@ export default Vue.extend({
             })
             .catch(error => {
               console.log('获取失败')
+              that.saveLoading = false
               that.onConfirmNoShelf() //如果拒绝，在这里进行再次获取授权的操作
             })
         },
         fail: () => {
+          that.saveLoading = false
           wx.showToast({
             title: '获取图片失败'
           })
