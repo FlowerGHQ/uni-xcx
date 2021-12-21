@@ -75,7 +75,7 @@ export default Vue.extend({
   },
   methods: {
     clickCancel() {
-      this.$emit('clickCancel')
+      this.$emit('clickCancel', this.textContent)
       this.textContent = null
       this.disabled = false
     },

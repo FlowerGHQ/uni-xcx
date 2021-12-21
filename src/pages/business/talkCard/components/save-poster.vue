@@ -24,10 +24,10 @@
       save="下载至相册"
       @viewClick="editClick"
       @saveClick="picClick"
+      :saveLoading="saveLoading"
     ></bottom-button>
     <van-popup
       :show="showPopup"
-      @close="onClose"
       position="bottom"
       round
       :close-on-click-overlay="false"
@@ -70,6 +70,7 @@ export default Vue.extend({
   components: { bottomButton, EditArea, dialogShow },
   data() {
     return {
+      saveLoading: false,
       // 控制遮罩层后面是否可以滚动
       preventdefault: '',
       noPhoto: false,
@@ -134,8 +135,9 @@ export default Vue.extend({
     },
     // 将海报保存到系统相册
     picClick() {
-      console.log('是否下载到相册')
+      // console.log('是否下载到相册')
       const that = this
+      this.saveLoading = true
       uni.canvasToTempFilePath({
         //把当前画布指定区域的内容导出生成指定大小的图片
         canvasId: 'mycanvas',
@@ -146,6 +148,7 @@ export default Vue.extend({
               wx.showToast({
                 title: '图片保存成功'
               })
+              that.saveLoading = false
             })
             .catch(error => {
               console.log('获取失败')
@@ -153,18 +156,15 @@ export default Vue.extend({
             })
         },
         fail: () => {
-          authWriteToAlbum()
-            .then(resOne => {
-              wx.showToast({
-                title: '图片保存成功'
-              })
-            })
-            .catch(error => {
-              that.onConfirmNoShelf() //如果拒绝，在这里进行再次获取授权的操作
-            })
+          wx.showToast({
+            title: '获取图片失败'
+          })
         }
       })
     },
+    // 保存图片文件到手机相册
+    // getPicture() {
+    // },
     onCloseNoShelf() {
       this.noPhoto = false
     },
@@ -466,19 +466,21 @@ export default Vue.extend({
           console.log(error)
         })
     },
-    onClose() {
-      this.showPopup = false
-      this.preventdefault = ''
-    },
+    // onClose() {
+    //   this.showPopup = false
+    //   this.preventdefault = ''
+    // },
     editClick() {
       this.showCanvas = false
       this.showPopup = true
       this.preventdefault = 'preventdefault'
     },
-    clickCancel() {
+    clickCancel(val) {
+      this.textContent = '收下这张会员卡，只有我的朋友可以获得哦'
+      this.showCanvas = true
       this.showPopup = false
       this.preventdefault = ''
-      this.drawTwo()
+      this.getTextHeight()
     },
     clickSave(val) {
       // console.log(val == null, '是否存在')
