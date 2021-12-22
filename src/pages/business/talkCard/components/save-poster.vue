@@ -219,7 +219,7 @@ export default Vue.extend({
       drawRoundedRect(
         this.paddingSchool * rpx,
         54 * rpx,
-        screenWidth - 32.5 * rpx,
+        screenWidth - 32.1 * rpx,
         530 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
         20,
         ctx,
