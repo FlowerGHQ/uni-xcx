@@ -46,6 +46,7 @@ import dayjs from 'dayjs'
 import Vue from 'vue'
 import { API } from '@/models/api'
 import SaveAlbum from './save-album.vue'
+import appIdObj from '@/pages/business/talkCard/appId'
 export default Vue.extend({
   data() {
     return { showQRcode: false, src: '' }
@@ -97,12 +98,14 @@ export default Vue.extend({
       )
       // 判断是测试和预发环境还是生产环境
       wx.navigateToMiniProgram({
+        appId: appIdObj.appId,
         // appId: 'wxcf3a3fd9e27ea168', //小程序正式端
-        appId: 'wxb94eeef233d3d51d', //小程序测试端
+        // appId: 'wxb94eeef233d3d51d', //小程序测试端
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
           res1.data.shareParams
         )}`, //path
-        envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
+        // envVersion: 'trial',
+        envVersion: __wxConfig.envVersion, //开发版develop 开发版 trial   体验版 release 正式版
         success(res) {
           console.log('成功')
         }

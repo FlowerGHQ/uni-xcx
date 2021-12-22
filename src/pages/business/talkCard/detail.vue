@@ -99,6 +99,7 @@ import DiscountItem from './components/discount-item.vue'
 import { API } from '@/models/api'
 import Empty from '@/components/empty.vue'
 import dayjs from 'dayjs'
+import appIdObj from '@/pages/business/talkCard/appId'
 
 export default Vue.extend({
   name: 'HomeList',
@@ -123,6 +124,7 @@ export default Vue.extend({
     }
   },
   async onLoad(option) {
+    // console.log(__wxConfig.envVersion, appIdObj.appId, 'appIdObj.appId')
     this.id = option?.id
     const res = await API.partnersSBusiness.campus.list.request({})
     const res1 = await API.partnersSBusiness.memberCard.detail.request({
@@ -155,12 +157,14 @@ export default Vue.extend({
         }
       )
       wx.navigateToMiniProgram({
+        appId: appIdObj.appId,
         // appId: 'wxcf3a3fd9e27ea168', //小程序正式
-        appId: 'wxb94eeef233d3d51d', //小程序测试端
+        // appId: 'wxb94eeef233d3d51d', //小程序测试端
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
           res1.data.shareParams
         )}`, //path
-        envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
+        envVersion: __wxConfig.envVersion,
+        // envVersion: 'trial', //开发版develop 开发版 trial   体验版 release 正式版
         success(res) {
           console.log('成功')
         }
