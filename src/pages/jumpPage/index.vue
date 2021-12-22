@@ -135,6 +135,10 @@ export default Vue.extend({
     )
     this.totalCount = res.data.count
     this.value = res.data.value
+
+    let data = await wx.login()
+    console.log(data)
+    this.data = data
   },
   methods: {
     closePopup() {
@@ -146,10 +150,6 @@ export default Vue.extend({
       } catch (error) {
         console.log(1, error)
       }
-
-      let data = await wx.login()
-      console.log(data)
-      this.data = data
     },
     async onAuth(e) {
       const { detail } = e
