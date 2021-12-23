@@ -1,0 +1,29 @@
+@import "./fontello-codes.css";
+
+@spicons-font-path: "https://cdn.xiaobaoxiu.cn/xbshow/XcxImages/fontello";
+@hash: "64952336";
+
+@font-face {
+  font-family: "fontello";
+  src: url("@{spicons-font-path}/fontello.eot?@{hash}");
+  src: url("@{spicons-font-path}/fontello.eot?@{hash}#iefix")
+      format("embedded-opentype"),
+    url("@{spicons-font-path}/fontello.woff?@{hash}") format("woff"),
+    url("@{spicons-font-path}/fontello.ttf?@{hash}") format("truetype"),
+    url("@{spicons-font-path}/fontello.svg?@{hash}#fontello") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.weapp-icon {
+  font-family: "fontello";
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,213 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/code/code",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/code/index",
+      "style": {
+        "navigationBarTitleText": "一群伙伴",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/user/terms",
+      "style": {
+        "navigationBarTitleText": "用户条款",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/login/user/privacy",
+      "style": {
+        "navigationBarTitleText": "隐私政策",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/schoolList/index",
+      "style": {
+        "navigationBarTitleText": "切换校区",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/talkCard/index",
+      "style": {
+        "navigationBarTitleText": "拓客卡分享",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/talkCard/detail",
+      "style": {
+        "navigationBarTitleText": "拓客卡预览",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/reward/index",
+      "style": {
+        "navigationBarTitleText": "奖励金查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/contract/index",
+      "style": {
+        "navigationBarTitleText": "合约查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/historyContract/index",
+      "style": {
+        "navigationBarTitleText": "历史合约",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/storedValue/index",
+      "style": {
+        "navigationBarTitleText": "储值金查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/customer/index",
+      "style": {
+        "navigationBarTitleText": "客源查询",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/customer/detail",
+      "style": {
+        "navigationBarTitleText": "客户详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/trade/index",
+      "style": {
+        "navigationBarTitleText": "交易管理",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/talkCard/components/save-poster",
+      "style": {
+        "navigationBarTitleText": "拓客卡分享海报",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/trade/components/detailTransation/index",
+      "style": {
+        "navigationBarTitleText": "订单详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/trade/components/detailTransationListenTest/index",
+      "style": {
+        "navigationBarTitleText": "订单详情",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/business/set/index",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/jumpPage/index",
+      "style": {
+        "navigationBarTitleText": "诚邀推荐官",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/jumpPage/apply",
+      "style": {
+        "navigationBarTitleText": "",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ED4A4A",
+    "backgroundColor": "#ED4A4A",
+    "usingComponents": {
+      "van-popup": "/static/vant/popup/index",
+      "van-toast": "/static/vant/toast/index",
+      "van-overlay": "/static/vant/overlay/index",
+      "van-count-down": "/static/vant/count-down/index",
+      "van-loading": "/static/vant/loading/index",
+      "van-field": "/static/vant/field/index",
+      "van-picker": "/static/vant/picker/index",
+      "van-dialog": "/static/vant/dialog/index",
+      "van-tab": "/static/vant/tab/index",
+      "van-tabs": "/static/vant/tabs/index",
+      "van-sticky": "/static/vant/sticky/index",
+      "van-icon": "/static/vant/icon/index",
+      "van-cell": "/static/vant/cell/index",
+      "van-cell-group": "/static/vant/cell-group/index",
+      "van-calendar": "/static/vant/calendar/index",
+      "van-nav-bar": "/static/vant/nav-bar/index",
+      "van-search": "/static/vant/search/index",
+      "van-action-sheet": "/static/vant/action-sheet/index",
+      "van-checkbox-group": "/static/vant/checkbox-group/index",
+      "van-checkbox": "/static/vant/checkbox/index",
+      "van-notice-bar": "/static/vant/notice-bar/index",
+      "van-button": "/static/vant/button/index",
+      "van-divider": "/static/vant/divider/index"
+    }
+  }
+}

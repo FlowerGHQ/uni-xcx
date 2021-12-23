@@ -1,0 +1,71 @@
+.generate(100);
+
+.generate(@n, @i: 5) when (@i =< @n) {
+  .mar-@{i} {
+    margin: @i*1rpx;
+  }
+
+  .mar-l-@{i} {
+    margin-left: @i*1rpx;
+  }
+
+  .mar-r-@{i} {
+    margin-right: @i*1rpx;
+  }
+
+  .mar-t-@{i} {
+    margin-top: @i*1rpx;
+  }
+
+  .mar-b-@{i} {
+    margin-bottom: @i*1rpx;
+  }
+
+  .pad-@{i} {
+    padding: @i*1rpx;
+  }
+
+  .pad-l-@{i} {
+    padding-left: @i*1rpx;
+  }
+
+  .pad-r-@{i} {
+    padding-right: @i*1rpx;
+  }
+
+  .pad-t-@{i} {
+    padding-top: @i*1rpx;
+  }
+
+  .pad-b-@{i} {
+    padding-bottom: @i*1rpx;
+  }
+
+  .generate(@n, (@i + 5));
+}
+
+.generateHeight(100);
+
+.generateHeight(@n, @i: 10) when (@i =< @n) {
+  .height-@{i} {
+    height: @i*1rpx;
+  }
+
+  .generateHeight(@n, (@i + 10));
+}
+
+.generateLineHeight(100);
+
+.generateLineHeight(@n, @i: 10) when (@i =< @n) {
+  .line-height-@{i} {
+    line-height: @i*1rpx;
+  }
+
+  .generateLineHeight(@n, (@i + 10));
+}
+.mar-l-16 {
+  margin-left: 16rpx;
+}
+.mar-r-16 {
+  margin-right: 16rpx;
+}
