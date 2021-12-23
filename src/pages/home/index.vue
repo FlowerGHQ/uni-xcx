@@ -25,7 +25,8 @@
         </div>
         <img src="../../assets/images/right-arrow.png" class="icon-right" />
       </div>
-      <img src="../../assets/images/background-home.png" class="icon-inmage" />
+      <!-- <img src="../../assets/images/background-home.png" class="icon-inmage" /> -->
+      <div class="icon-image" />
     </div>
     <div class="middle-item">
       <ScrollMiddle ref="scrollMiddle"></ScrollMiddle>
@@ -451,16 +452,27 @@ export default Vue.extend({
   font-family: PingFangSC-Regular;
   font-weight: Regular;
 }
-.icon-inmage {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.74) 0%,
-    rgba(255, 255, 255, 0.21) 100%
-  );
+// .icon-inmage {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   background: linear-gradient(
+//     135deg,
+//     rgba(255, 255, 255, 0.74) 0%,
+//     rgba(255, 255, 255, 0.21) 100%
+//   );
+//   filter: blur(70rpx);
+//   z-index: -1;
+//   width: 750rpx;
+//   height: 1116rpx;
+// }
+.icon-image {
+  // background: chartreuse;
+  background: linear-gradient(135deg, #fae0da 0%, #d9e1f3 100%);
   filter: blur(70rpx);
+  position: absolute;
+  top: 200rpx;
+  left: 0;
   z-index: -1;
   width: 750rpx;
   height: 1116rpx;

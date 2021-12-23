@@ -6,7 +6,7 @@
           <span class="now-wrap">{{ name }}</span>
         </div>
         <div class="partner-card-phone">手机号： {{ phone }}</div>
-        <div class="partner-card-phone">
+        <div class="partner-card-time">
           <div>创建时间： {{ createdAt }}</div>
         </div>
       </div>
@@ -108,6 +108,10 @@ export default Vue.extend({
 .star-right {
   width: 166rpx;
   height: 160rpx;
+  position: absolute;
+  top: 20rpx;
+  right: 32rpx;
+  // margin-bottom: 100rpx;
 }
 .button-list {
   justify-content: flex-end;
@@ -124,8 +128,11 @@ export default Vue.extend({
   font-weight: 400;
 }
 .partner-card {
+  position: relative;
   width: 686rpx;
-  height: 212rpx;
+  // height: 200rpx;
+  padding: 32rpx 32rpx;
+  // padding-bottom: 0;
   margin: 32rpx 32rpx 0;
   background: linear-gradient(223deg, #fdb2a1 0%, #fd776c 100%);
   color: #ffffff;
@@ -141,14 +148,18 @@ export default Vue.extend({
       width: 100%;
     }
   }
-  &-phone {
+  &-phone,
+  &-time {
     display: flex;
     justify-content: space-between;
     font-size: 24rpx;
     font-weight: 400;
-    line-height: 40rpx;
+    line-height: 32rpx;
     margin-bottom: 8rpx;
   }
+  // &-time {
+  //   // margin-bottom: 8rpx;
+  // }
 }
 
 .tab-base {

@@ -69,6 +69,14 @@ export const drawText = (ctx, color, f, x, y, w) => {
   // ctx.setTextBaseline('middle')
   ctx.fillText(w, x, y)
 }
+// 字体设置
+export const drawTextFontBold = (ctx, color, f, x, y, w) => {
+  ctx.setFillStyle(color)
+  // ctx.font = `normal bold 20 DINAlternate-Bold `
+  ctx.setFontSize(f) //字大小
+  // ctx.setTextBaseline('middle')
+  ctx.fillText(w, x, y)
+}
 // 生成圆角矩形
 // rect 矩形 r半径 ctx canvas的 2d 对象
 /**
