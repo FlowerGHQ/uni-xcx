@@ -213,14 +213,14 @@ export default Vue.extend({
           ? `${this.school.slice(0, 13)}...`
           : this.school,
         (this.paddingSchool + 28) * rpx,
-        30 * rpx
+        38 * rpx
       )
       // 先绘制圆角矩形再绘制图片 避免遮盖
       drawRoundedRect(
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.1 * rpx,
-        530 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
+        540 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
         20,
         ctx,
         rpx
@@ -235,7 +235,7 @@ export default Vue.extend({
           ctx.drawImage(
             path,
             this.paddingSchool * rpx,
-            12 * rpx,
+            20 * rpx,
             24 * rpx,
             24 * rpx
           )
