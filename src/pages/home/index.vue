@@ -126,7 +126,7 @@
             <p>推荐官可领取试听课奖励</p>
           </div>
           <div class="card-bottom">
-            <div class="close" @click="onClose">取消</div>
+            <button class="close" @click="onClose">取消</button>
             <button class="share" @click="shareCard">立即分享拓客卡</button>
           </div>
         </div>
@@ -599,16 +599,18 @@ export default Vue.extend({
   margin: 48rpx 0;
   align-items: center;
   .close {
-    width: 160rpx;
-    height: 80rpx;
-    background: #ffffff;
+    // width: 160rpx;
+    // height: 80rpx;
+    // background: #ffffff;
     border-radius: 44rpx;
     border: 1rpx solid #f86744;
     color: #222222;
     font-size: 32rpx;
     text-align: center;
-    line-height: 78rpx;
+    // line-height: 80rpx;
+    padding: 0 48rpx;
     margin-right: 32rpx;
+    box-sizing: border-box;
   }
   .share {
     width: 366rpx;

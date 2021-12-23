@@ -1,8 +1,9 @@
 <template>
   <div class="invite-intro">
-    <!-- <div class=""> -->
-    <div class="invite-school">{{ schoolName }}</div>
-    <div class="invite-card">
+    <div class="invite-school" v-if="schoolName">
+      <div class="invite-school-name">{{ schoolName }}</div>
+    </div>
+    <div class="invite-card" v-if="value">
       <div class="invite-card-top">
         预计可获得拓客卡(张)：<span class="invite-num-span">{{
           totalCount
@@ -141,8 +142,11 @@ export default Vue.extend({
     this.data = data
   },
   methods: {
-    closePopup() {
+    async closePopup() {
       this.showMessage = false
+      let data = await wx.login()
+      console.log(data)
+      this.data = data
     },
     async onMouseTouch() {
       try {
@@ -268,6 +272,11 @@ export default Vue.extend({
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   color: #666;
+  display: flex;
+  justify-content: center;
+  .invite-school-name {
+    max-width: 400rpx;
+  }
 }
 .invite-card {
   margin-top: 580rpx;
@@ -294,7 +303,7 @@ export default Vue.extend({
   border-radius: 40rpx;
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
+  font-weight: 600;
   border: 1px solid #f86744;
   color: #fff;
 }

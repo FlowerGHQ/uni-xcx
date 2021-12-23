@@ -174,7 +174,8 @@
       "style": {
         "navigationBarTitleText": "",
         "navigationBarBackgroundColor": "#FFF",
-        "navigationBarTextStyle": "black"
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "custom"
       }
     }
   ],
