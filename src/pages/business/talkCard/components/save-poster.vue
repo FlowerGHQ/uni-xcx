@@ -399,13 +399,15 @@ export default Vue.extend({
               //绘制图片
               const that = this
               ctx.draw(false, () => {
-                wx.canvasToTempFilePath({
-                  //把当前画布指定区域的内容导出生成指定大小的图片
-                  canvasId: 'mycanvas',
-                  success(res) {
-                    that.imageUrl = res.tempFilePath
-                  }
-                })
+                setTimeout(() => {
+                  wx.canvasToTempFilePath({
+                    //把当前画布指定区域的内容导出生成指定大小的图片
+                    canvasId: 'mycanvas',
+                    success(res) {
+                      that.imageUrl = res.tempFilePath
+                    }
+                  })
+                }, 500)
               })
               hideLoading()
               // console.log('能否走到这里')
@@ -449,11 +451,11 @@ export default Vue.extend({
           const that = this
           uni.getSystemInfo({
             success(res) {
-              const dpr = wx.getSystemInfoSync().pixelRatio
+              // const dpr = wx.getSystemInfoSync().pixelRatio
               that._heigth = res.windowHeight
               that._width = res.screenWidth
-              that.dpr = dpr
-              that.rpx = (res.screenWidth / 375) * dpr
+              // that.dpr = dpr
+              that.rpx = res.screenWidth / 375
               // that.textHeight = drawHeightText(
               //   that.textContent,
               //   that._width / 375
