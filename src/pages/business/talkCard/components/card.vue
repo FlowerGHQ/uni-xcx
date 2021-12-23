@@ -98,7 +98,7 @@ export default Vue.extend({
       )
       // 判断是测试和预发环境还是生产环境
       wx.navigateToMiniProgram({
-        appId: appIdObj.appId,
+        appId: 'wxcf3a3fd9e27ea168',
         // appId: 'wxcf3a3fd9e27ea168', //小程序正式端
         // appId: 'wxb94eeef233d3d51d', //小程序测试端
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
