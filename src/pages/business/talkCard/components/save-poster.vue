@@ -213,14 +213,14 @@ export default Vue.extend({
           ? `${this.school.slice(0, 13)}...`
           : this.school,
         (this.paddingSchool + 28) * rpx,
-        30 * rpx
+        38 * rpx
       )
       // 先绘制圆角矩形再绘制图片 避免遮盖
       drawRoundedRect(
         this.paddingSchool * rpx,
         54 * rpx,
         screenWidth - 32.1 * rpx,
-        530 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
+        540 * rpx + this.textHeight + this.bottomCodeBegin * rpx,
         20,
         ctx,
         rpx
@@ -235,7 +235,7 @@ export default Vue.extend({
           ctx.drawImage(
             path,
             this.paddingSchool * rpx,
-            12 * rpx,
+            20 * rpx,
             24 * rpx,
             24 * rpx
           )
@@ -399,13 +399,15 @@ export default Vue.extend({
               //绘制图片
               const that = this
               ctx.draw(false, () => {
-                wx.canvasToTempFilePath({
-                  //把当前画布指定区域的内容导出生成指定大小的图片
-                  canvasId: 'mycanvas',
-                  success(res) {
-                    that.imageUrl = res.tempFilePath
-                  }
-                })
+                setTimeout(() => {
+                  wx.canvasToTempFilePath({
+                    //把当前画布指定区域的内容导出生成指定大小的图片
+                    canvasId: 'mycanvas',
+                    success(res) {
+                      that.imageUrl = res.tempFilePath
+                    }
+                  })
+                }, 500)
               })
               hideLoading()
               // console.log('能否走到这里')
@@ -449,11 +451,11 @@ export default Vue.extend({
           const that = this
           uni.getSystemInfo({
             success(res) {
-              const dpr = wx.getSystemInfoSync().pixelRatio
+              // const dpr = wx.getSystemInfoSync().pixelRatio
               that._heigth = res.windowHeight
               that._width = res.screenWidth
-              that.dpr = dpr
-              that.rpx = (res.screenWidth / 375) * dpr
+              // that.dpr = dpr
+              that.rpx = res.screenWidth / 375
               // that.textHeight = drawHeightText(
               //   that.textContent,
               //   that._width / 375

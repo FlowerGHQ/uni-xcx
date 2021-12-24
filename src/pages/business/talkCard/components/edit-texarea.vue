@@ -17,6 +17,7 @@
           placeholder="请输入新的推荐语"
           placeholder-style="color:#CCCCCC"
           maxlength="50"
+          :cursor-spacing="50"
           :value="textContent"
           @input="changeTextArea"
           :disabled="disabled"
@@ -82,7 +83,7 @@ export default Vue.extend({
     clickSave() {
       if (this.lineCount > 3) {
         this.$toast('只支持换行输入三行,请重新编辑')
-        this.textContent = null
+        // this.textContent = null
         this.disabled = false
         return
       }
@@ -91,19 +92,21 @@ export default Vue.extend({
       this.disabled = false
     },
     changeTextArea(val) {
-      this.textContent = val.detail.value.trim()
-      // console.log(val, '去除前后空格哈哈')
-    },
-    lineChange(val) {
-      // console.log(val, '换几行')
-      this.lineCount = val.detail.lineCount
-      if (val.detail.lineCount > 3) {
-        // console.log('是否设置了禁止')
-        this.disabled = true
-        console.log(this.disabled, 'this.disabled')
+      if (val.detail.value.trim().length > 50) {
+        this.textContent = val.detail.value.trim().slice(0, 49)
       } else {
-        this.disabled = false
+        this.textContent = val.detail.value.trim()
       }
+    },
+    // 行数改变ios不支持
+    lineChange(val) {
+      // console.log(val.detail.lineCount)
+      this.lineCount = val.detail.lineCount
+      // if (val.detail.lineCount > 3) {
+      //   this.disabled = true
+      // } else {
+      //   this.disabled = false
+      // }
     }
   }
 })
