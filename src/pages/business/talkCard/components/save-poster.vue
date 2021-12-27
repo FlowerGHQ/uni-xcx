@@ -317,12 +317,13 @@ export default Vue.extend({
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
           // ctx.font = `normal bold ${20 * rpx}px DINAlternate-Bold`
+          console.log(this._heigth / 15, 'this._heigth / 15')
           drawText(
             ctx,
             '#E5C89C',
             20 * rpx,
-            centerTextX,
-            centerTextY + 45 * rpx,
+            centerTextX - 5 * rpx,
+            centerTextY + this._heigth / 15.5,
             '￥'
           )
           // ____
