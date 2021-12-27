@@ -323,7 +323,7 @@ export default Vue.extend({
             20 * rpx,
             centerTextX,
             centerTextY + 45 * rpx,
-            '¥'
+            '￥'
           )
           // ____
           ctx.setFontSize(40 * rpx) //字大小
