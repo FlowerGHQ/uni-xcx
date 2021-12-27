@@ -316,16 +316,21 @@ export default Vue.extend({
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
-          // ctx.font = `normal bold ${20 * rpx}px DINAlternate-Bold`
-          console.log(this._heigth / 15, 'this._heigth / 15')
-          drawText(
-            ctx,
-            '#E5C89C',
-            20 * rpx,
-            centerTextX - 5 * rpx,
-            centerTextY + this._heigth / 15.5,
-            '￥'
-          )
+          // console.log(this._heigth / 15, 'this._heigth / 15')
+          ctx.setFillStyle('#E5C89C')
+          ctx.setFontSize(20 * rpx) //字大小
+          // ctx.font = `normal ${f}px PingFangSC-Regular`
+          ctx.font = `normal bold ${20 * rpx}px DINAlternate-Bold`
+          ctx.setTextBaseline('middle')
+          ctx.fillText('￥', centerTextX - 5 * rpx, centerTextY + 44 * rpx)
+          // drawText(
+          //   ctx,
+          //   '#E5C89C',
+          //   20 * rpx,
+          //   centerTextX - 5 * rpx,
+          //   centerTextY + 44 * rpx,
+          //   '￥'
+          // )
           // ____
           ctx.setFontSize(40 * rpx) //字大小
           ctx.setTextBaseline('middle')
