@@ -58,7 +58,8 @@ import {
   drawRoundedRect,
   drawBorderRect,
   textValueChange,
-  drawHeightText
+  drawHeightText,
+  drawTextFontBold
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
 import { API } from '@/models/api'
@@ -207,6 +208,7 @@ export default Vue.extend({
       ctx.fillRect(0, 0, screenWidth, 1400 * rpx)
       // 绘制字体
       ctx.setFillStyle('#000')
+      // ctx.font = 'italic bold 20px 微软雅黑'
       ctx.setFontSize(16 * rpx) //字大小
       ctx.fillText(
         this.school.length > 14
@@ -215,6 +217,7 @@ export default Vue.extend({
         (this.paddingSchool + 28) * rpx,
         38 * rpx
       )
+      ctx.save()
       // 先绘制圆角矩形再绘制图片 避免遮盖
       drawRoundedRect(
         this.paddingSchool * rpx,
@@ -286,7 +289,14 @@ export default Vue.extend({
             this.formObj.name.length > 13
               ? `${this.formObj.name.slice(0, 12)}...`
               : this.formObj.name
-          drawText(ctx, '#E5C89C', 20 * rpx, 90 * rpx, 100 * rpx, nameCustom)
+          drawTextFontBold(
+            ctx,
+            '#E5C89C',
+            20 * rpx,
+            90 * rpx,
+            100 * rpx,
+            nameCustom
+          )
           drawText(
             ctx,
             '#a09fa2',
@@ -306,24 +316,24 @@ export default Vue.extend({
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
+          // ctx.font = `normal bold ${20 * rpx}px DINAlternate-Bold`
           drawText(
             ctx,
             '#E5C89C',
             20 * rpx,
             centerTextX,
-            centerTextY + 35 * rpx,
+            centerTextY + 45 * rpx,
             '¥'
           )
           // ____
-          ctx.setFontSize(32 * rpx) //字大小
+          ctx.setFontSize(40 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#E5C89C')
-          // ${this.formObj.value}
-          // let valueLength = textValueChange(`0.00`, )
+          ctx.font = `normal bold ${32 * rpx}px DINAlternate-Bold`
           ctx.fillText(
             `${this.formObj.value}`,
-            centerTextX + 15 * rpx,
-            centerTextY + 32 * rpx
+            centerTextX + 10 * rpx,
+            centerTextY + 40 * rpx
           )
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小
@@ -331,6 +341,8 @@ export default Vue.extend({
           ctx.setFillStyle('#000000')
           // console.log(textValueChange('0.00'), 'this.textContenthha')
           // 返回文字的高度
+          // 要覆盖上面加粗的样式
+          ctx.font = `normal 400 16px PingFangSC-Regula`
           drawtextLinebreak(
             ctx,
             this.textContent,
@@ -451,18 +463,11 @@ export default Vue.extend({
           const that = this
           uni.getSystemInfo({
             success(res) {
-              // const dpr = wx.getSystemInfoSync().pixelRatio
               that._heigth = res.windowHeight
               that._width = res.screenWidth
-              // that.dpr = dpr
               that.rpx = res.screenWidth / 375
-              // that.textHeight = drawHeightText(
-              //   that.textContent,
-              //   that._width / 375
-              // )
               // 将异步数据请求完成之后再渲染
               that.getTextHeight()
-              // that.drawImage(res.windowHeight, res.screenWidth)
             }
           })
         })
