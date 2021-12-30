@@ -20,6 +20,7 @@ export default {
     //     url: '/pages/login/index'
     //   })
     // }
+    // 随便写点测试一下merge
   },
   methods: {
     update: function () {
