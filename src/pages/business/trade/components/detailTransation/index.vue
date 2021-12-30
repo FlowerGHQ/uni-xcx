@@ -1,9 +1,18 @@
 <template>
   <div>
-    <van-notice-bar v-if="refundTransactionTime" background="#FFE6E6">
+    <!-- 根据状态展示 -->
+    <van-notice-bar
+      v-if="
+        orderFormListObj.state === 1 ||
+        orderFormListObj.type === 2 ||
+        orderFormListObj.type === 3
+      "
+      :background="backgroundNoticeColor"
+    >
       <template>
-        <div class="refund-center">
-          {{ refundTransactionTime }} 此订单退款成功
+        <div class="refund-center" :style="{ color: colorNotice }">
+          {{ noticeMessage }}
+          <!-- {{ refundTransactionTime }} 此订单退款成功 -->
         </div>
       </template>
     </van-notice-bar>
@@ -29,7 +38,7 @@
         :style="{
           'margin-bottom': [
             'customerPhone',
-            'extraDiscountAmount',
+            'realAmount',
             'transactionTime'
           ].includes(key)
             ? '32rpx'
@@ -45,6 +54,9 @@
 
       <page-loading v-show="detailLoading"></page-loading>
     </div>
+    <!-- 退款明细 -->
+    <!-- 没有退款明细的话不显示 -->
+    <RefoundList :list="refoundList"></RefoundList>
   </div>
 </template>
 
@@ -54,11 +66,53 @@ import { detail } from '@/pont/partnersSBusiness/mods/transaction'
 import PageLoading from '@/components/page-loading.vue'
 import Vue from 'vue'
 import dayjs from 'dayjs'
+import { notice } from '@/pages/business/trade/components/detailTransation/enum/noticeList'
+// 退款列表
+import RefoundList from '@/pages/business/trade/components/detailTransation/refoundList/refoundList.vue'
+// 根据不同订单类型输出
+const MASSAGE_NAME = {
+  2: '此订单产生全额退款',
+  3: '此订单产生部分退款',
+  1: '2020-03-24 14:00 此订单已作废'
+}
+const MASSAGE_COLOR = {
+  2: '#FFE6E6',
+  3: '#FFF5E6',
+  1: '#888888'
+}
+const MASSAGE_TEST = {
+  2: '#FF3333',
+  3: '#FF9900',
+  1: '#FFFFFF'
+}
 export default Vue.extend({
   name: 'DetailTransation',
-  components: { PageLoading },
+  components: { PageLoading, RefoundList },
   data() {
     return {
+      // 退款抽屉
+      showSheet: false,
+      // 退款notice
+      backgroundNoticeColor: '',
+      colorNotice: '',
+      typeBg: '2',
+      noticeMessage: '',
+      refoundList: [
+        {
+          id: 1,
+          refoundAmount: '-1000.00',
+          refoundWay: '微信',
+          refoundTime: '2021-10-17 10:00',
+          cancelTime: '2021-10-17 10:00',
+          iscancel: true
+        },
+        {
+          id: 2,
+          refoundAmount: '-1000.00',
+          refoundWay: '微信',
+          refoundTime: '2021-10-17 10:00'
+        }
+      ],
       showDialog: false,
       showNotify: false,
       detailLoading: false,
@@ -94,12 +148,51 @@ export default Vue.extend({
         this.detailLoading = false
         this.orderFormListObj = Object.assign({}, res.data)
         this.refundTransactionTime = res.data.refundTransactionTime
-        this.orderFormListObj.useCouponAmount = `${this.orderFormListObj.useCouponAmount}元`
-        this.orderFormListObj.originalAmount = `${res.data.originalAmount}元`
-        this.orderFormListObj.extraDiscountAmount = `${res.data.extraDiscountAmount}元`
+        // 看返回的信息如何显示顶部信息栏
+        // 部分退款和全部退款判断
+        switch (res.data.type) {
+          case notice.TYPE_ALL:
+            this.noticeMessage = MASSAGE_NAME[notice.TYPE_ALL]
+            this.backgroundNoticeColor = MASSAGE_COLOR[notice.TYPE_ALL]
+            this.colorNotice = MASSAGE_TEST[notice.TYPE_ALL]
+            break
+          case notice.TYPE_PART:
+            this.noticeMessage = MASSAGE_NAME[notice.TYPE_PART]
+            this.backgroundNoticeColor = MASSAGE_COLOR[notice.TYPE_PART]
+            this.colorNotice = MASSAGE_TEST[notice.TYPE_PART]
+            break
+          default:
+            break
+        }
+        // 已作废判断
+        switch (res.data.state) {
+          case notice.TYPE_CANCEL:
+            this.noticeMessage = MASSAGE_NAME[notice.TYPE_CANCEL]
+            this.backgroundNoticeColor = MASSAGE_COLOR[notice.TYPE_CANCEL]
+            this.colorNotice = MASSAGE_TEST[notice.TYPE_CANCEL]
+            break
+        }
+        this.addUnit(res.data)
+        // this.orderFormListObj.useCouponAmount = `${this.orderFormListObj.useCouponAmount}元`
+        // this.orderFormListObj.originalAmount = `${res.data.originalAmount}元`
+        // this.orderFormListObj.extraDiscountAmount = `${res.data.extraDiscountAmount}元`
         this.orderFormListObj.courseType =
           res.data.courseType === 1 ? '正式课' : '试听课'
       })
+    },
+    // 是否添加单位元
+    addUnit(dataList) {
+      // 动态增加单位
+      const listUnit = [
+        'useCouponAmount',
+        'originalAmount',
+        'extraDiscountAmount',
+        'realAmount'
+      ]
+      // 循环
+      for (let j of listUnit) {
+        this.orderFormListObj[j] = `${dataList[j]}元`
+      }
     },
     refundClick() {
       this.showDialog = true
