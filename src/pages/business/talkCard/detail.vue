@@ -201,7 +201,7 @@ export default Vue.extend({
       })
       this.showQRcode = true
       this.src = res.data.url
-      console.log('qrcode', res)
+      // console.log('qrcode', res)
     },
     // 生成分享海报
     openSavePoster() {

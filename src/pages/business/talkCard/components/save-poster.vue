@@ -9,13 +9,13 @@
         height: 1400 + 'rpx'
       }"
     />
-    <image
+    <img
       :src="imageUrl"
       :style="{
         width: 750 + 'rpx',
         height: 1400 + 'rpx'
       }"
-    ></image>
+    />
     <div id="text-content" v-if="showCanvas">
       {{ textContent }}
     </div>
@@ -417,15 +417,15 @@ export default Vue.extend({
       })
     },
     // 获取头像
-    async init() {
+    init() {
       // 等所有的异步加载完成之后再执行绘画代码
       // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
-      const res1 = await API.partnersSBusiness.account.info.request({})
-      const res2 = await API.partnersSBusiness.memberCard.detail.request({
+      const res1 = API.partnersSBusiness.account.info.request({})
+      const res2 = API.partnersSBusiness.memberCard.detail.request({
         id: this.id
       })
-      const res3 = await API.partnersSBusiness.campus.detail.request({})
-      const res4 = await API.partnersSBusiness.memberCard.shareInfo.request({
+      const res3 = API.partnersSBusiness.campus.detail.request({})
+      const res4 = API.partnersSBusiness.memberCard.shareInfo.request({
         id: this.id
       })
       Promise.all([res1, res2, res3, res4])
@@ -467,7 +467,8 @@ export default Vue.extend({
           })
         })
         .catch(error => {
-          console.log(error)
+          hideLoading()
+          this.$toast(error.errorMessage)
         })
     },
     // onClose() {
