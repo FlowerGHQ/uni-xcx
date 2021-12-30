@@ -22,6 +22,7 @@ export default {
     // }
   },
   methods: {
+    // 随便写点测试一下demo2
     update: function () {
       if (wx.canIUse('getUpdateManager')) {
         const updateManager = wx.getUpdateManager()
