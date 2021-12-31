@@ -56,7 +56,7 @@
     </div>
     <!-- 退款明细 -->
     <!-- 没有退款明细的话不显示 -->
-    <RefoundList :list="refoundList"></RefoundList>
+    <RefoundList :list="refoundList" v-if="refoundList.length"></RefoundList>
   </div>
 </template>
 
@@ -69,11 +69,12 @@ import dayjs from 'dayjs'
 import { notice } from '@/pages/business/trade/components/detailTransation/enum/noticeList'
 // 退款列表
 import RefoundList from '@/pages/business/trade/components/detailTransation/refoundList/refoundList.vue'
+import { getRefundList } from '@/pont/partnersSBusiness/mods/transaction/index'
 // 根据不同订单类型输出
 const MASSAGE_NAME = {
   2: '此订单产生全额退款',
   3: '此订单产生部分退款',
-  1: '2020-03-24 14:00 此订单已作废'
+  1: '此订单已作废'
 }
 const MASSAGE_COLOR = {
   2: '#FFE6E6',
@@ -97,22 +98,7 @@ export default Vue.extend({
       colorNotice: '',
       typeBg: '2',
       noticeMessage: '',
-      refoundList: [
-        {
-          id: 1,
-          refoundAmount: '-1000.00',
-          refoundWay: '微信',
-          refoundTime: '2021-10-17 10:00',
-          cancelTime: '2021-10-17 10:00',
-          iscancel: true
-        },
-        {
-          id: 2,
-          refoundAmount: '-1000.00',
-          refoundWay: '微信',
-          refoundTime: '2021-10-17 10:00'
-        }
-      ],
+      refoundList: [],
       showDialog: false,
       showNotify: false,
       detailLoading: false,
@@ -140,8 +126,20 @@ export default Vue.extend({
     if (!option.id) return
     this.transactionId = option.id
     this.getDetailList(option.id)
+    this.getRefundDetailList(option.id)
   },
   methods: {
+    // 获取退款列表
+    getRefundDetailList(id) {
+      getRefundList
+        .request({ originalTransactionId: id })
+        .then(res => {
+          this.refoundList = Object.assign([], res.data.list)
+        })
+        .catch(error => {
+          this.$toast(error.errorMessage)
+        })
+    },
     getDetailList(id) {
       this.detailLoading = true
       detail.request({ id: id }).then(res => {
@@ -167,7 +165,9 @@ export default Vue.extend({
         // 已作废判断
         switch (res.data.state) {
           case notice.TYPE_CANCEL:
-            this.noticeMessage = MASSAGE_NAME[notice.TYPE_CANCEL]
+            this.noticeMessage = `${dayjs(res.data.invalidTime).format(
+              'YYYY-MM-DD HH:mm'
+            )}  ${MASSAGE_NAME[notice.TYPE_CANCEL]}`
             this.backgroundNoticeColor = MASSAGE_COLOR[notice.TYPE_CANCEL]
             this.colorNotice = MASSAGE_TEST[notice.TYPE_CANCEL]
             break
