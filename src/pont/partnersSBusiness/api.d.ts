@@ -5,9 +5,6 @@ type ObjectMap<Key extends string | number | symbol = any, Value = any> = {
 declare namespace defs {
   export namespace partnersSBusiness {
     export class AccountAuthorizedDto {
-      /** 是否已存在合作人信息 */
-      hasAccount?: boolean
-
       /** 是否已登录 */
       login?: boolean
     }
@@ -332,6 +329,31 @@ declare namespace defs {
       phone?: string
     }
 
+    export class RefundListDto {
+      /** 退款金额，单位：元 */
+      amount?: string
+
+      /** 退款交易id */
+      id?: number
+
+      /** 作废时间，只有作废交易才有值，否则为null */
+      invalidTime?: string
+
+      /** 退款时间 */
+      refundTime?: string
+
+      /** 退款交易状态 0-正常交易，1-作废交易 */
+      state?: number
+
+      /** 退款方式 */
+      type?: string
+    }
+
+    export class RefundListVo {
+      /** 原始交易id */
+      originalTransactionId?: number
+    }
+
     export class RewardRuleFreeCourseFixedDto {
       /** 固定奖励金金额，单位元 */
       fixedAmount?: string
@@ -422,6 +444,9 @@ declare namespace defs {
 
       /** 合作人奖励金明细表主键id */
       id?: number
+
+      /** 作废时间（奖励金作废才存在，否则为0） */
+      invalidTime?: string
 
       /** 订单实际金额，单位元 */
       realAmount?: string
@@ -533,6 +558,9 @@ declare namespace defs {
       /** 消费者手机号 */
       customerPhone?: string
 
+      /** 外部订单编号 */
+      externalOrderNumber?: string
+
       /** 额外优惠金额，单位元 */
       extraDiscountAmount?: string
 
@@ -541,6 +569,9 @@ declare namespace defs {
 
       /** 交易id */
       id?: number
+
+      /** 原始交易类型 */
+      originType?: number
 
       /** 课程原价，单位元 */
       originalAmount?: string
@@ -551,6 +582,9 @@ declare namespace defs {
       /** 实际交易金额，单位元 */
       realAmount?: string
 
+      /** 净收金额，最上方展示的金额 */
+      realLeftAmount?: string
+
       /** 退款交易id，存在退款记录时有值，否则为null */
       refundTransactionId?: number
 
@@ -560,11 +594,17 @@ declare namespace defs {
       /** 合作人姓名 */
       shareholderName?: string
 
+      /** 交易状态 0-正常，1-已作废 */
+      state?: number
+
       /** 订单编号 */
       transactionNo?: string
 
       /** 交易时间 */
       transactionTime?: string
+
+      /** 交易类型（如果有退款产生会和原始交易类型不一致） 1-正向交易，2-退款，3-部分退款 */
+      type?: number
 
       /** 使用优惠券优惠金额，单位元 */
       useCouponAmount?: string
@@ -595,8 +635,17 @@ declare namespace defs {
       /** 正向交易id */
       id?: number
 
+      /** 作废时间 */
+      invalidTime?: string
+
+      /** 原始交易类型 */
+      originType?: number
+
       /** 实际交易金额，单位元 */
       realAmount?: string
+
+      /** 前端取这个作为列表展示的金额，该笔原始交易可退款的金额 */
+      realLeftAmount?: string
 
       /** 退款交易id，存在退款记录时有值，否则为null */
       refundTransactionId?: number
@@ -610,8 +659,14 @@ declare namespace defs {
       /** 合作人姓名 */
       shareholderName?: string
 
+      /** 交易状态 0-正常，1-已作废 */
+      state?: number
+
       /** 正向交易时间 */
       transactionTime?: string
+
+      /** 交易类型，前端取这个展示（如果有退款产生会和原始交易类型不一致） 1-正向交易，2-退款，3-部分退款 */
+      type?: number
     }
 
     export class TransactionUseCouponDto {
@@ -1295,6 +1350,26 @@ declare namespace API {
             defs.partnersSBusiness.Page<
               defs.partnersSBusiness.TransactionListDto
             >
+          >
+        >
+      }
+
+      /**
+       * 获取交易退款列表
+       * /transaction/refundList
+       */
+      export namespace getRefundList {
+        export class Params {}
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.Page<defs.partnersSBusiness.RefundListDto>
+        >
+        export const init: Response
+        export function request(
+          bodyParams: defs.partnersSBusiness.RefundListVo
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.Page<defs.partnersSBusiness.RefundListDto>
           >
         >
       }

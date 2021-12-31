@@ -1,7 +1,4 @@
 class AccountAuthorizedDto {
-  /** 是否已存在合作人信息 */
-  hasAccount = false
-
   /** 是否已登录 */
   login = false
 }
@@ -326,6 +323,31 @@ class PhoneDto {
   phone = ''
 }
 
+class RefundListDto {
+  /** 退款金额，单位：元 */
+  amount = ''
+
+  /** 退款交易id */
+  id = undefined
+
+  /** 作废时间，只有作废交易才有值，否则为null */
+  invalidTime = ''
+
+  /** 退款时间 */
+  refundTime = ''
+
+  /** 退款交易状态 0-正常交易，1-作废交易 */
+  state = undefined
+
+  /** 退款方式 */
+  type = ''
+}
+
+class RefundListVo {
+  /** 原始交易id */
+  originalTransactionId = undefined
+}
+
 class RewardRuleFreeCourseFixedDto {
   /** 固定奖励金金额，单位元 */
   fixedAmount = ''
@@ -416,6 +438,9 @@ class ShareholderRewardDetailDto {
 
   /** 合作人奖励金明细表主键id */
   id = undefined
+
+  /** 作废时间（奖励金作废才存在，否则为0） */
+  invalidTime = ''
 
   /** 订单实际金额，单位元 */
   realAmount = ''
@@ -527,6 +552,9 @@ class TransactionDetailDto {
   /** 消费者手机号 */
   customerPhone = ''
 
+  /** 外部订单编号 */
+  externalOrderNumber = ''
+
   /** 额外优惠金额，单位元 */
   extraDiscountAmount = ''
 
@@ -535,6 +563,9 @@ class TransactionDetailDto {
 
   /** 交易id */
   id = undefined
+
+  /** 原始交易类型 */
+  originType = undefined
 
   /** 课程原价，单位元 */
   originalAmount = ''
@@ -545,6 +576,9 @@ class TransactionDetailDto {
   /** 实际交易金额，单位元 */
   realAmount = ''
 
+  /** 净收金额，最上方展示的金额 */
+  realLeftAmount = ''
+
   /** 退款交易id，存在退款记录时有值，否则为null */
   refundTransactionId = undefined
 
@@ -554,11 +588,17 @@ class TransactionDetailDto {
   /** 合作人姓名 */
   shareholderName = ''
 
+  /** 交易状态 0-正常，1-已作废 */
+  state = undefined
+
   /** 订单编号 */
   transactionNo = ''
 
   /** 交易时间 */
   transactionTime = ''
+
+  /** 交易类型（如果有退款产生会和原始交易类型不一致） 1-正向交易，2-退款，3-部分退款 */
+  type = undefined
 
   /** 使用优惠券优惠金额，单位元 */
   useCouponAmount = ''
@@ -589,8 +629,17 @@ class TransactionListDto {
   /** 正向交易id */
   id = undefined
 
+  /** 作废时间 */
+  invalidTime = ''
+
+  /** 原始交易类型 */
+  originType = undefined
+
   /** 实际交易金额，单位元 */
   realAmount = ''
+
+  /** 前端取这个作为列表展示的金额，该笔原始交易可退款的金额 */
+  realLeftAmount = ''
 
   /** 退款交易id，存在退款记录时有值，否则为null */
   refundTransactionId = undefined
@@ -604,8 +653,14 @@ class TransactionListDto {
   /** 合作人姓名 */
   shareholderName = ''
 
+  /** 交易状态 0-正常，1-已作废 */
+  state = undefined
+
   /** 正向交易时间 */
   transactionTime = ''
+
+  /** 交易类型，前端取这个展示（如果有退款产生会和原始交易类型不一致） 1-正向交易，2-退款，3-部分退款 */
+  type = undefined
 }
 
 class TransactionUseCouponDto {
@@ -650,6 +705,8 @@ export const partnersSBusiness = {
   OpenSaveIntroducerVo,
   Page,
   PhoneDto,
+  RefundListDto,
+  RefundListVo,
   RewardRuleFreeCourseFixedDto,
   SaveIntroducerVo,
   ShareholderDetailDto,
