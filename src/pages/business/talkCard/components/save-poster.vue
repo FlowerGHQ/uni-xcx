@@ -75,7 +75,7 @@ export default Vue.extend({
       preventdefault: '',
       noPhoto: false,
       titleNoShelf: '当前操作需要访问你的相册',
-      contentNoShelf: '请前往系统设置中开启相机权限',
+      contentNoShelf: '请前往系统设置中开启相册权限',
       confirmButtonNoShelf: '前往设置',
       titleTime: '',
       formObj: {} as any,
