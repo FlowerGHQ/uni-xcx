@@ -1,6 +1,6 @@
 <template>
   <div class="all-content" :capture-catch:touchmove="preventdefault">
-    <posterOne v-if="showCanvas"></posterOne>
+    <posterOne v-if="showCanvas && loadingPoster"></posterOne>
     <canvas
       v-if="showCanvas"
       class="canvas"

@@ -25,15 +25,13 @@
             <div class="center-number">
               <span class="number">
                 <span class="symbol">¥</span>
-                <span>20000.00</span>
+                <span>{{ formObj.value }}</span>
               </span>
             </div>
           </div>
         </div>
         <div class="bottom">
-          <p class="textRecommend">
-            {{ textContent }}
-          </p>
+          <p class="textRecommend">收下这张会员卡，只有我的朋友可以获得哦</p>
           <div class="set-title">
             <div class="set-info">
               <div class="info-content flex-between flex-align">
@@ -57,7 +55,7 @@
                   <!-- 二维码 -->
                   <div class="img">
                     <image
-                      :src="srcImg"
+                      :src="codeUrl"
                       show-menu-by-longpress="true"
                       class="QR-img"
                     >

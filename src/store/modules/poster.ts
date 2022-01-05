@@ -55,20 +55,14 @@ const posterStore = {
     getInfoPoster({ state, commit }, id) {
       // 等所有的异步加载完成之后再执行绘画代码
       // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
-      const res1 = API.partnersSBusiness.account.info.request({})
-      const res2 = API.partnersSBusiness.memberCard.detail.request({
+      const res0 = API.partnersSBusiness.account.info.request({})
+      const res1 = API.partnersSBusiness.memberCard.shareInfo.request({
         id: id
       })
-      const res3 = API.partnersSBusiness.campus.detail.request({})
-      const res4 = API.partnersSBusiness.memberCard.shareInfo.request({
-        id: id
-      })
-      Promise.all([res1, res2, res3, res4])
+      Promise.all([res0, res1])
         .then(values => {
           commit('editInfo', values[0].data)
-          commit('cardDetail', values[1].data)
-          commit('editSchoolInfo', values[2].data)
-          commit('codeUrlEdit', values[3].data)
+          commit('codeUrlEdit', values[1].data)
         })
         .catch(error => {
           console.log(error)
