@@ -1,5 +1,6 @@
 <template>
   <div class="all-content" :capture-catch:touchmove="preventdefault">
+    <posterOne v-if="showCanvas"></posterOne>
     <canvas
       v-if="showCanvas"
       class="canvas"
@@ -48,10 +49,12 @@
   </div>
 </template>
 <script lang="ts">
+// import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
 import Vue from 'vue'
 import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
 import { authWriteToAlbum, saveToAlbumPromise } from '@/utils/poster'
 import dialogShow from '@/components/dialog-show.vue'
+import mixin from '@/pages/business/talkCard/components/mixin/mixin'
 import {
   drawtextLinebreak,
   drawText,
@@ -61,13 +64,15 @@ import {
   drawHeightText
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
+import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
 import { API } from '@/models/api'
 import { showLoading, hideLoading } from '@/utils/common'
 import dayjs from 'dayjs'
 export default Vue.extend({
   name: 'SavePoster',
+  mixins: [mixin],
   props: {},
-  components: { bottomButton, EditArea, dialogShow },
+  components: { bottomButton, EditArea, dialogShow, posterOne },
   data() {
     return {
       saveLoading: false,
@@ -101,7 +106,9 @@ export default Vue.extend({
       textHeight: 0, // 中间文字高度
       imageUrl: '',
       // 底部小程序码距离上面的距离
-      bottomCodeBegin: -50
+      bottomCodeBegin: -50,
+      // 海报展示页面加载中默认显示
+      loadingPoster: true
     }
   },
   onLoad(option: any) {
@@ -407,9 +414,11 @@ export default Vue.extend({
                       that.imageUrl = res.tempFilePath
                     }
                   })
+                  hideLoading()
+                  this.loadingPoster = false
                 }, 500)
               })
-              hideLoading()
+              // hideLoading()
               // console.log('能否走到这里')
             }
           })
@@ -418,6 +427,7 @@ export default Vue.extend({
     },
     // 获取头像
     init() {
+      // ;(this as any).getInfoPoster(this.id)
       // 等所有的异步加载完成之后再执行绘画代码
       // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
       const res1 = API.partnersSBusiness.account.info.request({})
@@ -430,7 +440,6 @@ export default Vue.extend({
       })
       Promise.all([res1, res2, res3, res4])
         .then(values => {
-          // console.log(values, '哈哈哈嘻嘻')
           this.name = values[0].data.name
           if (values[0].data.avatar) {
             this.avatar = values[0].data.avatar

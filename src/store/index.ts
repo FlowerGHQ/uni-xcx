@@ -3,6 +3,7 @@ import Vuex, { GetterTree, MutationTree, Store, ActionTree } from 'vuex'
 import competition from './modules/competition'
 import account from './modules/account'
 import org from './modules/org'
+import poster from './modules/poster'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Store({
   modules: {
     competition,
     account,
-    org
+    org,
+    poster
   }
 })
