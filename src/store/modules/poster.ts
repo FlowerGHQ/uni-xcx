@@ -3,6 +3,7 @@ import { State } from 'vuex-class'
 import { RootState } from '..'
 import { API } from '@/models/api'
 import dayjs from 'dayjs'
+import { showLoading, hideLoading } from '@/utils/common'
 
 // export interface sketchState {
 //   // 将海报的数据储存起来
@@ -41,8 +42,8 @@ const posterStore = {
     },
     // 校区
     editSchoolInfo(state, value2) {
-      state.school = value2.name ? value2.name : '满天星艺术培训学校文一路校区'
-      console.log(state.school, 'stauthWriteToAlbum.scholl')
+      state.school = value2.name ? value2.name : '-'
+      // console.log(state.school, 'stauthWriteToAlbum.scholl')
     },
     // 小程序码
     codeUrlEdit(state, value3) {
@@ -54,7 +55,7 @@ const posterStore = {
     // 获取头像
     getInfoPoster({ state, commit }, id) {
       // 等所有的异步加载完成之后再执行绘画代码
-      // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
+      //res0校区地区 res1获取二维码
       const res0 = API.partnersSBusiness.account.info.request({})
       const res1 = API.partnersSBusiness.memberCard.shareInfo.request({
         id: id
@@ -65,6 +66,7 @@ const posterStore = {
           commit('codeUrlEdit', values[1].data)
         })
         .catch(error => {
+          hideLoading()
           console.log(error)
         })
     }

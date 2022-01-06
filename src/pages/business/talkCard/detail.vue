@@ -121,7 +121,9 @@ export default Vue.extend({
       valueArea: '',
       name: '',
       address: '',
-      attachments: []
+      attachments: [],
+      // 是否海报的接口都加载完成标记
+      posterFlag: false
     }
   },
   computed: {
@@ -138,6 +140,7 @@ export default Vue.extend({
     this.cardDetail(res1.data)
     const res3 = await API.partnersSBusiness.campus.detail.request({})
     this.editSchoolInfo(res3.data)
+    this.posterFlag = true
     const { name, address, attachments, districts } = res3.data
     this.valueArea = `${districts[0].name}-${districts[1].name}-${districts[2].name}`
     this.name = name
@@ -209,18 +212,19 @@ export default Vue.extend({
       })
       this.showQRcode = true
       this.src = res.data.url
-      // console.log('qrcode', res)
     },
     // 生成分享海报
     openSavePoster() {
-      // 将参数传递过去
-      uni.navigateTo({
-        url: `/pages/business/talkCard/components/save-poster?id=${this.id}`
-      })
+      if (this.posterFlag) {
+        // 将参数传递过去
+        uni.navigateTo({
+          url: `/pages/business/talkCard/components/save-poster?id=${this.id}`
+        })
+      }
     },
     closeQRcode() {
       this.showQRcode = false
-      console.log(11)
+      // console.log(11)
     }
   }
 })
