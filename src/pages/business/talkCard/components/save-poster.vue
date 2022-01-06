@@ -1,6 +1,6 @@
 <template>
   <div class="all-content" :capture-catch:touchmove="preventdefault">
-    <posterOne v-if="showCanvas && loadingPoster"></posterOne>
+    <!-- <posterOne v-if="showCanvas && loadingPoster"></posterOne> -->
     <canvas
       v-if="showCanvas"
       class="canvas"
@@ -13,8 +13,8 @@
     <img
       :src="imageUrl"
       :style="{
-        width: 750 + 'rpx',
-        height: 1400 + 'rpx'
+        width: imgWidth,
+        height: imgHeight
       }"
     />
     <div id="text-content" v-if="showCanvas">
@@ -64,7 +64,7 @@ import {
   drawHeightText
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
-import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
+// import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
 import { API } from '@/models/api'
 import { showLoading, hideLoading } from '@/utils/common'
 import dayjs from 'dayjs'
@@ -73,7 +73,7 @@ export default Vue.extend({
   name: 'SavePoster',
   mixins: [mixin],
   props: {},
-  components: { bottomButton, EditArea, dialogShow, posterOne },
+  components: { bottomButton, EditArea, dialogShow },
   data() {
     return {
       saveLoading: false,
@@ -105,7 +105,9 @@ export default Vue.extend({
       // avatar:
       // 'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
       textHeight: 0, // 中间文字高度
-      imageUrl: '',
+      imageUrl: require('@/assets/images/clip-poster.png'),
+      imgWidth: 100 + 'vw',
+      imgHeight: 1300 + 'rpx',
       // 底部小程序码距离上面的距离
       bottomCodeBegin: -50,
       // 海报展示页面加载中默认显示
@@ -421,6 +423,8 @@ export default Vue.extend({
                     //把当前画布指定区域的内容导出生成指定大小的图片
                     canvasId: 'mycanvas',
                     success(res) {
+                      that.imgWidth = 750 + 'rpx'
+                      that.imgHeight = 1400 + 'rpx'
                       that.imageUrl = res.tempFilePath
                     }
                   })
