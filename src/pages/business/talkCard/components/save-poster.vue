@@ -278,15 +278,15 @@ export default Vue.extend({
             90 * rpx,
             90 * rpx
           )
-        }
-      })
-      // 绘制右侧二维码
-      wx.getImageInfo({
-        src: this.codeUrl,
-        success: res => {
-          let path = res.path //图片临时本地路径
-          // 图片高度和宽度
-          ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
+          // 绘制右侧二维码 为了保证二维码后绘制不被圆角矩形覆盖
+          wx.getImageInfo({
+            src: this.codeUrl,
+            success: res => {
+              let path = res.path //图片临时本地路径
+              // 图片高度和宽度
+              ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
+            }
+          })
         }
       })
       // 绘制中间背景
