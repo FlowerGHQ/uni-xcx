@@ -34,6 +34,7 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
       list.push(item)
     }
   })
+  ctx.font = 'normal normal 16rpx sans-serif'
   // 当数组的长度超过10 重新处理
   for (let b = 0; b < row.length; b++) {
     ctx.fillText(list[b], x, y + (b + 1) * 30 * rpx) //每行字体y坐标间隔40
@@ -66,7 +67,6 @@ export const drawHeightText = (textLength, rpx) => {
 export const drawText = (ctx, color, f, x, y, w) => {
   ctx.setFillStyle(color)
   ctx.setFontSize(f) //字大小
-  // ctx.setTextBaseline('middle')
   ctx.fillText(w, x, y)
 }
 // 字体设置

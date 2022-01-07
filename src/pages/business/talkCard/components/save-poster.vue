@@ -278,15 +278,6 @@ export default Vue.extend({
             90 * rpx,
             90 * rpx
           )
-          // 绘制右侧二维码 为了保证二维码后绘制不被圆角矩形覆盖
-          wx.getImageInfo({
-            src: this.codeUrl,
-            success: res => {
-              let path = res.path //图片临时本地路径
-              // 图片高度和宽度
-              ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
-            }
-          })
         }
       })
       // 绘制中间背景
@@ -300,12 +291,6 @@ export default Vue.extend({
           let picX = 343 * rpx
           let picY = 370 * rpx
           ctx.drawImage(path, this.paddingSchool * rpx, 54 * rpx, picX, picY)
-          // 将name截图省略号
-          let nameCustom =
-            this.formObj.name.length > 13
-              ? `${this.formObj.name.slice(0, 12)}...`
-              : this.formObj.name
-          drawText(ctx, '#E5C89C', 20 * rpx, 90 * rpx, 100 * rpx, nameCustom)
           drawText(
             ctx,
             '#a09fa2',
@@ -325,25 +310,7 @@ export default Vue.extend({
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
-          drawText(
-            ctx,
-            '#E5C89C',
-            20 * rpx,
-            centerTextX,
-            centerTextY + 35 * rpx,
-            '¥'
-          )
-          // ____
-          ctx.setFontSize(32 * rpx) //字大小
-          ctx.setTextBaseline('middle')
-          ctx.setFillStyle('#E5C89C')
-          // ${this.formObj.value}
-          // let valueLength = textValueChange(`0.00`, )
-          ctx.fillText(
-            `${this.formObj.value}`,
-            centerTextX + 15 * rpx,
-            centerTextY + 32 * rpx
-          )
+
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
@@ -408,36 +375,89 @@ export default Vue.extend({
                 avatarY + 35 * rpx,
                 '长按识别二维码，领取福利'
               )
-              // drawBorderRect(
-              //   34 * rpx + 225 * rpx,
-              //   350 * rpx + 125 * rpx + this.textHeight,
-              //   80 * rpx,
-              //   80 * rpx,
-              //   ctx
+              // 将name截图省略号拓客卡名称字体加粗为了保证粗体不会被后面的字体继承所以放在最后绘制
+              let nameCustom =
+                this.formObj.name.length > 13
+                  ? `${this.formObj.name.slice(0, 12)}...`
+                  : this.formObj.name
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(18 * rpx) //字大小
+              // ctx.font = 'normal bold 20rpx PingFangSC-Semibold'
+              ctx.fillText(nameCustom, 90 * rpx, 90 * rpx)
+              // drawText(
+              //   ctx,
+              //   '#E5C89C',
+              //   20 * rpx,
+              //   90 * rpx,
+              //   100 * rpx,
+              //   nameCustom
               // )
+              // ____绘制价格部分
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(16 * rpx) //字大小
+              ctx.font = 'normal bold 24rpx DINAlternate-Bold'
+              ctx.fillText('￥', centerTextX - 5 * rpx, centerTextY + 47 * rpx)
+              ctx.setTextBaseline('middle')
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(24 * rpx) //字大小
+              ctx.font = `normal bold 40rpx DINAlternate-Bold`
+              ctx.fillText(
+                `${this.formObj.value}`,
+                centerTextX + 15 * rpx,
+                centerTextY + 42 * rpx
+              )
+
               //绘制图片
               const that = this
-              ctx.draw(false, () => {
-                setTimeout(() => {
-                  wx.canvasToTempFilePath({
-                    //把当前画布指定区域的内容导出生成指定大小的图片
-                    canvasId: 'mycanvas',
-                    success(res) {
-                      that.imgWidth = 750 + 'rpx'
-                      that.imgHeight = 1400 + 'rpx'
-                      that.imageUrl = res.tempFilePath
-                    }
+              // 绘制右侧二维码 为了保证二维码后绘制不被圆角矩形覆盖并且可以等绘制好二维码之后再调用draw方法
+              that
+                .drawCode()
+                .then((res: any) => {
+                  ctx.drawImage(res, codeX, codeY, 70 * rpx, 70 * rpx)
+                  ctx.draw(false, () => {
+                    setTimeout(() => {
+                      wx.canvasToTempFilePath({
+                        //把当前画布指定区域的内容导出生成指定大小的图片
+                        canvasId: 'mycanvas',
+                        success(res) {
+                          that.imgWidth = 750 + 'rpx'
+                          that.imgHeight = 1400 + 'rpx'
+                          that.imageUrl = res.tempFilePath
+                        }
+                      })
+                      hideLoading()
+                      this.loadingPoster = false
+                    }, 500)
                   })
-                  hideLoading()
-                  this.loadingPoster = false
-                }, 500)
-              })
+                })
+                .catch(res => {
+                  console.log(res, '小程序码绘制失败')
+                })
+              // ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
+
               // hideLoading()
               // console.log('能否走到这里')
             }
           })
         }
       })
+    },
+    // 为了保证二维码正确绘制
+    drawCode() {
+      const p = new Promise((resolve, reject) => {
+        wx.getImageInfo({
+          src: this.codeUrl,
+          success: res => {
+            let path = res.path //图片临时本地路径
+            // 图片高度和宽度
+            resolve(path)
+          },
+          fail: res => {
+            reject(res)
+          }
+        })
+      })
+      return p
     },
     // 获取头像
     init() {

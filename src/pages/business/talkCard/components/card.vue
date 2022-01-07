@@ -174,6 +174,7 @@ export default Vue.extend({
   font-size: 48rpx;
   font-weight: bold;
   color: #e5c89c;
+  font-family: DINAlternate-Bold;
   span {
     font-size: 32rpx;
     margin-right: 10rpx;
