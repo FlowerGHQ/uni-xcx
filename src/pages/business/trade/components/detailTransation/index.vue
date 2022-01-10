@@ -46,10 +46,10 @@
         }"
         :key="key"
       >
-        <span class="gray-text">{{ orderFormListObjKey[key] }}</span>
-        <span class="black-text">{{
-          orderFormListObj[key] ? orderFormListObj[key] : '-'
-        }}</span>
+        <div class="all flex-between" v-if="orderFormListObj[key]">
+          <span class="gray-text">{{ orderFormListObjKey[key] }}</span>
+          <span class="black-text">{{ orderFormListObj[key] }}</span>
+        </div>
       </div>
 
       <page-loading v-show="detailLoading"></page-loading>
@@ -115,10 +115,12 @@ export default Vue.extend({
         originalAmount: '课程原价',
         useCouponAmount: '满减券',
         extraDiscountAmount: '额外优惠金额',
+        realAmount: '实际支付金额',
         payMethodType: '支付方式',
         transactionNo: '订单编号',
         transactionTime: '交易时间',
-        shareholderName: '关联合作人'
+        shareholderName: '关联合作人',
+        externalOrderNumber: '外部订单编号'
       }
     }
   },

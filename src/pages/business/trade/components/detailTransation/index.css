@@ -42,11 +42,16 @@
   font-weight: 400;
   margin-bottom: 16rpx;
 }
+.detail-page .detail-text .all {
+  width: 100%;
+}
 .detail-page .gray-text {
   color: #888888;
 }
 .detail-page .black-text {
   color: #222222;
+  width: 400rpx;
+  text-align: right;
 }
 .detail-page .detail-bottom {
   display: flex;
