@@ -14,17 +14,18 @@
       <div
         class="middle clor-gray-6 font-24 flex-between"
         :class="!item.iscancel ? 'mar-b-8' : ''"
+        v-if="item.type"
       >
-        退款方式：{{ item.refoundWay }}
+        退款方式：{{ item.type }}
         <Tag v-if="item.iscancel" text="已作废"></Tag>
       </div>
-      <div class="bottom clor-gray-6 font-24 mar-b-8">
-        退款时间：{{ item.refoundTime }}
+      <div class="bottom clor-gray-6 font-24 mar-b-8" v-if="item.refundTime">
+        退款时间：{{ item.refundTime }}
       </div>
       <!-- 作废添加作废时间和标签 -->
       <!-- 作废时间：2021-10-17 10:00 -->
-      <div class="bottom clor-gray-6 font-24" v-if="item.iscancel">
-        作废时间：{{ item.refoundTime }}
+      <div class="bottom clor-gray-6 font-24" v-if="item.invalidTime">
+        作废时间：{{ item.invalidTime ? item.invalidTime : '-' }}
       </div>
     </div>
   </div>
