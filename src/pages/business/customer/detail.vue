@@ -97,11 +97,7 @@
           }}
         </div>
         <div class="bottom thin-list mar-t-16" v-if="item.invalidTime">
-          作废时间：{{
-            item.invalidTime
-              ? dayjs(item.invalidTime).format('YYYY-MM-DD HH:mm')
-              : '-'
-          }}
+          作废时间：{{ dayjs(item.invalidTime).format('YYYY-MM-DD HH:mm') }}
         </div>
       </div>
       <Empty v-if="!listTransation.length"></Empty>
