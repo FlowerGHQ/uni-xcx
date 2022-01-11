@@ -38,7 +38,7 @@
           </div>
           <div v-else>
             <span class="font-24">+</span>
-            <span>{{ item.realAmount ? item.realAmount : '-' }}</span>
+            <span>{{ item.realLeftAmount ? item.realLeftAmount : '-' }}</span>
           </div>
         </div>
         <div class="bottom flex thin-list">
