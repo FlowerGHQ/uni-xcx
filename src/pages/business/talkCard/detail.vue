@@ -173,7 +173,7 @@ export default Vue.extend({
     },
     onChange(e) {
       const curH = 24 * e.detail.days + e.detail.hours
-      console.log(e.detail.minutes)
+      // console.log(e.detail.minutes)
       this.timeData = {
         ...e.detail,
         hours: curH < 10 ? `0${curH}` : curH,

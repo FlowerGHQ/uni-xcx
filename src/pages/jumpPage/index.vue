@@ -121,6 +121,7 @@ export default Vue.extend({
   },
   async onShow() {
     const parmaState = this.state.split('&')
+    console.log(parmaState, 'parmaState')
     // const parma = {
     //   campusId: 1,
     //   merchantId: 1,
@@ -237,12 +238,13 @@ export default Vue.extend({
         sign: parmaState[2]
       }
       try {
-        const res =
-          await API.partnersSBusiness.shareholder.saveIntroducer.request({
+        const res = await API.partnersSBusiness.shareholder.saveIntroducer.request(
+          {
             name: this.defaultVVVV,
             phone: this.phone,
             open: parma
-          })
+          }
+        )
         uni.reLaunch({
           url: '/pages/home/index?isIntroduce=show'
         })
