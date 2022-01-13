@@ -4632,6 +4632,48 @@
             ]
           },
           {
+            "description": "获取请求参数信息",
+            "name": "params",
+            "method": "get",
+            "path": "/open/campus/params",
+            "response": {
+              "typeArgs": [
+                {
+                  "typeArgs": [],
+                  "typeName": "OpenCampusInfoVo",
+                  "isDefsType": true,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              ],
+              "typeName": "SimpleResponse",
+              "isDefsType": true,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "parameters": [
+              {
+                "in": "query",
+                "description": "code",
+                "name": "code",
+                "required": true,
+                "dataType": {
+                  "typeArgs": [],
+                  "typeName": "string",
+                  "isDefsType": false,
+                  "templateIndex": -1,
+                  "compileTemplateKeyword": "#/definitions/",
+                  "enum": [],
+                  "typeProperties": []
+                }
+              }
+            ]
+          },
+          {
             "consumes": [
               "application/json"
             ],
@@ -7280,7 +7322,7 @@
               "typeProperties": []
             },
             "name": "invalidTime",
-            "description": "作废时间（奖励金作废才存在，否则为0）",
+            "description": "作废时间",
             "required": false
           },
           {
@@ -7831,6 +7873,20 @@
             },
             "name": "id",
             "description": "交易id",
+            "required": false
+          },
+          {
+            "dataType": {
+              "typeArgs": [],
+              "typeName": "string",
+              "isDefsType": false,
+              "templateIndex": -1,
+              "compileTemplateKeyword": "#/definitions/",
+              "enum": [],
+              "typeProperties": []
+            },
+            "name": "invalidTime",
+            "description": "作废时间",
             "required": false
           },
           {

@@ -439,7 +439,7 @@ class ShareholderRewardDetailDto {
   /** 合作人奖励金明细表主键id */
   id = undefined
 
-  /** 作废时间（奖励金作废才存在，否则为0） */
+  /** 作废时间 */
   invalidTime = ''
 
   /** 订单实际金额，单位元 */
@@ -563,6 +563,9 @@ class TransactionDetailDto {
 
   /** 交易id */
   id = undefined
+
+  /** 作废时间 */
+  invalidTime = ''
 
   /** 原始交易类型 */
   originType = undefined

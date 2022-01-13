@@ -445,7 +445,7 @@ declare namespace defs {
       /** 合作人奖励金明细表主键id */
       id?: number
 
-      /** 作废时间（奖励金作废才存在，否则为0） */
+      /** 作废时间 */
       invalidTime?: string
 
       /** 订单实际金额，单位元 */
@@ -569,6 +569,9 @@ declare namespace defs {
 
       /** 交易id */
       id?: number
+
+      /** 作废时间 */
+      invalidTime?: string
 
       /** 原始交易类型 */
       originType?: number
@@ -1080,6 +1083,29 @@ declare namespace API {
         ): Promise<
           defs.partnersSBusiness.SimpleResponse<
             defs.partnersSBusiness.CampusSimpleDto
+          >
+        >
+      }
+
+      /**
+       * 获取请求参数信息
+       * /open/campus/params
+       */
+      export namespace params {
+        export class Params {
+          /** code */
+          code: string
+        }
+
+        export type Response = defs.partnersSBusiness.SimpleResponse<
+          defs.partnersSBusiness.OpenCampusInfoVo
+        >
+        export const init: Response
+        export function request(
+          params: Params
+        ): Promise<
+          defs.partnersSBusiness.SimpleResponse<
+            defs.partnersSBusiness.OpenCampusInfoVo
           >
         >
       }
