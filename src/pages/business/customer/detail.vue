@@ -96,7 +96,7 @@
               : '-'
           }}
         </div>
-        <div class="bottom thin-list mar-t-16" v-if="item.invalidTime">
+        <div class="bottom thin-list mar-t-16" v-if="item.state === 1">
           作废时间：{{ dayjs(item.invalidTime).format('YYYY-MM-DD HH:mm') }}
         </div>
       </div>
