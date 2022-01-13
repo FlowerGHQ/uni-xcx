@@ -34,11 +34,29 @@
             <div class="construct-number">
               {{ item.customerPhone ? item.customerPhone : '-' }}
             </div>
+            <!-- 全额退款 -->
             <Tag
+              v-if="item.state !== 1 && item.type === 2"
               color="#FFE6E6"
               text-color="#FF3333"
               v-show="item.hasRefund"
-              :text="item.hasRefund ? '已退款' : ''"
+              :text="item.hasRefund ? '全部退款' : ''"
+            />
+            <!-- 部分退款 -->
+            <Tag
+              v-if="item.state !== 1 && item.type === 3"
+              color="#FFF5E6"
+              text-color="#FF9900"
+              v-show="item.hasRefund"
+              :text="item.hasRefund ? '部分退款' : ''"
+            />
+            <!-- 已作废 -->
+            <Tag
+              v-if="item.state === 1"
+              color="#EEEEEE"
+              text-color="#888888"
+              v-show="item.state"
+              :text="item.state === 1 ? '已作废' : ''"
             />
           </div>
           <div class="van-hairline--bottom be-half"></div>
@@ -65,6 +83,7 @@ import PageLoading from '@/components/page-loading.vue'
 import { list } from '@/pont/partnersSBusiness/mods/transaction'
 import HeaderSearch from '@/components/header-search/index.vue'
 import _ from 'lodash'
+// 退款列表
 
 export default Vue.extend({
   name: 'PartnerList',

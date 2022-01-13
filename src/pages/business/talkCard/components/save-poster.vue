@@ -1,5 +1,6 @@
 <template>
   <div class="all-content" :capture-catch:touchmove="preventdefault">
+    <!-- <posterOne v-if="showCanvas && loadingPoster"></posterOne> -->
     <canvas
       v-if="showCanvas"
       class="canvas"
@@ -9,13 +10,13 @@
         height: 1400 + 'rpx'
       }"
     />
-    <image
+    <img
       :src="imageUrl"
       :style="{
-        width: 750 + 'rpx',
-        height: 1400 + 'rpx'
+        width: imgWidth,
+        height: imgHeight
       }"
-    ></image>
+    />
     <div id="text-content" v-if="showCanvas">
       {{ textContent }}
     </div>
@@ -48,24 +49,30 @@
   </div>
 </template>
 <script lang="ts">
+// import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
 import Vue from 'vue'
 import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
 import { authWriteToAlbum, saveToAlbumPromise } from '@/utils/poster'
 import dialogShow from '@/components/dialog-show.vue'
+import mixin from '@/pages/business/talkCard/components/mixin/mixin'
 import {
   drawtextLinebreak,
   drawText,
   drawRoundedRect,
   drawBorderRect,
   textValueChange,
-  drawHeightText
+  drawHeightText,
+  drawTextFontBold
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
+// import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
 import { API } from '@/models/api'
 import { showLoading, hideLoading } from '@/utils/common'
 import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 export default Vue.extend({
   name: 'SavePoster',
+  mixins: [mixin],
   props: {},
   components: { bottomButton, EditArea, dialogShow },
   data() {
@@ -75,10 +82,10 @@ export default Vue.extend({
       preventdefault: '',
       noPhoto: false,
       titleNoShelf: '当前操作需要访问你的相册',
-      contentNoShelf: '请前往系统设置中开启相机权限',
+      contentNoShelf: '请前往系统设置中开启相册权限',
       confirmButtonNoShelf: '前往设置',
-      titleTime: '',
-      formObj: {} as any,
+      // titleTime: '',
+      // formObj: {} as any,
       // showImage: false,
       showCanvas: true,
       // 修改推荐语
@@ -89,25 +96,39 @@ export default Vue.extend({
       _heigth: 0, //手机屏高
       // 海报分享起始位置
       paddingSchool: 15,
-      codeUrl:
-        'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/schoolpal/59-10-47-202112131314028.jpg', //二维码网络路径
+      // codeUrl:
+      // 'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/schoolpal/59-10-47-202112131314028.jpg', //二维码网络路径
       rpx: 0, // 百分比占比
       dpr: 0,
-      school: '满天星艺术培训学校文一路校区',
+      // school: '满天星艺术培训学校文一路校区',
       textContent: '收下这张会员卡，只有我的朋友可以获得哦',
-      name: '张某某',
-      avatar:
-        'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
+      // name: '张某某',
+      // avatar:
+      // 'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
       textHeight: 0, // 中间文字高度
-      imageUrl: '',
+      imageUrl: require('@/assets/images/clip-poster.png'),
+      imgWidth: 100 + 'vw',
+      imgHeight: 1300 + 'rpx',
       // 底部小程序码距离上面的距离
-      bottomCodeBegin: -50
+      bottomCodeBegin: -50,
+      // 海报展示页面加载中默认显示
+      loadingPoster: true
     }
   },
   onLoad(option: any) {
-    if (!option.id) return
-    this.id = option.id
+    // if (!option.id) return
+    // this.id = option.id
     this.getInfoSystem()
+  },
+  computed: {
+    ...mapState('poster', [
+      'avatar',
+      'name',
+      'formObj',
+      'titleTime',
+      'school',
+      'codeUrl'
+    ])
   },
   methods: {
     // 获取文字动态高度
@@ -181,12 +202,11 @@ export default Vue.extend({
     },
     // 获取该手机屏幕宽高
     getInfoSystem() {
-      showLoading()
-      // console.log('打开loading')
       this.init()
     },
     // 绘制
     drawImage(screenHeight, screenWidth) {
+      showLoading()
       // console.log('是否绘制')
       let rpx = screenWidth / 375
       this.rpx = rpx
@@ -207,6 +227,7 @@ export default Vue.extend({
       ctx.fillRect(0, 0, screenWidth, 1400 * rpx)
       // 绘制字体
       ctx.setFillStyle('#000')
+      // ctx.font = 'italic bold 20px 微软雅黑'
       ctx.setFontSize(16 * rpx) //字大小
       ctx.fillText(
         this.school.length > 14
@@ -215,6 +236,7 @@ export default Vue.extend({
         (this.paddingSchool + 28) * rpx,
         38 * rpx
       )
+      ctx.save()
       // 先绘制圆角矩形再绘制图片 避免遮盖
       drawRoundedRect(
         this.paddingSchool * rpx,
@@ -261,15 +283,6 @@ export default Vue.extend({
           )
         }
       })
-      // 绘制右侧二维码
-      wx.getImageInfo({
-        src: this.codeUrl,
-        success: res => {
-          let path = res.path //图片临时本地路径
-          // 图片高度和宽度
-          ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
-        }
-      })
       // 绘制中间背景
       wx.getImageInfo({
         src:
@@ -281,12 +294,6 @@ export default Vue.extend({
           let picX = 343 * rpx
           let picY = 370 * rpx
           ctx.drawImage(path, this.paddingSchool * rpx, 54 * rpx, picX, picY)
-          // 将name截图省略号
-          let nameCustom =
-            this.formObj.name.length > 13
-              ? `${this.formObj.name.slice(0, 12)}...`
-              : this.formObj.name
-          drawText(ctx, '#E5C89C', 20 * rpx, 90 * rpx, 100 * rpx, nameCustom)
           drawText(
             ctx,
             '#a09fa2',
@@ -306,31 +313,14 @@ export default Vue.extend({
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
-          drawText(
-            ctx,
-            '#E5C89C',
-            20 * rpx,
-            centerTextX,
-            centerTextY + 35 * rpx,
-            '¥'
-          )
-          // ____
-          ctx.setFontSize(32 * rpx) //字大小
-          ctx.setTextBaseline('middle')
-          ctx.setFillStyle('#E5C89C')
-          // ${this.formObj.value}
-          // let valueLength = textValueChange(`0.00`, )
-          ctx.fillText(
-            `${this.formObj.value}`,
-            centerTextX + 15 * rpx,
-            centerTextY + 32 * rpx
-          )
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
           // console.log(textValueChange('0.00'), 'this.textContenthha')
           // 返回文字的高度
+          // 要覆盖上面加粗的样式
+          ctx.font = `normal 400 16px PingFangSC-Regula`
           drawtextLinebreak(
             ctx,
             this.textContent,
@@ -389,86 +379,113 @@ export default Vue.extend({
                 avatarY + 35 * rpx,
                 '长按识别二维码，领取福利'
               )
-              // drawBorderRect(
-              //   34 * rpx + 225 * rpx,
-              //   350 * rpx + 125 * rpx + this.textHeight,
-              //   80 * rpx,
-              //   80 * rpx,
-              //   ctx
+              // 将name截图省略号拓客卡名称字体加粗为了保证粗体不会被后面的字体继承所以放在最后绘制
+              let nameCustom =
+                this.formObj.name.length > 13
+                  ? `${this.formObj.name.slice(0, 12)}...`
+                  : this.formObj.name
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(18 * rpx) //字大小
+              // ctx.font = 'normal bold 20rpx PingFangSC-Semibold'
+              ctx.fillText(nameCustom, 90 * rpx, 90 * rpx)
+              // drawText(
+              //   ctx,
+              //   '#E5C89C',
+              //   20 * rpx,
+              //   90 * rpx,
+              //   100 * rpx,
+              //   nameCustom
               // )
+              // ____绘制价格部分
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(16 * rpx) //字大小
+              ctx.font = 'normal bold 24rpx DINAlternate-Bold'
+              ctx.fillText('￥', centerTextX - 5 * rpx, centerTextY + 47 * rpx)
+              ctx.setTextBaseline('middle')
+              ctx.setFillStyle('#E5C89C')
+              ctx.setFontSize(24 * rpx) //字大小
+              ctx.font = `normal bold 40rpx DINAlternate-Bold`
+              ctx.fillText(
+                `${this.formObj.value}`,
+                centerTextX + 15 * rpx,
+                centerTextY + 42 * rpx
+              )
+
               //绘制图片
               const that = this
-              ctx.draw(false, () => {
-                setTimeout(() => {
-                  wx.canvasToTempFilePath({
-                    //把当前画布指定区域的内容导出生成指定大小的图片
-                    canvasId: 'mycanvas',
-                    success(res) {
-                      that.imageUrl = res.tempFilePath
-                    }
+              // 绘制右侧二维码 为了保证二维码后绘制不被圆角矩形覆盖并且可以等绘制好二维码之后再调用draw方法
+              that
+                .drawCode()
+                .then((res: any) => {
+                  ctx.drawImage(res, codeX, codeY, 70 * rpx, 70 * rpx)
+                  ctx.draw(false, () => {
+                    setTimeout(() => {
+                      wx.canvasToTempFilePath({
+                        //把当前画布指定区域的内容导出生成指定大小的图片
+                        canvasId: 'mycanvas',
+                        success(res) {
+                          that.imgWidth = 750 + 'rpx'
+                          that.imgHeight = 1400 + 'rpx'
+                          that.imageUrl = res.tempFilePath
+                        }
+                      })
+                      hideLoading()
+                      this.loadingPoster = false
+                    }, 500)
                   })
-                }, 500)
-              })
-              hideLoading()
+                })
+                .catch(res => {
+                  console.log(res, '小程序码绘制失败')
+                })
+              // ctx.drawImage(path, codeX, codeY, 70 * rpx, 70 * rpx)
+
+              // hideLoading()
               // console.log('能否走到这里')
             }
           })
         }
       })
     },
-    // 获取头像
-    async init() {
-      // 等所有的异步加载完成之后再执行绘画代码
-      // res1获取用户头像、res2拓客卡详情、res3校区地区 res4获取二维码
-      const res1 = await API.partnersSBusiness.account.info.request({})
-      const res2 = await API.partnersSBusiness.memberCard.detail.request({
-        id: this.id
-      })
-      const res3 = await API.partnersSBusiness.campus.detail.request({})
-      const res4 = await API.partnersSBusiness.memberCard.shareInfo.request({
-        id: this.id
-      })
-      Promise.all([res1, res2, res3, res4])
-        .then(values => {
-          // console.log(values, '哈哈哈嘻嘻')
-          this.name = values[0].data.name
-          if (values[0].data.avatar) {
-            this.avatar = values[0].data.avatar
-          } else {
-            this.avatar =
-              'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png'
+    // 为了保证二维码正确绘制
+    drawCode() {
+      const p = new Promise((resolve, reject) => {
+        wx.getImageInfo({
+          src: this.codeUrl,
+          success: res => {
+            let path = res.path //图片临时本地路径
+            // 图片高度和宽度
+            resolve(path)
+          },
+          fail: res => {
+            reject(res)
           }
-          this.formObj = Object.assign({}, values[1].data)
-          console.log(values[1].data.value, 'values[1].data.value')
-          this.formObj.value = values[1].data.value.toString()
-          this.titleTime = `${dayjs(values[1].data.applyStartTime).format(
-            'YYYY-MM-DD'
-          )}~ ${dayjs(values[1].data.applyEndTime).format('YYYY-MM-DD')}`
-          this.school = values[2].data.name
-            ? values[2].data.name
-            : '满天星艺术培训学校文一路校区'
-          this.codeUrl = values[3].data.url
-          const that = this
-          uni.getSystemInfo({
-            success(res) {
-              // const dpr = wx.getSystemInfoSync().pixelRatio
-              that._heigth = res.windowHeight
-              that._width = res.screenWidth
-              // that.dpr = dpr
-              that.rpx = res.screenWidth / 375
-              // that.textHeight = drawHeightText(
-              //   that.textContent,
-              //   that._width / 375
-              // )
-              // 将异步数据请求完成之后再渲染
-              that.getTextHeight()
-              // that.drawImage(res.windowHeight, res.screenWidth)
-            }
-          })
         })
-        .catch(error => {
-          console.log(error)
-        })
+      })
+      return p
+    },
+    // 获取头像
+    init() {
+      const that = this
+      uni.getSystemInfo({
+        success(res) {
+          // const dpr = wx.getSystemInfoSync().pixelRatio
+          that._heigth = res.windowHeight
+          that._width = res.screenWidth
+          that.rpx = res.screenWidth / 375
+          // that.textHeight = drawHeightText(
+          //   that.textContent,
+          //   that._width / 375
+          // )
+          // 将异步数据请求完成之后再渲染
+          that.getTextHeight()
+          // that.drawImage(res.windowHeight, res.screenWidth)
+        }
+      })
+      // })
+      //   .catch(error => {
+      //     hideLoading()
+      //     this.$toast(error.errorMessage)
+      //   })
     },
     // onClose() {
     //   this.showPopup = false

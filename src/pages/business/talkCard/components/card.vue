@@ -98,7 +98,7 @@ export default Vue.extend({
       )
       // 判断是测试和预发环境还是生产环境
       wx.navigateToMiniProgram({
-        appId: 'wxcf3a3fd9e27ea168',
+        appId: 'wxb94eeef233d3d51d',
         // appId: 'wxcf3a3fd9e27ea168', //小程序正式端
         // appId: 'wxb94eeef233d3d51d', //小程序测试端
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
@@ -174,6 +174,7 @@ export default Vue.extend({
   font-size: 48rpx;
   font-weight: bold;
   color: #e5c89c;
+  font-family: DINAlternate-Bold;
   span {
     font-size: 32rpx;
     margin-right: 10rpx;

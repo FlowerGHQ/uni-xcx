@@ -34,6 +34,7 @@ export const drawtextLinebreak = (ctx, t, x, y, w, rpx) => {
       list.push(item)
     }
   })
+  ctx.font = 'normal normal 16rpx sans-serif'
   // 当数组的长度超过10 重新处理
   for (let b = 0; b < row.length; b++) {
     ctx.fillText(list[b], x, y + (b + 1) * 30 * rpx) //每行字体y坐标间隔40
@@ -66,15 +67,13 @@ export const drawHeightText = (textLength, rpx) => {
 export const drawText = (ctx, color, f, x, y, w) => {
   ctx.setFillStyle(color)
   ctx.setFontSize(f) //字大小
-  // ctx.setTextBaseline('middle')
   ctx.fillText(w, x, y)
 }
 // 字体设置
 export const drawTextFontBold = (ctx, color, f, x, y, w) => {
   ctx.setFillStyle(color)
-  // ctx.font = `normal bold 20 DINAlternate-Bold `
+  ctx.font = `bold ${f}px PingFangSC-Semibold`
   ctx.setFontSize(f) //字大小
-  // ctx.setTextBaseline('middle')
   ctx.fillText(w, x, y)
 }
 // 生成圆角矩形
@@ -164,7 +163,7 @@ export const drawBorderRect = (x, y, w, h, ctx) => {
 export const textValueChange = (text, rpx) => {
   let textLength = 0
   for (let i = 0; i < text.length; i++) {
-    textLength += 10 * rpx
+    textLength += 9.5 * rpx
   }
   return textLength
 }

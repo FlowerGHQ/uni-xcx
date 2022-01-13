@@ -63,9 +63,30 @@
 
   .generateLineHeight(@n, (@i + 10));
 }
+.generateFontSize(50);
+
+.generateFontSize(@n, @i: 10) when (@i =< @n) {
+  .font-@{i} {
+    font-size: @i*1rpx;
+  }
+
+  .generateFontSize(@n, (@i + 1));
+}
 .mar-l-16 {
   margin-left: 16rpx;
 }
 .mar-r-16 {
   margin-right: 16rpx;
+}
+.mar-b-16 {
+  margin-bottom: 16rpx;
+}
+.mar-b-8 {
+  margin-bottom: 8rpx;
+}
+.mar-t-8 {
+  margin-top: 8rpx;
+}
+.mar-t-16 {
+  margin-top: 16rpx;
 }

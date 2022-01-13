@@ -132,7 +132,7 @@ export default Vue.extend({
         if (!res.data.list && this.params.hasTransactionType === 0) {
           this.showSticky = false
         }
-        console.log(res.data.list)
+        // console.log(res.data.list)
         if (!res.data.list) {
           this.loading = true
         }

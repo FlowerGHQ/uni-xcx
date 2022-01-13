@@ -3,7 +3,7 @@
     <div class="flex login-img">
       <img src="../../assets/images/login.png" class="login-icon" />
     </div>
-    <div class="login-title">一群伙伴</div>
+    <div class="login-title">我的校区</div>
     <auth-button redirect="/pages/home/index" reLaunch>
       <div
         class="footer-bar__item apply middle-btn green flex wx-login-btn"
