@@ -89,14 +89,14 @@
               : '-'
           }}
         </div>
-        <div class="bottom thin-list" v-if="item.hasRefund">
+        <div class="bottom thin-list mar-t-16" v-if="item.hasRefund">
           退款时间：{{
             item.refundTransactionTime
               ? dayjs(item.refundTransactionTime).format('YYYY-MM-DD HH:mm')
               : '-'
           }}
         </div>
-        <div class="bottom thin-list mar-t-16" v-if="item.state === 1">
+        <div class="bottom thin-list mar-t-8" v-if="item.state === 1">
           作废时间：{{ dayjs(item.invalidTime).format('YYYY-MM-DD HH:mm') }}
         </div>
       </div>
