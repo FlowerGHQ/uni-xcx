@@ -38,7 +38,7 @@
           </div>
           <div v-else>
             <span class="font-24">+</span>
-            <span>{{ item.realAmount ? item.realAmount : '-' }}</span>
+            <span>{{ item.realLeftAmount ? item.realLeftAmount : '-' }}</span>
           </div>
         </div>
         <div class="bottom flex thin-list">
@@ -46,27 +46,58 @@
             课程名称 ：{{ item.courseName ? item.courseName : '-' }}
           </div>
           <div class="tag-product">
-            <Tag
+            <!-- <Tag
               color="#FFE6E6"
               text-color="#FF3333"
               v-if="item.hasRefund"
               :text="item.hasRefund ? '已退款' : ''"
+            /> -->
+            <!-- 根据不同的状态显示标签 -->
+            <!-- 全额退款 -->
+            <Tag
+              v-if="item.state !== 1 && item.type === 2"
+              color="#FFE6E6"
+              text-color="#FF3333"
+              v-show="item.hasRefund"
+              :text="item.hasRefund ? '全部退款' : ''"
+            />
+            <!-- 部分退款 -->
+            <Tag
+              v-if="item.state !== 1 && item.type === 3"
+              color="#FFF5E6"
+              text-color="#FF9900"
+              v-show="item.hasRefund"
+              :text="item.hasRefund ? '部分退款' : ''"
+            />
+            <!-- 已作废 -->
+            <Tag
+              v-if="item.state === 1"
+              color="#EEEEEE"
+              text-color="#888888"
+              v-show="item.state"
+              :text="item.state === 1 ? '已作废' : ''"
             />
           </div>
         </div>
-        <div class="bottom thin-list">
+        <div
+          class="bottom thin-list"
+          :class="item.state === 1 || item.hasRefund ? 'line-none' : ''"
+        >
           购买时间：{{
             item.transactionTime
               ? dayjs(item.transactionTime).format('YYYY-MM-DD HH:mm')
               : '-'
           }}
         </div>
-        <div class="bottom thin-list" v-if="item.hasRefund">
+        <div class="bottom thin-list mar-t-16" v-if="item.hasRefund">
           退款时间：{{
             item.refundTransactionTime
               ? dayjs(item.refundTransactionTime).format('YYYY-MM-DD HH:mm')
               : '-'
           }}
+        </div>
+        <div class="bottom thin-list mar-t-8" v-if="item.state === 1">
+          作废时间：{{ dayjs(item.invalidTime).format('YYYY-MM-DD HH:mm') }}
         </div>
       </div>
       <Empty v-if="!listTransation.length"></Empty>
@@ -205,6 +236,9 @@ export default Vue.extend({
   color: #666666;
   line-height: 32rpx;
 }
+.line-none {
+  line-height: 16rpx;
+}
 .font-24 {
   font-size: 24rpx;
 }
@@ -230,7 +264,7 @@ export default Vue.extend({
     }
   }
 }
-.customer-detail{
-  background-color: #F6F7F8;
+.customer-detail {
+  background-color: #f6f7f8;
 }
 </style>

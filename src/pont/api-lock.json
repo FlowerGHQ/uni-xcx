@@ -9128,12 +9128,12 @@
             "description": "获取通过微信好友列表分享拓客卡的返回信息",
             "name": "shareInfoByWx",
             "method": "get",
-            "path": "/memberCard/shareInfoByWx",
+            "path": "/open/campus/params",
             "response": {
               "typeArgs": [
                 {
                   "typeArgs": [],
-                  "typeName": "MemberCardShareByWxDto",
+                  "typeName": "OpenCampusInfoVo",
                   "isDefsType": true,
                   "templateIndex": -1,
                   "compileTemplateKeyword": "#/definitions/",
@@ -9151,64 +9151,13 @@
             "parameters": [
               {
                 "in": "query",
-                "description": "@Min: 1.0 - @Max: null (until #1244 gets fixed)",
-                "name": "id",
+                "description": "code",
+                "name": "code",
                 "required": true,
                 "dataType": {
                   "typeArgs": [],
-                  "typeName": "number",
+                  "typeName": "string",
                   "isDefsType": false,
-                  "templateIndex": -1,
-                  "compileTemplateKeyword": "#/definitions/",
-                  "enum": [],
-                  "typeProperties": []
-                }
-              }
-            ]
-          }
-        ],
-        "name": "memberCard"
-      },
-      {
-        "description": "Open Controller",
-        "interfaces": [
-          {
-            "consumes": [
-              "application/json"
-            ],
-            "description": "获取校区信息",
-            "name": "campusInfo",
-            "method": "post",
-            "path": "/open/campus/info",
-            "response": {
-              "typeArgs": [
-                {
-                  "typeArgs": [],
-                  "typeName": "CampusSimpleDto",
-                  "isDefsType": true,
-                  "templateIndex": -1,
-                  "compileTemplateKeyword": "#/definitions/",
-                  "enum": [],
-                  "typeProperties": []
-                }
-              ],
-              "typeName": "SimpleResponse",
-              "isDefsType": true,
-              "templateIndex": -1,
-              "compileTemplateKeyword": "#/definitions/",
-              "enum": [],
-              "typeProperties": []
-            },
-            "parameters": [
-              {
-                "in": "body",
-                "description": "vo",
-                "name": "vo",
-                "required": true,
-                "dataType": {
-                  "typeArgs": [],
-                  "typeName": "OpenCampusInfoVo",
-                  "isDefsType": true,
                   "templateIndex": -1,
                   "compileTemplateKeyword": "#/definitions/",
                   "enum": [],

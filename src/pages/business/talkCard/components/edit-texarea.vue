@@ -93,7 +93,7 @@ export default Vue.extend({
     },
     changeTextArea(val) {
       if (val.detail.value.trim().length > 50) {
-        this.textContent = val.detail.value.trim().slice(0, 49)
+        this.textContent = val.detail.value.trim().slice(0, 50)
       } else {
         this.textContent = val.detail.value.trim()
       }

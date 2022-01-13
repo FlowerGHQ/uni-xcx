@@ -72,9 +72,8 @@ export const drawText = (ctx, color, f, x, y, w) => {
 // 字体设置
 export const drawTextFontBold = (ctx, color, f, x, y, w) => {
   ctx.setFillStyle(color)
-  // ctx.font = `normal bold 20 DINAlternate-Bold `
+  ctx.font = `bold ${f}px PingFangSC-Semibold`
   ctx.setFontSize(f) //字大小
-  // ctx.setTextBaseline('middle')
   ctx.fillText(w, x, y)
 }
 // 生成圆角矩形
@@ -164,7 +163,7 @@ export const drawBorderRect = (x, y, w, h, ctx) => {
 export const textValueChange = (text, rpx) => {
   let textLength = 0
   for (let i = 0; i < text.length; i++) {
-    textLength += 10 * rpx
+    textLength += 9.5 * rpx
   }
   return textLength
 }

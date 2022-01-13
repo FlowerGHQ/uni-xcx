@@ -61,7 +61,8 @@ import {
   drawRoundedRect,
   drawBorderRect,
   textValueChange,
-  drawHeightText
+  drawHeightText,
+  drawTextFontBold
 } from '@/utils/canvas'
 import bottomButton from '@/components/bottom-button.vue'
 // import posterOne from '@/pages/business/talkCard/components/save-posterone.vue'
@@ -226,6 +227,7 @@ export default Vue.extend({
       ctx.fillRect(0, 0, screenWidth, 1400 * rpx)
       // 绘制字体
       ctx.setFillStyle('#000')
+      // ctx.font = 'italic bold 20px 微软雅黑'
       ctx.setFontSize(16 * rpx) //字大小
       ctx.fillText(
         this.school.length > 14
@@ -234,6 +236,7 @@ export default Vue.extend({
         (this.paddingSchool + 28) * rpx,
         38 * rpx
       )
+      ctx.save()
       // 先绘制圆角矩形再绘制图片 避免遮盖
       drawRoundedRect(
         this.paddingSchool * rpx,
@@ -310,13 +313,14 @@ export default Vue.extend({
           let numberLength = textValueChange(`${this.formObj.value}`, this.rpx)
           let centerTextX = (picX / 2 - numberLength) * rpx
           let centerTextY = (400 / 2) * rpx
-
           // ----底部
           ctx.setFontSize(16 * rpx) //字大小
           ctx.setTextBaseline('middle')
           ctx.setFillStyle('#000000')
           // console.log(textValueChange('0.00'), 'this.textContenthha')
           // 返回文字的高度
+          // 要覆盖上面加粗的样式
+          ctx.font = `normal 400 16px PingFangSC-Regula`
           drawtextLinebreak(
             ctx,
             this.textContent,

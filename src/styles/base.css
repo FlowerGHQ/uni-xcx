@@ -658,9 +658,144 @@
 .line-height-100 {
   line-height: 100rpx;
 }
+.font-10 {
+  font-size: 10rpx;
+}
+.font-11 {
+  font-size: 11rpx;
+}
+.font-12 {
+  font-size: 12rpx;
+}
+.font-13 {
+  font-size: 13rpx;
+}
+.font-14 {
+  font-size: 14rpx;
+}
+.font-15 {
+  font-size: 15rpx;
+}
+.font-16 {
+  font-size: 16rpx;
+}
+.font-17 {
+  font-size: 17rpx;
+}
+.font-18 {
+  font-size: 18rpx;
+}
+.font-19 {
+  font-size: 19rpx;
+}
+.font-20 {
+  font-size: 20rpx;
+}
+.font-21 {
+  font-size: 21rpx;
+}
+.font-22 {
+  font-size: 22rpx;
+}
+.font-23 {
+  font-size: 23rpx;
+}
+.font-24 {
+  font-size: 24rpx;
+}
+.font-25 {
+  font-size: 25rpx;
+}
+.font-26 {
+  font-size: 26rpx;
+}
+.font-27 {
+  font-size: 27rpx;
+}
+.font-28 {
+  font-size: 28rpx;
+}
+.font-29 {
+  font-size: 29rpx;
+}
+.font-30 {
+  font-size: 30rpx;
+}
+.font-31 {
+  font-size: 31rpx;
+}
+.font-32 {
+  font-size: 32rpx;
+}
+.font-33 {
+  font-size: 33rpx;
+}
+.font-34 {
+  font-size: 34rpx;
+}
+.font-35 {
+  font-size: 35rpx;
+}
+.font-36 {
+  font-size: 36rpx;
+}
+.font-37 {
+  font-size: 37rpx;
+}
+.font-38 {
+  font-size: 38rpx;
+}
+.font-39 {
+  font-size: 39rpx;
+}
+.font-40 {
+  font-size: 40rpx;
+}
+.font-41 {
+  font-size: 41rpx;
+}
+.font-42 {
+  font-size: 42rpx;
+}
+.font-43 {
+  font-size: 43rpx;
+}
+.font-44 {
+  font-size: 44rpx;
+}
+.font-45 {
+  font-size: 45rpx;
+}
+.font-46 {
+  font-size: 46rpx;
+}
+.font-47 {
+  font-size: 47rpx;
+}
+.font-48 {
+  font-size: 48rpx;
+}
+.font-49 {
+  font-size: 49rpx;
+}
+.font-50 {
+  font-size: 50rpx;
+}
 .mar-l-16 {
   margin-left: 16rpx;
 }
 .mar-r-16 {
   margin-right: 16rpx;
+}
+.mar-b-16 {
+  margin-bottom: 16rpx;
+}
+.mar-b-8 {
+  margin-bottom: 8rpx;
+}
+.mar-t-8 {
+  margin-top: 8rpx;
+}
+.mar-t-16 {
+  margin-top: 16rpx;
 }
