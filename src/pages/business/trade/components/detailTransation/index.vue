@@ -181,7 +181,7 @@ export default Vue.extend({
         // this.orderFormListObj.useCouponAmount = `${this.orderFormListObj.useCouponAmount}元`
         // this.orderFormListObj.originalAmount = `${res.data.originalAmount}元`
         // this.orderFormListObj.extraDiscountAmount = `${res.data.extraDiscountAmount}元`
-        this.orderFormListObj.courseType =
+        this.orderFormListObj.courseTypeName =
           res.data.courseType === 1 ? '正式课' : '试听课'
       })
     },
