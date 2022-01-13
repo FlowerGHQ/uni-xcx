@@ -6,7 +6,7 @@
         <span class="mar-r-15">
           <img :src="imgLocation" alt="" class="location-img" />
         </span>
-        <p class="school-location">满天星艺术培训学校文一路校区</p>
+        <p class="school-location">{{ school }}</p>
       </div>
       <div class="content-info">
         <div
@@ -16,8 +16,8 @@
           <div class="top-title flex-align">
             <div class="left"></div>
             <div class="right">
-              <p class="title">贵宾卡贵宾卡贵宾卡贵宾…</p>
-              <span class="time">有效期：2021–12-01 ～ 2022-12-01</span>
+              <p class="title">{{ formObj.name }}</p>
+              <span class="time">{{ titleTime }}</span>
             </div>
           </div>
           <div class="center-content">
@@ -25,15 +25,13 @@
             <div class="center-number">
               <span class="number">
                 <span class="symbol">¥</span>
-                <span>20000.00</span>
+                <span>{{ formObj.value }}</span>
               </span>
             </div>
           </div>
         </div>
         <div class="bottom">
-          <p class="textRecommend">
-            {{ textContent }}
-          </p>
+          <p class="textRecommend">收下这张会员卡，只有我的朋友可以获得哦</p>
           <div class="set-title">
             <div class="set-info">
               <div class="info-content flex-between flex-align">
@@ -57,7 +55,7 @@
                   <!-- 二维码 -->
                   <div class="img">
                     <image
-                      :src="srcImg"
+                      :src="codeUrl"
                       show-menu-by-longpress="true"
                       class="QR-img"
                     >
@@ -70,42 +68,29 @@
         </div>
       </div>
     </div>
-    <bottom-button
-      view="修改推荐语"
-      save="下载至相册"
-      @viewClick="editClick"
-      @saveClick="picClick"
-    ></bottom-button>
-    <van-popup :show="showPopup" @close="onClose" position="bottom" round>
-      <edit-area @clickCancel="clickCancel" @clickSave="clickSave"></edit-area>
-    </van-popup>
-    <!-- 生成海报 -->
-    <!-- <van-popup
-      :show="showPoster"
-      @close="onClosePoster"
-      custom-style="width:90%;height: 450px;"
-    >
-      <pic-poster ref="picPoster" :id="id"></pic-poster>
-    </van-popup> -->
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import EditArea from '@/pages/business/talkCard/components/edit-texarea.vue'
-import PicPoster from '@/pages/business/talkCard/components/save-poster.vue'
 // src/components/bottom-button.vue
-import bottomButton from '@/components/bottom-button.vue'
+// import bottomButton from '@/components/bottom-button.vue'
 import { API } from '@/models/api'
+import { mapState } from 'vuex'
 export default Vue.extend({
   name: 'SavePoster',
   props: {},
   // components: {}
-  components: {
-    EditArea,
-    bottomButton,
-    PicPoster
-    // SaveAlbum
-    // ImageSaver
+  components: {},
+  computed: {
+    ...mapState('poster', [
+      'avatar',
+      'imageUrl',
+      'name',
+      'formObj',
+      'titleTime',
+      'school',
+      'codeUrl'
+    ])
   },
   data() {
     return {
@@ -120,9 +105,9 @@ export default Vue.extend({
         'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16391284380005f6db2.png',
       // imageAvatar:
       //   'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
-      name: '',
-      avatar:
-        'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
+      // name: '',
+      // avatar:
+      //   'https://greedyint-qa.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads16393661620003e392f.png',
       textContent: '强力推荐这家机构！分享给你，好机构陪伴孩子一生！'
     }
   },
@@ -137,8 +122,8 @@ export default Vue.extend({
     async init() {
       try {
         const res = await API.partnersSBusiness.account.info.request({})
-        this.name = res.data.name
-        this.avatar = res.data.avatar
+        // this.name = res.data.name
+        // this.avatar = res.data.avatar
       } catch (error) {}
     },
     async openGetInfo() {
@@ -154,12 +139,12 @@ export default Vue.extend({
         }
       })
     },
-    async openQRcode() {
-      const res = await API.partnersSBusiness.memberCard.shareInfo.request({
-        id: this.id
-      })
-      this.srcImg = res.data.url
-      console.log('qrcode', res)
+    openQRcode() {
+      // const res = await API.partnersSBusiness.memberCard.shareInfo.request({
+      //   id: this.id
+      // })
+      // this.srcImg = res.data.url
+      console.log('qrcode')
     },
     onClose() {
       this.showPopup = false
