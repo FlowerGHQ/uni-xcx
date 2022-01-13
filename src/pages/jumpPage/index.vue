@@ -247,8 +247,17 @@ export default Vue.extend({
           url: '/pages/home/index?isIntroduce=show'
         })
       } catch (error) {
-        const { errorMessage = '' } = error as any
+        const { errorMessage = '', errorCode } = error as any
+        console.log(errorCode)
         this.$toast(errorMessage)
+        if ([11002, 11003, 11004].includes(errorCode)) {
+          await API.partnersSBusiness.account.authorized.request({})
+          setTimeout(() => {
+            uni.reLaunch({
+              url: '/pages/home/index'
+            })
+          }, 1000)
+        }
       }
     }
   }

@@ -13,11 +13,29 @@
                 discountObj.discountAmount ? discountObj.discountAmount : '-'
               }}
             </div>
-            <div class="use-number">
+            <div
+              class="use-number"
+              v-if="
+                discountObj.ruleType === 1 &&
+                discountObj.conditionAmount !== '0.00'
+              "
+            >
               满<span>{{
                 discountObj.conditionAmount ? discountObj.conditionAmount : '-'
               }}</span
               >可用
+            </div>
+            <div
+              class="use-number"
+              v-if="
+                discountObj.ruleType === 1 &&
+                discountObj.conditionAmount === '0.00'
+              "
+            >
+              无最低消费限制
+            </div>
+            <div class="use-number" v-if="discountObj.ruleType === 2">
+              赠品价值
             </div>
           </div>
         </div>
