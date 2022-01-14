@@ -100,6 +100,7 @@ import { API } from '@/models/api'
 import Empty from '@/components/empty.vue'
 import dayjs from 'dayjs'
 import appIdObj from '@/pages/business/talkCard/appId'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'HomeList',
@@ -120,17 +121,26 @@ export default Vue.extend({
       valueArea: '',
       name: '',
       address: '',
-      attachments: []
+      attachments: [],
+      // 是否海报的接口都加载完成标记
+      posterFlag: false
     }
+  },
+  computed: {
+    // ...mapState('poster', ['avatar', ''])
   },
   async onLoad(option) {
     // console.log(__wxConfig.envVersion, appIdObj.appId, 'appIdObj.appId')
     this.id = option?.id
+    this.getInfoPoster(this.id)
     const res = await API.partnersSBusiness.campus.list.request({})
     const res1 = await API.partnersSBusiness.memberCard.detail.request({
       id: this.id
     })
+    this.cardDetail(res1.data)
     const res3 = await API.partnersSBusiness.campus.detail.request({})
+    this.editSchoolInfo(res3.data)
+    this.posterFlag = true
     const { name, address, attachments, districts } = res3.data
     this.valueArea = `${districts[0].name}-${districts[1].name}-${districts[2].name}`
     this.name = name
@@ -147,6 +157,8 @@ export default Vue.extend({
     this.time = date2.diff(date1)
   },
   methods: {
+    ...mapMutations('poster', ['cardDetail', 'editSchoolInfo', 'codeUrlEdit']),
+    ...mapActions('poster', ['getInfoPoster']),
     onClickTab(e: any) {
       console.log(e.target.name)
     },
@@ -185,7 +197,6 @@ export default Vue.extend({
     },
     onFinish() {
       this.isFinish = true
-      console.log(1, 'end')
     },
     openDetail(name: string, desc: string) {
       this.disCountName = name
@@ -201,17 +212,19 @@ export default Vue.extend({
       })
       this.showQRcode = true
       this.src = res.data.url
-      console.log('qrcode', res)
     },
     // 生成分享海报
     openSavePoster() {
-      uni.navigateTo({
-        url: `/pages/business/talkCard/components/save-poster?id=${this.id}`
-      })
+      if (this.posterFlag) {
+        // 将参数传递过去
+        uni.navigateTo({
+          url: `/pages/business/talkCard/components/save-poster?id=${this.id}`
+        })
+      }
     },
     closeQRcode() {
       this.showQRcode = false
-      console.log(11)
+      // console.log(11)
     }
   }
 })

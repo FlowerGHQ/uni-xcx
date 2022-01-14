@@ -74,6 +74,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { API } from '@/models/api'
+import { params } from '@/pont/partnersSBusiness/mods/open/index'
 export default Vue.extend({
   name: 'Invite',
   data() {
@@ -86,7 +87,16 @@ export default Vue.extend({
       showMessage: false,
       defaultVVVV: '',
       error: false,
-      data: null as any
+      data: null as any,
+      parmaState: [] as any,
+      // 传参对象
+      parma: {
+        campusId: '',
+        merchantId: '',
+        sign: ''
+      },
+      // 为了兼容之前的onload
+      optionObj: {}
     }
   },
   onShareAppMessage: function (res): any {
@@ -102,47 +112,49 @@ export default Vue.extend({
         'https://production-sam.oss-cn-hangzhou.aliyuncs.com/innovation/partners/partners-b-business/uploads1639385533000e1a573.png'
     }
   },
-  //   eccfc2cca1c852f8b5dc6ef9ee366e64
   async onLoad(option: any) {
-    this.state = decodeURIComponent(option.scene)
-    const parmaState = this.state.split('&')
-    // const parma = {
-    //   campusId: 1,
-    //   merchantId: 1,
-    //   sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-    // }
-    const parma = {
-      campusId: parmaState[0],
-      merchantId: parmaState[1],
-      sign: parmaState[2]
+    this.optionObj = option
+    try {
+      await this.getInfo(this.optionObj)
+    } catch (error) {
+      this.$toast('接口报错')
     }
-    const res = await API.partnersSBusiness.open.campusInfo.request(parma)
+    const res = await API.partnersSBusiness.open.campusInfo.request(this.parma)
     this.schoolName = res.data.name
   },
   async onShow() {
-    const parmaState = this.state.split('&')
-    console.log(parmaState, 'parmaState')
-    // const parma = {
-    //   campusId: 1,
-    //   merchantId: 1,
-    //   sign: 'eccfc2cca1c852f8b5dc6ef9ee366e64'
-    // }
-    const parma = {
-      campusId: parmaState[0],
-      merchantId: parmaState[1],
-      sign: parmaState[2]
+    try {
+      await this.getInfo(this.optionObj)
+    } catch (error) {
+      this.$toast('接口报错')
     }
     let res = await API.partnersSBusiness.open.memberCardStatistic.request(
-      parma
+      this.parma
     )
     this.totalCount = res.data.count
     this.value = res.data.value
 
     let data = await wx.login()
-    console.log(data)
     this.data = data
   },
   methods: {
+    // 得到参数信息
+    async getInfo(option) {
+      if (decodeURIComponent(option.scene).includes('&')) {
+        this.state = decodeURIComponent(option.scene)
+        const parmaState = this.state.split('&')
+        this.parma.campusId = parmaState[0]
+        this.parma.merchantId = parmaState[1]
+        this.parma.sign = parmaState[2]
+      } else {
+        // 扫描获取信息
+        const parmaState = await API.partnersSBusiness.open.params.request({
+          code: option.scene
+        })
+        this.parma = Object.assign({}, parmaState.data)
+        // console.log(this.parma, 'this.parma')
+      }
+    },
     async closePopup() {
       this.showMessage = false
       let data = await wx.login()
@@ -242,15 +254,24 @@ export default Vue.extend({
           {
             name: this.defaultVVVV,
             phone: this.phone,
-            open: parma
+            open: this.parma
           }
         )
         uni.reLaunch({
           url: '/pages/home/index?isIntroduce=show'
         })
       } catch (error) {
-        const { errorMessage = '' } = error as any
+        const { errorMessage = '', errorCode } = error as any
+        console.log(errorCode)
         this.$toast(errorMessage)
+        if ([11002, 11003, 11004].includes(errorCode)) {
+          await API.partnersSBusiness.account.authorized.request({})
+          setTimeout(() => {
+            uni.reLaunch({
+              url: '/pages/home/index'
+            })
+          }, 1000)
+        }
       }
     }
   }
