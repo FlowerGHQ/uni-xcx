@@ -119,7 +119,7 @@ export default Vue.extend({
         realAmount: '实际支付金额',
         payMethodType: '支付方式',
         transactionNo: '订单编号',
-        // 加两个字段
+        // 加两个字段哈哈
         // 根据是否有外部订单动态增加该属性
         externalOrderNumber: '外部订单编号',
         transactionTime: '交易时间',
