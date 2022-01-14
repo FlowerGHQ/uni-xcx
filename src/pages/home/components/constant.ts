@@ -33,7 +33,7 @@ export const ButtonList = [
     title: '合约查询',
     type: 'class',
     imageStyle: 'contract',
-    openUrl: '/pages/business/contract/index'
+    openUrl: '/pages/pkg_contract/index'
   },
   {
     title: '设置',
