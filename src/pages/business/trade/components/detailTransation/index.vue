@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content-amount">
     <!-- 根据状态展示 -->
     <van-notice-bar
       v-if="
@@ -110,17 +110,20 @@ export default Vue.extend({
       orderFormListObjKey: {
         customerName: '消费者姓名',
         customerPhone: '手机号',
-        courseType: '课程类型',
+        courseTypeName: '课程类型',
         courseName: '课程名称',
         originalAmount: '课程原价',
         useCouponAmount: '满减券',
         extraDiscountAmount: '额外优惠金额',
+        // 加两个字段
         realAmount: '实际支付金额',
         payMethodType: '支付方式',
         transactionNo: '订单编号',
+        // 加两个字段哈哈
+        // 根据是否有外部订单动态增加该属性
+        externalOrderNumber: '外部订单编号',
         transactionTime: '交易时间',
-        shareholderName: '关联合作人',
-        externalOrderNumber: '外部订单编号'
+        shareholderName: '关联合作人'
       }
     }
   },
@@ -178,7 +181,7 @@ export default Vue.extend({
         // this.orderFormListObj.useCouponAmount = `${this.orderFormListObj.useCouponAmount}元`
         // this.orderFormListObj.originalAmount = `${res.data.originalAmount}元`
         // this.orderFormListObj.extraDiscountAmount = `${res.data.extraDiscountAmount}元`
-        this.orderFormListObj.courseType =
+        this.orderFormListObj.courseTypeName =
           res.data.courseType === 1 ? '正式课' : '试听课'
       })
     },
@@ -218,5 +221,8 @@ export default Vue.extend({
 .refund-center {
   text-align: center;
   color: #ff3333;
+}
+.content-amount {
+  padding-bottom: calc(64rpx + var(--safe-area-inset-bottom));
 }
 </style>

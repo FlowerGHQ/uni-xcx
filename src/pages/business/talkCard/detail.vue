@@ -169,9 +169,9 @@ export default Vue.extend({
         }
       )
       wx.navigateToMiniProgram({
-        appId: 'wxb94eeef233d3d51d',
+        // appId: 'wxcf3a3fd9e27ea168',
         // appId: 'wxcf3a3fd9e27ea168', //小程序正式
-        // appId: 'wxb94eeef233d3d51d', //小程序测试端
+        appId: 'wxb94eeef233d3d51d', //小程序测试端
         path: `/pages/jumpPage/index?url=${encodeURIComponent(
           res1.data.shareParams
         )}`, //path
