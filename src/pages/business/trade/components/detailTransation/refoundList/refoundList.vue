@@ -9,15 +9,15 @@
     >
       <div class="top flex-between font-weight-500 mar-b-16">
         <div class="name">退款</div>
-        <div class="refound-amount">{{ item.refoundAmount }}</div>
+        <div class="refound-amount">{{ item.amount }}</div>
       </div>
       <div
         class="middle clor-gray-6 font-24 flex-between"
-        :class="!item.iscancel ? 'mar-b-8' : ''"
+        :class="!item.invalidTime ? 'mar-b-8' : ''"
         v-if="item.type"
       >
         退款方式：{{ item.type }}
-        <Tag v-if="item.iscancel" text="已作废"></Tag>
+        <Tag v-if="item.invalidTime" text="已作废"></Tag>
       </div>
       <div class="bottom clor-gray-6 font-24 mar-b-8" v-if="item.refundTime">
         退款时间：{{ item.refundTime }}

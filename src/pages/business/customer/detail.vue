@@ -59,7 +59,7 @@
               color="#FFE6E6"
               text-color="#FF3333"
               v-show="item.hasRefund"
-              :text="item.hasRefund ? '全部退款' : ''"
+              :text="item.hasRefund ? '全额退款' : ''"
             />
             <!-- 部分退款 -->
             <Tag

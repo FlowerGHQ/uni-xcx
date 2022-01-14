@@ -26,8 +26,7 @@
               <Tag color="#E6F0FF" text-color="#0066FF" text="试听交易" />
             </div>
             <div class="list-top-number" v-else>
-              <span v-if="Number(item.realAmount) > 0" class="small-add">+</span
-              >{{ item.realAmount }}
+              {{ item.realLeftAmount ? '+' + item.realLeftAmount : '-' }}
             </div>
           </div>
           <div class="list-center">
@@ -40,7 +39,7 @@
               color="#FFE6E6"
               text-color="#FF3333"
               v-show="item.hasRefund"
-              :text="item.hasRefund ? '全部退款' : ''"
+              :text="item.hasRefund ? '全额退款' : ''"
             />
             <!-- 部分退款 -->
             <Tag
