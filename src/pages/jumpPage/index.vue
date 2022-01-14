@@ -254,7 +254,7 @@ export default Vue.extend({
           {
             name: this.defaultVVVV,
             phone: this.phone,
-            open: parma
+            open: this.parma
           }
         )
         uni.reLaunch({
